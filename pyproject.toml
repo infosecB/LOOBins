@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "py-loobas"
+version = "0.1.0"
+description = "Python package for managing the LOOBAS model and schema."
+authors = ["infosecB <brendan@infosecb.com>"]
+readme = "README.md"
+packages = [{include = "py_loobas"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pydantic = "^1.10.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
