@@ -1,10 +1,10 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Union
 from datetime import datetime
 
 class Detection(BaseModel):
     source: str
-    url: List[str]
+    url: Union[List[str], str]
 
 class ExternalReference(BaseModel):
     name: str
@@ -18,7 +18,7 @@ class Command(BaseModel):
     description: str
     use_case: str
 
-class LOOBASItem(BaseModel):
+class LOOBin(BaseModel):
     name: str
     description: str
     author: str
