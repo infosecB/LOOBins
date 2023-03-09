@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "py-loobas"
+name = "PyLOOBins"
 version = "0.1.0"
-description = "Python package for managing the LOOBAS model and schema."
+description = "Python package for managing the LOOBins model and schema."
 authors = ["infosecB <brendan@infosecb.com>"]
 readme = "README.md"
-packages = [{include = "py_loobins"}]
+packages = [{include = "pyloobins"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
