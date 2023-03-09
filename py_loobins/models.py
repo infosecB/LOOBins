@@ -1,4 +1,4 @@
-"""Models that represent a LOOBin and its various components"""
+"""Model that represents a LOOBin and its various components"""
 from typing import List, Optional, Union
 from datetime import datetime
 from pydantic import BaseModel
@@ -66,6 +66,7 @@ class NonInteractiveReverseShell(BaseModel):
 
 class BindShell(BaseModel):
     """Bind Shell model"""
+
     Code: str
     Description = (
         "It can bind a shell to a local port to allow remote network access."
@@ -74,6 +75,7 @@ class BindShell(BaseModel):
 
 class NonInteractiveBindShell(BaseModel):
     """Non-interactive Bind Shell model"""
+
     Code: str
     Description = (
         "It can bind a non-interactive shell to a local port to allow remote"
@@ -83,18 +85,21 @@ class NonInteractiveBindShell(BaseModel):
 
 class FileUpload(BaseModel):
     """File Upload model"""
+
     Code: str
     Description = "It can exfiltrate files on the network."
 
 
 class FileDownload(BaseModel):
     """File Download model"""
+
     Code: str
     Description = "It can download remote files."
 
 
 class FileWrite(BaseModel):
     """File Write model"""
+
     Code: str
     Description = (
         "It writes data to files, it may be used to do privileged writes or"
@@ -104,6 +109,7 @@ class FileWrite(BaseModel):
 
 class FileRead(BaseModel):
     """File Read model"""
+
     Code: str
     Description = (
         "It reads data from files, it may be used to do privileged reads or"
@@ -113,6 +119,7 @@ class FileRead(BaseModel):
 
 class LibraryLoad(BaseModel):
     """Library Load model"""
+
     Code: str
     Description = (
         "It loads shared libraries that may be used to run code in the binary"
