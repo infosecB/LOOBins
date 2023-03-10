@@ -12,7 +12,9 @@ def validate_loobin(yml_path: str) -> bool:
             print(exc)
     try:
         LOOBin(**ycontent)
+        print(f"LOOBin at {yml_path} is valid.")
         return True
-    except Exception as exception:
-        print(exception)
+    except Exception as exc:
+        print(f"LOOBin at {yml_path} is NOT valid.")
+        print(exc)
         return False
