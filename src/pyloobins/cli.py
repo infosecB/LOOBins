@@ -9,9 +9,12 @@ def cli():
 
 @cli.command()
 @click.option('--file', type=str, required=True, help='File location of the LOOBin YAML file to validate.')
-def validate(file: str)->bool:
+def validate(file: str)->None:
     '''Validate a LOOBin object.'''
-    return validate_loobin(yml_path=file)
+    if validate_loobin(yml_path=file):
+        print(f"LOOBin at {file} is valid.")
+    else:
+        print(f"LOOBin at {file} is NOT valid.")
 
 @cli.command()
 def create():
