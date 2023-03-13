@@ -1,6 +1,6 @@
 """Model that represents a LOOBin and its various components"""
 from typing import List, Optional, Union
-from datetime import datetime
+from datetime import date
 from pydantic import BaseModel
 
 
@@ -197,7 +197,7 @@ class LOOBin(BaseModel):
     Name: str
     Description: str
     Author: str
-    Created: datetime
+    Created: date
     Functions: Functions
     Full_Path: List[FullPath]
     Detections: List[Detection]

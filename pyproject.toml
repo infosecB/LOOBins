@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Python package for managing the LOOBins model and schema."
 authors = ["infosecB <brendan@infosecb.com>"]
 readme = "README.md"
-packages = [{include = "pyloobins"}]
+packages = [{include = "pyloobins", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.8"
