@@ -24,7 +24,7 @@ class FullPath(BaseModel):
     Path: str
 
 
-class Shell(BaseModel):
+class ShellCls(BaseModel):
     """Shell model"""
 
     Code: str
@@ -33,8 +33,7 @@ class Shell(BaseModel):
         " an interactive system shell."
     )
 
-
-class Command(BaseModel):
+class CommandCls(BaseModel):
     """Command model"""
 
     Code: str
@@ -44,7 +43,7 @@ class Command(BaseModel):
     )
 
 
-class ReverseShell(BaseModel):
+class ReverseShellCls(BaseModel):
     """Reverse Shell model"""
 
     Code: str
@@ -54,7 +53,7 @@ class ReverseShell(BaseModel):
     )
 
 
-class NonInteractiveReverseShell(BaseModel):
+class NonInteractiveReverseShellCls(BaseModel):
     """Non-interactive Reverse Shell model"""
 
     Code: str
@@ -64,16 +63,14 @@ class NonInteractiveReverseShell(BaseModel):
     )
 
 
-class BindShell(BaseModel):
+class BindShellCls(BaseModel):
     """Bind Shell model"""
 
     Code: str
-    Description = (
-        "It can bind a shell to a local port to allow remote network access."
-    )
+    Description = "It can bind a shell to a local port to allow remote network access."
 
 
-class NonInteractiveBindShell(BaseModel):
+class NonInteractiveBindShellCls(BaseModel):
     """Non-interactive Bind Shell model"""
 
     Code: str
@@ -83,21 +80,21 @@ class NonInteractiveBindShell(BaseModel):
     )
 
 
-class FileUpload(BaseModel):
+class FileUploadCls(BaseModel):
     """File Upload model"""
 
     Code: str
     Description = "It can exfiltrate files on the network."
 
 
-class FileDownload(BaseModel):
+class FileDownloadCls(BaseModel):
     """File Download model"""
 
     Code: str
     Description = "It can download remote files."
 
 
-class FileWrite(BaseModel):
+class FileWriteCls(BaseModel):
     """File Write model"""
 
     Code: str
@@ -107,7 +104,7 @@ class FileWrite(BaseModel):
     )
 
 
-class FileRead(BaseModel):
+class FileReadCls(BaseModel):
     """File Read model"""
 
     Code: str
@@ -117,7 +114,7 @@ class FileRead(BaseModel):
     )
 
 
-class LibraryLoad(BaseModel):
+class LibraryLoadCls(BaseModel):
     """Library Load model"""
 
     Code: str
@@ -127,7 +124,7 @@ class LibraryLoad(BaseModel):
     )
 
 
-class SUID(BaseModel):
+class SUIDCls(BaseModel):
     """SUID model"""
 
     Code: str
@@ -144,7 +141,7 @@ class SUID(BaseModel):
     )
 
 
-class Sudo(BaseModel):
+class SudoCls(BaseModel):
     """Sudo model"""
 
     Code: str
@@ -155,7 +152,7 @@ class Sudo(BaseModel):
     )
 
 
-class Capabilities(BaseModel):
+class CapabilitiesCls(BaseModel):
     """Capabilities model"""
 
     Code: str
@@ -167,7 +164,7 @@ class Capabilities(BaseModel):
     )
 
 
-class LimitedSUID(BaseModel):
+class LimitedSUIDCls(BaseModel):
     """LimitedSUID model"""
 
     Code: str
@@ -187,8 +184,21 @@ class LimitedSUID(BaseModel):
 class Functions(BaseModel):
     """Defines the function base class"""
 
-    Shell: Optional[Shell]
-    LimitedSUID: Optional[LimitedSUID]
+    Shell: Optional[ShellCls] = None
+    Command: Optional[CommandCls] = None
+    ReverseShell: Optional[ReverseShellCls] = None
+    NonInteractiveReverseShell: Optional[NonInteractiveReverseShellCls] = None
+    BindShell: Optional[BindShellCls] = None
+    NonInteractiveBindShell: Optional[NonInteractiveBindShellCls] = None
+    FileUpload: Optional[FileUploadCls] = None
+    FileDownload: Optional[FileDownloadCls] = None
+    FileWrite: Optional[FileWriteCls] = None
+    FileRead: Optional[FileReadCls] = None
+    LibraryLoad: Optional[LibraryLoadCls] = None
+    Capabilities: Optional[CapabilitiesCls] = None
+    Sudo: Optional[SudoCls] = None
+    SUID: Optional[SUIDCls] = None
+    LimitedSUID: Optional[LimitedSUIDCls] = None
 
 
 class LOOBin(BaseModel):
