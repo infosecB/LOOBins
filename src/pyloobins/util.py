@@ -1,18 +1,18 @@
-"""Module contains various utility functions"""
+"""Utility functions that support the CLI and library"""
 from datetime import date
 import yaml
-from .models import *
+from .models import LOOBin, Functions, ShellCls, FullPath, Detection, ExternalReference
 
 
 def validate_loobin(yml_path: str) -> bool:
     """Validates LOOBin YAML file"""
     with open(yml_path, "r", encoding="utf-8") as stream:
         try:
-            ycontent = yaml.safe_load(stream)
+            yml_content = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
     try:
-        LOOBin(**ycontent)
+        LOOBin(**yml_content) # type: ignore
         return True
     except Exception as exc:
         # TODO add more specific Exception handling
@@ -43,3 +43,7 @@ def make_template() -> LOOBin:
         ],
     )
     return loobin_template
+
+def normalize_file_name(title: str)->str:
+    """Accepts a binary title and normalizes it for the file name"""
+    return title.lower().replace(" ","_")
