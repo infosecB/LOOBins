@@ -2,30 +2,31 @@
 from typing import List, Optional, Union
 from datetime import date
 from pydantic import BaseModel
+import yaml
 
 
 class Detection(BaseModel):
-    """Detection model"""
+    """Detection base class"""
 
     Source: str
     URL: Union[List[str], str]
 
 
 class ExternalReference(BaseModel):
-    """External reference model"""
+    """External reference base class"""
 
     Name: str
     URL: str
 
 
 class FullPath(BaseModel):
-    """Full path model"""
+    """Full path base class"""
 
     Path: str
 
 
 class ShellCls(BaseModel):
-    """Shell model"""
+    """Shell base class"""
 
     Code: str
     Description = (
@@ -33,8 +34,9 @@ class ShellCls(BaseModel):
         " an interactive system shell."
     )
 
+
 class CommandCls(BaseModel):
-    """Command model"""
+    """Command base class"""
 
     Code: str
     Description = (
@@ -44,7 +46,7 @@ class CommandCls(BaseModel):
 
 
 class ReverseShellCls(BaseModel):
-    """Reverse Shell model"""
+    """Reverse Shell base class"""
 
     Code: str
     Description = (
@@ -54,7 +56,7 @@ class ReverseShellCls(BaseModel):
 
 
 class NonInteractiveReverseShellCls(BaseModel):
-    """Non-interactive Reverse Shell model"""
+    """Non-interactive Reverse Shell base class"""
 
     Code: str
     Description = (
@@ -64,14 +66,14 @@ class NonInteractiveReverseShellCls(BaseModel):
 
 
 class BindShellCls(BaseModel):
-    """Bind Shell model"""
+    """Bind Shell base class"""
 
     Code: str
     Description = "It can bind a shell to a local port to allow remote network access."
 
 
 class NonInteractiveBindShellCls(BaseModel):
-    """Non-interactive Bind Shell model"""
+    """Non-interactive Bind Shell base class"""
 
     Code: str
     Description = (
@@ -81,21 +83,21 @@ class NonInteractiveBindShellCls(BaseModel):
 
 
 class FileUploadCls(BaseModel):
-    """File Upload model"""
+    """File Upload base class"""
 
     Code: str
     Description = "It can exfiltrate files on the network."
 
 
 class FileDownloadCls(BaseModel):
-    """File Download model"""
+    """File Download base class"""
 
     Code: str
     Description = "It can download remote files."
 
 
 class FileWriteCls(BaseModel):
-    """File Write model"""
+    """File Write base class"""
 
     Code: str
     Description = (
@@ -105,7 +107,7 @@ class FileWriteCls(BaseModel):
 
 
 class FileReadCls(BaseModel):
-    """File Read model"""
+    """File Read base class"""
 
     Code: str
     Description = (
@@ -115,7 +117,7 @@ class FileReadCls(BaseModel):
 
 
 class LibraryLoadCls(BaseModel):
-    """Library Load model"""
+    """Library Load base class"""
 
     Code: str
     Description = (
@@ -125,7 +127,7 @@ class LibraryLoadCls(BaseModel):
 
 
 class SUIDCls(BaseModel):
-    """SUID model"""
+    """SUID base class"""
 
     Code: str
     Description = (
@@ -142,7 +144,7 @@ class SUIDCls(BaseModel):
 
 
 class SudoCls(BaseModel):
-    """Sudo model"""
+    """Sudo base class"""
 
     Code: str
     Description = (
@@ -153,7 +155,7 @@ class SudoCls(BaseModel):
 
 
 class CapabilitiesCls(BaseModel):
-    """Capabilities model"""
+    """Capabilities base class"""
 
     Code: str
     Description = (
@@ -165,7 +167,7 @@ class CapabilitiesCls(BaseModel):
 
 
 class LimitedSUIDCls(BaseModel):
-    """LimitedSUID model"""
+    """LimitedSUID base class"""
 
     Code: str
     Description = (
@@ -182,7 +184,7 @@ class LimitedSUIDCls(BaseModel):
 
 
 class Functions(BaseModel):
-    """Defines the function base class"""
+    """Function base class"""
 
     Shell: Optional[ShellCls] = None
     Command: Optional[CommandCls] = None
@@ -202,7 +204,7 @@ class Functions(BaseModel):
 
 
 class LOOBin(BaseModel):
-    """LOOBin model"""
+    """LOOBin base class"""
 
     Name: str
     Description: str
@@ -212,3 +214,9 @@ class LOOBin(BaseModel):
     Full_Path: List[FullPath]
     Detections: List[Detection]
     External_References: Optional[List[ExternalReference]]
+
+    def yaml(self, exclude_null: bool = True) -> str:
+        """Convert a LOOBin object to a YAML string"""
+        return yaml.dump(
+            self.dict(exclude_none=exclude_null), Dumper=yaml.Dumper, sort_keys=False
+        )
