@@ -3,6 +3,7 @@ from typing import List, Optional, Union, Literal
 from datetime import date
 from pydantic import BaseModel, Field
 import yaml
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 
 AttackTactics = Literal[
@@ -87,3 +88,19 @@ class LOOBin(BaseModel):
             Dumper=yaml.Dumper,
             sort_keys=False,
         )
+
+    def md(self, exclude_null: bool = True) -> str:
+        """Convert a LOOBin object to a Markdown string"""
+        env = Environment(
+            loader=PackageLoader("pyloobins", "templates"),
+            autoescape=select_autoescape(),
+        )
+
+        template = env.get_template("loobin.md.j2").render(loobin=self)
+        return template
+
+    def __str__(self) -> str:
+        return self.yaml()
+
+    def __repr__(self) -> str:
+        return self.yaml()
