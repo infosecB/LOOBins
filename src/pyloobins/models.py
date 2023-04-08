@@ -81,7 +81,7 @@ class LOOBin(BaseModel):
         description="A list of useful external references for the LOOBin",
     )
 
-    def yaml(self, exclude_null: bool = True) -> str:
+    def to_yaml(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a YAML string"""
         return yaml.dump(
             self.dict(exclude_none=exclude_null),
@@ -89,7 +89,7 @@ class LOOBin(BaseModel):
             sort_keys=False,
         )
 
-    def md(self, exclude_null: bool = True) -> str:
+    def to_md(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a Markdown string"""
         env = Environment(
             loader=PackageLoader("pyloobins", "templates"),
@@ -100,7 +100,7 @@ class LOOBin(BaseModel):
         return template
 
     def __str__(self) -> str:
-        return self.yaml()
+        return self.to_yaml()
 
     def __repr__(self) -> str:
-        return self.yaml()
+        return self.to_yaml()
