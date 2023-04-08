@@ -1,7 +1,7 @@
 """Utility functions that support the CLI and library"""
 from datetime import date
 import yaml
-from .models import LOOBin, Functions, ShellCls, FullPath, Detection, ExternalReference
+from .models import *
 
 
 def validate_loobin(yml_path: str) -> bool:
@@ -23,22 +23,22 @@ def validate_loobin(yml_path: str) -> bool:
 def make_template() -> LOOBin:
     """Creates a template LOOBin object"""
     loobin_template = LOOBin(
-        Name="Template",
-        Description="A short description of the binary goes here.",
-        Author="Enter your name or alias here.",
-        Created=date.today(),
-        Functions=Functions(Shell=ShellCls(Code="Code here.")),
-        Full_Path=[FullPath(Path="/enter/binary/path/here")],
-        Detections=[
+        name="Template",
+        short_description="A short description of the binary goes here.",
+        full_description="A full length description of the binary goes here.",
+        author="Enter your name or alias here.",
+        created=date.today(),
+        example_use_cases=[ExampleUseCase(name="An Example Use Case", description="A description of the use case goes here.", code="A code snippet goes here.", tactics=["Discovery"],tags=["example_tag"])],
+        paths=["/enter/binary/path/here"],
+        detections=[
             Detection(
-                Source="A detection source (e.g. Sigma)",
-                URL="https://urltodetection.here",
+                name="A detection source (e.g. Sigma)",
+                url="https://urltodetection.here",
             )
         ],
-        External_References=[
-            ExternalReference(
-                Name="Name of external reference.",
-                URL="https://urlofexternalreference.here",
+        external_references=[ExternalReference(
+                name="Name of external reference.",
+                url="https://urlofexternalreference.here",
             )
         ],
     )
