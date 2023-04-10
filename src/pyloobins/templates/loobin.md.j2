@@ -1,0 +1,49 @@
+---
+title: {{ loobin.name }}
+description: {{ loobin.short_description }}
+date: {{ loobin.created }}
+draft: false
+menu:
+  showcase:
+    parent: "browse"
+weight: 100
+toc: false
+pinned: false
+featured: false
+tactics: {{ tactics }}
+tags: {{ tags }}
+---
+
+# {{ loobin.name }}
+{{ loobin.full_description }}
+| Created | Tactics | Tags |
+|---|---|---|
+| {{ loobin.created }} | {% for t in tags %}<span class="badge text-bg-secondary">{{ t }}</span>{% endfor %} | <span class="badge text-bg-danger">TACTIC8</span>  |
+
+## Paths
+{% for path in loobin.paths %}
+- {{ path }}
+{% endfor %}
+
+## Example Usage
+{% for example in loobin.example_use_cases %}
+### {{ example.name }}
+{{ example.description }}
+
+`{{ example.code }}`
+{% endfor %}
+
+## Detections
+{% for detection in loobin.detections %}
+- [{{ detection.name }}]({{ detection.url }})
+{% endfor %}
+
+# Resources
+{% for resource in loobin.resources %}
+- [{{ resource.name }}]({{ resource.url }})
+{% endfor %}
+
+# Acknowledgements
+{% for acknowledgement in loobin.acknowledgements %}
+- {{ acknowledgement }}
+{% endfor %}

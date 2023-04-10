@@ -1,7 +1,12 @@
 """Utility functions that support the CLI and library"""
 from datetime import date
 import yaml
-from .models import LOOBin, Functions, ShellCls, FullPath, Detection, ExternalReference
+from .models import (
+    LOOBin,
+    ExampleUseCase,
+    Detection,
+    Resource
+)
 
 
 def validate_loobin(yml_path: str) -> bool:
@@ -12,7 +17,7 @@ def validate_loobin(yml_path: str) -> bool:
         except yaml.YAMLError as exc:
             print(exc)
     try:
-        LOOBin(**yml_content) # type: ignore
+        LOOBin(**yml_content)  # type: ignore
         return True
     except Exception as exc:
         # TODO add more specific Exception handling
@@ -23,27 +28,38 @@ def validate_loobin(yml_path: str) -> bool:
 def make_template() -> LOOBin:
     """Creates a template LOOBin object"""
     loobin_template = LOOBin(
-        Name="Template",
-        Description="A short description of the binary goes here.",
-        Author="Enter your name or alias here.",
-        Created=date.today(),
-        Functions=Functions(Shell=ShellCls(Code="Code here.")),
-        Full_Path=[FullPath(Path="/enter/binary/path/here")],
-        Detections=[
+        name="Template",
+        short_description="A short description of the binary goes here.",
+        full_description="A full length description of the binary goes here.",
+        author="Enter your name or alias here.",
+        created=date.today(),
+        example_use_cases=[
+            ExampleUseCase(
+                name="An Example Use Case",
+                description="A description of the use case goes here.",
+                code="A code snippet goes here.",
+                tactics=["Discovery"],
+                tags=["example_tag", "another_tag"],
+            )
+        ],
+        paths=["/enter/binary/path/here"],
+        detections=[
             Detection(
-                Source="A detection source (e.g. Sigma)",
-                URL="https://urltodetection.here",
+                name="A detection source (e.g. Sigma)",
+                url="https://urltodetection.here",
             )
         ],
-        External_References=[
-            ExternalReference(
-                Name="Name of external reference.",
-                URL="https://urlofexternalreference.here",
+        resources=[
+            Resource(
+                name="Name of resources.",
+                url="https://urlofexternalreference.here",
             )
         ],
+        acknowledgements=["Enter any acknowledgements here."]
     )
     return loobin_template
 
-def normalize_file_name(title: str)->str:
+
+def normalize_file_name(title: str) -> str:
     """Accepts a binary title and normalizes it for the file name"""
-    return title.lower().replace(" ","_")
+    return title.lower().replace(" ", "_")

@@ -4,6 +4,7 @@ import os
 import click
 from .util import validate_loobin, make_template, normalize_file_name
 
+
 @click.group()
 def cli():
     """Create, manage, and validate LOOBin objects."""
@@ -25,17 +26,28 @@ def validate(file: str) -> None:
 
 
 @cli.command()
-@click.option("--name", type=str, required=False, help="Enter the name of the binary")
-@click.option("--path", type=str, required=False, help="Enter the path where you would like to create the template YAML file.")
-def create_template(name: str, path: str)->None:
+@click.option(
+    "--name", type=str, required=False, help="Enter the name of the binary"
+)
+@click.option(
+    "--path",
+    type=str,
+    required=False,
+    help="Enter the path where you would like to create the template YAML file.",
+)
+def create_template(name: str, path: str) -> None:
     """Create a new LOOBin template file."""
     template = make_template().yaml()
     file_name = normalize_file_name(name) if name else "template"
     file_path = path if path and os.path.exists(path) else "./"
     if not os.path.exists(path):
-        click.echo(f"The specified path did not exist. "
-                   f"Creating the {file_name}.yml file in the current directory.")
-    with open(file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8") as out_file:
+        click.echo(
+            f"The specified path did not exist. "
+            f"Creating the {file_name}.yml file in the current directory."
+        )
+    with open(
+        file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
+    ) as out_file:
         out_file.write(template)
         out_file.close()
 
