@@ -1,5 +1,5 @@
 """Model that represents a LOOBin and its various components"""
-from typing import List, Optional, Union, Literal
+from typing import List, Optional, Literal
 from datetime import date
 from pydantic import BaseModel, Field
 import yaml
@@ -28,10 +28,10 @@ class Detection(BaseModel):
     """Detection base class"""
 
     name: str
-    url: Union[List[str], str]
+    url: str
 
 
-class ExternalReference(BaseModel):
+class Resource(BaseModel):
     """External reference base class"""
 
     name: str
@@ -43,7 +43,7 @@ class ExampleUseCase(BaseModel):
 
     name: str
     description: str
-    code: str
+    code: Optional[str] = None
     tactics: Optional[List[AttackTactics]] = None
     tags: Optional[List[str]] = None
 
@@ -76,10 +76,22 @@ class LOOBin(BaseModel):
     detections: List[Detection] = Field(
         title="Detections", description="A list of detections for the LOOBin"
     )
-    external_references: Optional[List[ExternalReference]] = Field(
-        title="External References",
-        description="A list of useful external references for the LOOBin",
+    resources: Optional[List[Resource]] = Field(
+        title="Resource",
+        description="A list of useful resources for the LOOBin",
     )
+    acknowledgements: Optional[List[str]] = Field(
+        title="Acknowledgements",
+        description="Acknowledgements for the LOOBin"
+    )
+
+    def combine_tactics(self) -> List[str]:
+        """Returns a list of all tactics across all LOOBin example use cases"""
+        return [t for euc in self.example_use_cases for t in euc.tactics]  # type: ignore
+
+    def combine_tags(self) -> List[str]:
+        """Returns a list of all tags across all LOOBin example use cases"""
+        return [t for euc in self.example_use_cases for t in euc.tags]  # type: ignore
 
     def to_yaml(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a YAML string"""
@@ -89,14 +101,18 @@ class LOOBin(BaseModel):
             sort_keys=False,
         )
 
-    def to_md(self, exclude_null: bool = True) -> str:
+    def to_md(self) -> str:
         """Convert a LOOBin object to a Markdown string"""
         env = Environment(
             loader=PackageLoader("pyloobins", "templates"),
             autoescape=select_autoescape(),
         )
 
-        template = env.get_template("loobin.md.j2").render(loobin=self)
+        template = env.get_template("loobin.md.j2").render(
+            loobin=self,
+            tactics=self.combine_tactics(),
+            tags=self.combine_tags(),
+        )
         return template
 
     def __str__(self) -> str:
