@@ -27,7 +27,10 @@ def validate(file: str) -> None:
 
 @cli.command()
 @click.option(
-    "--name", type=str, required=False, help="Enter the name of the binary"
+    "--name", 
+    type=str,
+    required=False,
+    help="Enter the name of the binary"
 )
 @click.option(
     "--path",
@@ -37,10 +40,10 @@ def validate(file: str) -> None:
 )
 def create_template(name: str, path: str) -> None:
     """Create a new LOOBin template file."""
-    template = make_template().yaml()
+    template = make_template().to_yaml()
     file_name = normalize_file_name(name) if name else "template"
     file_path = path if path and os.path.exists(path) else "./"
-    if not os.path.exists(path):
+    if not os.path.exists(file_path):
         click.echo(
             f"The specified path did not exist. "
             f"Creating the {file_name}.yml file in the current directory."
