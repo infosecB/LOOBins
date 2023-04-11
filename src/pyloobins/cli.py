@@ -1,8 +1,10 @@
 """Model for CLI functions"""
-import sys
 import os
+import sys
+
 import click
-from .util import validate_loobin, make_template, normalize_file_name
+
+from .util import make_template, normalize_file_name, validate_loobin
 
 
 @click.group()
@@ -26,12 +28,7 @@ def validate(file: str) -> None:
 
 
 @cli.command()
-@click.option(
-    "--name", 
-    type=str,
-    required=False,
-    help="Enter the name of the binary"
-)
+@click.option("--name", type=str, required=False, help="Enter the name of the binary")
 @click.option(
     "--path",
     type=str,

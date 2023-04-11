@@ -1,12 +1,9 @@
 """Utility functions that support the CLI and library"""
 from datetime import date
+
 import yaml
-from .models import (
-    LOOBin,
-    ExampleUseCase,
-    Detection,
-    Resource
-)
+
+from .models import Detection, ExampleUseCase, LOOBin, Resource
 
 
 def validate_loobin(yml_path: str) -> bool:
@@ -55,7 +52,7 @@ def make_template() -> LOOBin:
                 url="https://urlofexternalreference.here",
             )
         ],
-        acknowledgements=["Enter any acknowledgements here."]
+        acknowledgements=["Enter any acknowledgements here."],
     )
     return loobin_template
 
