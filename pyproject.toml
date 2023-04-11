@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "PyLOOBins"
-version = "0.1.0"
+version = "0.1.1"
 description = "Python package for managing the LOOBins model and schema."
 authors = ["infosecB <brendan@infosecb.com>"]
 readme = "README.md"
 packages = [{include = "pyloobins", from = "src"}]
-include = ["LOOBins"]
+include = ["LOOBins/*"]
 homepage = "https://loobins.io/"
 repository = "https://github.com/infosecB/LOOBins"
 keywords = ["cybersecurity", "cli", "lol"]
