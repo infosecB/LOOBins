@@ -6,6 +6,9 @@ authors = ["infosecB <brendan@infosecb.com>"]
 readme = "README.md"
 packages = [{include = "pyloobins", from = "src"}]
 include = ["LOOBins"]
+homepage = "https://loobins.io/"
+repository = "https://github.com/infosecB/LOOBins"
+keywords = ["cybersecurity", "cli", "lol"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
