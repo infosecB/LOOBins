@@ -1,9 +1,29 @@
 """Utility functions that support the CLI and library"""
+import pathlib
+import site
 from datetime import date
 
 import yaml
 
 from .models import Detection, ExampleUseCase, LOOBin, Resource
+
+
+def get_loobins() -> list:
+    """Returns a list of LOOBin objects"""
+    loobins = []
+    yml_files = (pathlib.Path(site.getsitepackages()[0]) / "LOOBins").glob("**/*.yml")
+    for yml_file in yml_files:
+        with open(yml_file, "r", encoding="utf-8") as stream:
+            try:
+                yml_content = yaml.safe_load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+        try:
+            loobins.append(LOOBin(**yml_content))  # type: ignore
+        except Exception as exc:
+            # TODO add more specific Exception handling
+            print(exc)
+    return loobins
 
 
 def validate_loobin(yml_path: str) -> bool:
