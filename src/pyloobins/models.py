@@ -1,10 +1,10 @@
 """Model that represents a LOOBin and its various components"""
-from typing import List, Optional, Literal
 from datetime import date
-from pydantic import BaseModel, Field
+from typing import List, Literal, Optional
+
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
-
+from pydantic import BaseModel, Field
 
 AttackTactics = Literal[
     "Reconnaissance",
@@ -63,16 +63,12 @@ class LOOBin(BaseModel):
         description="A full description of the LOOBin."
         "This will display on the LOOBin's single page.",
     )
-    created: date = Field(
-        title="Created", description="Date the LOOBin was created"
-    )
+    created: date = Field(title="Created", description="Date the LOOBin was created")
     example_use_cases: List[ExampleUseCase] = Field(
         title="Example Use Cases",
         description="A list of example use cases for the LOOBin",
     )
-    paths: List[str] = Field(
-        title="Paths", description="A list of paths to the LOOBin"
-    )
+    paths: List[str] = Field(title="Paths", description="A list of paths to the LOOBin")
     detections: List[Detection] = Field(
         title="Detections", description="A list of detections for the LOOBin"
     )
@@ -81,8 +77,7 @@ class LOOBin(BaseModel):
         description="A list of useful resources for the LOOBin",
     )
     acknowledgements: Optional[List[str]] = Field(
-        title="Acknowledgements",
-        description="Acknowledgements for the LOOBin"
+        title="Acknowledgements", description="Acknowledgements for the LOOBin"
     )
 
     def combine_tactics(self) -> List[str]:
