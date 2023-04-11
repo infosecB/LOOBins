@@ -1,0 +1,23 @@
+name: pbpaste
+author: Brendan Chamberlain (@infosecB)
+short_description: Paste the contents of clipboard to the terminal.
+full_description: A full length description of the binary goes here.
+created: 2023-04-10
+example_use_cases:
+- name: Use pbpaste to collect sensitive clipboard data
+  description: Run a pbpaste bash loop to collect clipboard contents every x minutes and write contents to a file (or another location).
+  code: while true; do echo $(pbpaste) >> loot.txt; sleep 10; done
+  tactics:
+  - Credential Access
+  - Collection
+  tags:
+  - bash
+  - oneliner
+paths:
+- /usr/bin/pbpaste
+detections:
+- name: No detections at time of publishing
+  url: https://loobins.io/binaries/pbpaste
+resources:
+- name: 'Hacking macOS: How to Dump 1Password, KeePassX & LastPass Passwords in Plaintext'
+  url: https://medium.com/@NullByteWht/hacking-macos-how-to-dump-1password-keepassx-lastpass-passwords-in-plaintext-723c5b1c311b
