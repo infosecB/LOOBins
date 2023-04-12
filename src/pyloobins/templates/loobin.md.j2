@@ -18,16 +18,16 @@ tags: {{ tags }}
 {{ loobin.full_description }}
 | Created | Tactics | Tags |
 |---|---|---|
-| {{ loobin.created }} | {% for t in tags %}<span class="badge text-bg-secondary">{{ t }}</span>{% endfor %} | <span class="badge text-bg-danger">TACTIC8</span>  |
+| {{ loobin.created }} | {% for t in tactics %}<span class="badge text-bg-danger">{{ t }}</span> {% endfor %}  | {% for t in tags %}<span class="badge text-bg-secondary">{{ t }}</span> {% endfor %} | 
 
 ## Paths
 {% for path in loobin.paths %}
-- {{ path }}
+- `{{ path }}`
 {% endfor %}
 
-## Example Usage
+## Use Cases
 {% for example in loobin.example_use_cases %}
-### {{ example.name }}
+#### {{ example.name }}
 {{ example.description }}
 
 `{{ example.code }}`
@@ -38,12 +38,16 @@ tags: {{ tags }}
 - [{{ detection.name }}]({{ detection.url }})
 {% endfor %}
 
-# Resources
+{% if loobin.resources %}
+## Resources
 {% for resource in loobin.resources %}
 - [{{ resource.name }}]({{ resource.url }})
 {% endfor %}
+{% endif %}
 
-# Acknowledgements
+{% if loobin.acknowledgements %}
+## Acknowledgements
 {% for acknowledgement in loobin.acknowledgements %}
 - {{ acknowledgement }}
 {% endfor %}
+{% endif %}
