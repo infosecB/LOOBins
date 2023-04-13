@@ -7,3 +7,8 @@ body:
     attributes:
       value: |
         Thanks for taking the time to create this issue!
+  - type: textarea
+    id: Description
+    attributes:
+      label: LOOBin description
+      description: Please provide a brief description of the binary.
