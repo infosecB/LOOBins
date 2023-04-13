@@ -1,0 +1,9 @@
+name: New LOOBin
+description: Submit and issue to track the creation of a new LOOBin
+title: "Add LOOBin for "
+labels: ["loobin"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to create this issue!
