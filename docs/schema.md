@@ -440,18 +440,9 @@
   </tbody>
 </table>
 
-
-
-
-
-
-
-
-
-
 <hr />
 
-## Schema
+## JSON Schema
 ```
 {
     "title": "LOOBin",
