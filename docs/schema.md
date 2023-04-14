@@ -443,7 +443,7 @@
 <hr />
 
 ## JSON Schema
-```
+```json
 {
     "title": "LOOBin",
     "description": "LOOBin base class",
@@ -620,4 +620,40 @@
         }
     }
 }
+```
+
+## YAML Example 
+
+```yaml
+name: Template
+author: Enter your name or alias here.
+short_description: A short description of the binary goes here.
+full_description: A full length description of the binary goes here.
+created: 2023-04-14
+example_use_cases:
+- name: An Example Use Case
+  description: A description of the use case goes here.
+  code: A code snippet goes here.
+  tactics:
+  - Discovery
+  tags:
+  - example_tag
+  - another_tag
+- name: Another Example Use Case
+  description: A description of the use case goes here.
+  code: A code snippet goes here.
+  tactics:
+  - Collection
+  tags:
+  - another_tag
+paths:
+- /enter/binary/path/here
+detections:
+- name: A detection source (e.g. Sigma)
+  url: https://urltodetection.here
+resources:
+- name: Name of resources.
+  url: https://urlofexternalreference.here
+acknowledgements:
+- Enter any acknowledgements here.
 ```
