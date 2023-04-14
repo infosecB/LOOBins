@@ -21,7 +21,7 @@ Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.or
 
     `git checkout -b your-branch-name`
 
-6. **Create Your YAML File**: Create a new YAML file in the LOOBins directory located in the root folder the project. Ensure that the YAML file adheres to the LOOBin schema. You can use the "pyloobins" Python commandline utility to generate a template file:
+6. **Create Your YAML File**: Create a new YAML file in the LOOBins directory located in the root folder the project. Ensure that the YAML file adheres to the [LOOBin schema](https://github.com/infosecB/LOOBins/blob/add-schema-doc/docs/schema.md). You can use the "pyloobins" Python command-line utility to generate a template file:
 
     `pip install pyloobins`
     `pyloobins create-template --name "Test"`
