@@ -7,7 +7,7 @@ Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.or
 
 ## Add a new LOOBin
 
-1. **Check Existing Issues**: To prevent duplicative work efforts, please first check the existing [LOOBins Issues](https://github.com/infosecB/LOOBins/issues) to ensure that the binary you would like to add isn't already in development. Issues tagged with "Help Wanted" are available for assignment. 
+1. **Check Existing Issues**: To prevent duplicative work efforts, please first check the existing [Issues](https://github.com/infosecB/LOOBins/issues) to ensure that the binary you would like to add isn't already in development. Issues tagged with "Help Wanted" are available for assignment. 
 
 2. **Create an Issue**: Once you have validated that an issue does not exist for the binary you would like to author, create a new issue using the "New LOOBin" template. If you are interesting in claiming a LOOBin that is tagged as "Help Wanted", add a comment. A maintainer will review the issue and assign it to you.
 
@@ -21,7 +21,7 @@ Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.or
 
     `git checkout -b your-branch-name`
 
-6. **Create Your YAML File**: Create a new YAML file in the LOOBins directory located in the root folder the project. Ensure that the YAML file adheres to the [LOOBin schema](https://github.com/infosecB/LOOBins/blob/add-schema-doc/docs/schema.md). You can use the "pyloobins" Python command-line utility to generate a template file:
+6. **Create Your YAML File**: Create a new YAML file in the LOOBins directory located in the root folder the project. Ensure that the YAML file adheres to the [LOOBin schema](https://github.com/infosecB/LOOBins/blob/main/docs/schema.md). You can use the "pyloobins" Python command-line utility to generate a template file:
 
     `pip install pyloobins`
     `pyloobins create-template --name "Test"`
