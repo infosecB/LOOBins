@@ -21,7 +21,11 @@ Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.or
 
     `git checkout -b your-branch-name`
 
-6. **Create Your YAML File**: Create a new YAML file in the LOOBins directory located in the root folder the project. Ensure that the YAML file adheres to the [LOOBin schema](https://github.com/infosecB/LOOBins/blob/main/docs/schema.md). You can use the "pyloobins" Python command-line utility to generate a template file:
+6. **Create Your YAML File**: Create a new YAML file in the LOOBins directory located in the root folder the project. Ensure that the YAML file adheres to the [LOOBin schema](https://github.com/infosecB/LOOBins/blob/main/docs/schema.md). 
+
+    The LOOBins json schema is included in [SchemaStore](https://github.com/SchemaStore/schemastore/pull/2893). VS Code will now perform YAML schema validation and linting for LOOBins out of the box. Make sure to install the [YAML extension](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml). Schema validation will automatically apply to the YAML files within the /LOOBins subfolder.
+
+    You can use the "pyloobins" Python command-line utility to generate a template file:
 
     `pip install pyloobins`
     `pyloobins create-template --name "Test"`
@@ -29,8 +33,6 @@ Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.or
     You can validate a new schema by running:
 
     `pyloobins validate --file "test.yml"`
-
-    **4/13/2023:** We are waiting for SchemaStore to [merge a PR](https://github.com/SchemaStore/schemastore/pull/2893) to add a schema for  LOOBins. This will allow for use of YAML file schema validation in editors like VS Code.
 
 7. **Commit Your Changes**: Add the new YAML file to the staging area and commit the changes with a descriptive commit message:
 
