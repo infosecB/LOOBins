@@ -23,8 +23,10 @@ def validate(file: str) -> None:
     """Validate a LOOBin object."""
     if validate_loobin(yml_path=file):
         print(f"LOOBin at {file} is valid.")
+        sys.exit(0)
     else:
         print(f"LOOBin at {file} is NOT valid.")
+        sys.exit(1)
 
 
 @cli.command()
