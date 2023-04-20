@@ -6,7 +6,7 @@ created: 2023-04-20
 example_use_cases:
 - name: Use ioreg to check whether the remote macOS screen is locked.
   description: A pbpaste bash loop can continously collect clipboard contents every x minutes and write contents to a file (or another location). This may allow an attacker to gather user credentials or collect other sensitive information.
-  code: while true; do echo $(ioreg -n Root -d1 -a | grep CGSSession); done
+  code: ioreg -n Root -d1 -a | grep CGSSession
   tactics:
   - Collection
   tags:
