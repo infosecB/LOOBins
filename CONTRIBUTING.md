@@ -1,13 +1,13 @@
 # How to Contribute 
 
-Thank you for your interest in contributing to the LOOBins project! We appreciate and welcome contributions that help bolster the project. You can contribute by adding or updating YAML files that represent LOOBins. 
+Thank you for your interest in contributing to the LOOBins project! We appreciate and welcome contributions that help bolster the project. You can contribute by adding or updating YAML files that represent LOOBins. **Important Note:** LOOBins does not intend to cover Unix-based binaries that are detailed in [GTFOBins](https://gtfobins.github.io) unless the binary has a very specific use case targeting macOS.
 
 Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.org/project/pyloobins/) contained in the src folder of the repository.
 
 
 ## Add a new LOOBin
 
-1. **Check Existing Issues**: To prevent duplicative work efforts, please first check the existing [Issues](https://github.com/infosecB/LOOBins/issues) to ensure that the binary you would like to add isn't already in development. Issues tagged with "Help Wanted" are available for assignment. 
+1. **Check Existing Issues**: To prevent duplicative work efforts, please first check the active and closed [Issues](https://github.com/infosecB/LOOBins/issues) to ensure that the binary you would like to add isn't already in development. Issues tagged with "Help Wanted" are available for assignment. 
 
 2. **Create an Issue**: Once you have validated that an issue does not exist for the binary you would like to author, create a new issue using the "New LOOBin" template. If you are interesting in claiming a LOOBin that is tagged as "Help Wanted", add a comment. A maintainer will review the issue and assign it to you.
 
