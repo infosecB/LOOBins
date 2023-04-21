@@ -8,7 +8,7 @@ example_use_cases:
   description: sysctl can be used to gather interesting macOS host data, including hardware information, memory size, logical cpu information, etc.
   code: sysctl -n hw.model
   tactics:
-  - Collection
+  - Reconnaissance
   tags:
   - bash
   - oneliner
