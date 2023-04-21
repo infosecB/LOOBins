@@ -1,0 +1,24 @@
+name: sysctl
+author: Cedric Owens (@cedowens)
+short_description: Get macOS hardware model information.
+full_description: Gets the macOS hardware information, which can be used to determine whether the target macOS host is running on a physical or virtual machine.
+created: 2023-04-20
+example_use_cases:
+- name: Use sysctl to gather macOS hardware info.
+  description: sysctl can be used to gather interesting macOS host data, including hardware information, memory size, logical cpu information, etc.
+  code: sysctl -n hw.model
+  tactics:
+  - Reconnaissance
+  tags:
+  - bash
+  - oneliner
+  - sysctl
+paths:
+- /usr/sbin/sysctl
+detections:
+- name: No detections at time of publishing
+  url: https://loobins.io/binaries/sysctl
+resources:
+- name: 'Evasions: macOS'
+  url: https://evasions.checkpoint.com/techniques/macos.html
+
