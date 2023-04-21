@@ -1,0 +1,24 @@
+name: osascript
+author: Cedric Owens (@cedowens)
+short_description: Executes AppleScripts and other OSA language scripts and commands.
+full_description: osascript is a command-line utility included in macOS that allows users to run AppleScript and Open Scripting Architecture (OSA) scripts or commands. AppleScript is a scripting language that is designed for power users to automate various tasks, application actions, and to interact with the operating system.
+created: 2023-04-19
+example_use_cases:
+  - name: Use osascript to gather sensitive clipboard data  
+    description: A bash loop can gather clipboard contents over a defined time period. The following command calls /usr/bin/osascript -e 'return (the clipboard)' indefinitely every 10 seconds and writes clipboard content to a text file.  
+    code: while true; do echo $(osascript -e 'return (the clipboard)') >> clipdata.txt; sleep 10; done  
+tactics:    
+  - Collection    
+  - Credential Access  
+tags:  
+  - clipboard  
+  - bash  
+  - oneliner
+paths:
+  - /usr/bin/osascript
+detections:
+  - name: Command Line Argument Detection (args contain osascript AND -e AND clipboard)  
+    url: n/a
+resources:
+  - name: 'Using macOS Internals for Post Exploitation'  
+    url: https://medium.com/red-teaming-with-a-blue-team-mentality/using-macos-internals-for-post-exploitation-b5faaa11e121
