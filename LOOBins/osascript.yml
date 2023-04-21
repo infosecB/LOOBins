@@ -7,13 +7,13 @@ example_use_cases:
   - name: Use osascript to gather sensitive clipboard data  
     description: A bash loop can gather clipboard contents over a defined time period. The following command calls /usr/bin/osascript -e 'return (the clipboard)' indefinitely every 10 seconds and writes clipboard content to a text file.  
     code: while true; do echo $(osascript -e 'return (the clipboard)') >> clipdata.txt; sleep 10; done  
-tactics:    
-  - Collection    
-  - Credential Access  
-tags:  
-  - clipboard  
-  - bash  
-  - oneliner
+    tactics:    
+      - Collection    
+      - Credential Access  
+    tags:  
+      - clipboard  
+      - bash  
+      - oneliner
 paths:
   - /usr/bin/osascript
 detections:
