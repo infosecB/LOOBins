@@ -8,10 +8,15 @@ import yaml
 from .models import Detection, ExampleUseCase, LOOBin, Resource
 
 
-def get_loobins() -> list:
+def get_loobins(path: str = "") -> list:
     """Returns a list of LOOBin objects"""
     loobins = []
-    yml_files = (pathlib.Path(site.getsitepackages()[0]) / "LOOBins").glob("**/*.yml")
+    if path:
+        yml_files = pathlib.Path(path).glob("**/*.yml")
+    else:
+        yml_files = (pathlib.Path(site.getsitepackages()[0]) / "LOOBins").glob(
+            "**/*.yml"
+        )
     for yml_file in yml_files:
         with open(yml_file, "r", encoding="utf-8") as stream:
             try:
