@@ -1,0 +1,121 @@
+name: networksetup
+author: Jason Trost (@jason_trost)
+short_description: configuration tool for network settings in System Preferences.
+full_description: extensive tool for reading and setting various network configuration details useful for Discovery and Command and Control.
+created: 2023-04-22
+example_use_cases:
+  - name: network device enumeration
+    description: Use networksetup to display services with corresponding port and device in order they are tried for connecting to a network.
+    code: networksetup -listnetworkserviceorder
+    tactics:
+      - Discovery
+    tags:
+      - network
+      - configuration
+  - name: Detect connected network hardware
+    description: Use networksetup to detect new network hardware and create a default network service on the hardware.
+    code: networksetup -detectnewhardware
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - configuration
+  - name: network device enumeration
+    description: Use networksetup to list all network interfaces, providing name, device name, MAC address.
+    code: networksetup -listallhardwareports
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - configuration
+  - name: network device enumeration
+    description: Use networksetup to list all network interface names.
+    code: networksetup -listallnetworkservices
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - configuration
+  - name: DNS server enumeration
+    description: Use networksetup to get configured DNS servers for a specific interface.
+    code: networksetup -getdnsservers Wi-Fi
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - configuration
+    - dns
+  - name: Enumerate configured web proxy URL for an interface
+    description:
+    code: networksetup -getautoproxyurl "Thunderbolt Ethernet"
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - configuration
+    - proxy
+  - name: Enumerate configured web proxy for an interface
+    description:
+    code: networksetup -getwebproxy "Wi-Fi"
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - configuration
+    - proxy
+  - name: Set the https web proxy for an interface
+    description: Use networksetup to set the https web proxy for an interface.
+    code: networksetup -setsecurewebproxy "Wi-Fi" 46.226.108.171
+    tactics:
+    - Command and Control
+    tags:
+    - network
+    - configuration
+    - proxy
+  - name: Set the http web proxy for an interface
+    description: Use networksetup to set the http web proxy for an interface.
+    code: networksetup -setwebproxy "Wi-Fi" 46.226.108.171 
+    tactics:
+    - Command and Control
+    tags:
+    - network
+    - configuration
+    - proxy
+  - name: Set auto proxy URL for an interface
+    description: Use networksetup to set the proxy URL for an interface.
+    code: networksetup -setautoproxyurl "Wi-Fi" $autoProxyURL
+    tactics:
+    - Command and Control
+    tags:
+    - network
+    - configuration
+    - proxy
+  - name: Enable auto proxy state
+    description: Use networksetup to enable the proxy auto-config
+    code: networksetup -setautoproxystate "Wi-Fi" on
+    tactics:
+    - Command and Control
+    tags:
+    - network
+    - configuration
+    - proxy
+paths:
+  - /usr/sbin/networksetup
+detections:
+  - name: No detections at time of publishing
+    url: n/a
+resources:
+  - name: 'Threat Hunting the macOS edition Megan Carney (Report)'
+    url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf
+  - name: 'GrrCon 2018: Threat Hunting the macOS edition Megan Carney'
+    url: https://www.youtube.com/watch?v=_K4gnSuDkRM&feature=youtu.be
+  - name: 'Mac Malware of 2017 - a comprehensive analysis of the new mac malware of 17'
+    url: https://objective-see.org/blog/blog_0x25.html
+  - name: 'Ay MaMi - Analyzing a New macOS DNS Hijacker: OSX/MaMi'
+    url: https://objective-see.org/blog/blog_0x26.html
+  - name: 'Analyzing OSX.DazzleSpy - A fully-featured cyber-espionage macOS implant'
+    url: https://objective-see.org/blog/blog_0x6D.html
+  - name: 'The Mac Malware of 2018 - a comprehensive analysis of the new mac malware of - 18'
+    url: https://objective-see.org/blog/blog_0x3C.html
+  - name: 'From The DPRK With Love - analyzing a recent north korean macOS backdoor'
+    url: https://objective-see.org/blog/blog_0x6E.html
