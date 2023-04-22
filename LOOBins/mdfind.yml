@@ -1,0 +1,34 @@
+name: mdfind
+author: Chris Campbell (@texasbe2trill)
+short_description: CommandLine alternative to Spotlight in MacOS
+full_description: Uses the CommandLine/Terminal to locate files on MacOS by searching a pre-built database.
+created: 2023-04-22
+example_use_cases:
+  - name: Use mdfind to provide live updates to the number of files matching the query
+    description: A bash or zsh oneliner can cause mdfind to provide an attacker with live updates to the number of files on a system.
+    code: mdfind -live passw
+    tactics:
+      - Reconnaissance
+      - Discovery
+    tags:
+      - bash
+      - zsh
+      - oneliner
+  - name: Use mdfind to search for AWS Keys
+    description: Allows an attacker to query the filesystem via the CommandLine/Terminal to search for AWS keys.
+    code: mdfind 'kMDItemTextContext == AKIA || kMDItemDisplayName = *AKIA* -onlyin ~'
+    tactics:
+      - Reconnaissance
+      - Discovery
+    tags:
+      - bash
+      - zsh
+      - oneliner
+paths:
+  - /usr/bin/mdfind
+detections:
+  - name: No detections at time of publishing
+    url: n/a
+resources:
+  - name: '"Farming The Apple Orchards: Living off the Land Techniques" - Chris Ross & Cedric Owens'
+    url: https://youtu.be/Snwh4mMe-Cg?t=45
