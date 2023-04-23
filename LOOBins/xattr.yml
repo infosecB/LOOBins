@@ -1,0 +1,36 @@
+name: xattr
+author: Jason Trost (@jason_trost)
+short_description: display and manipulate extended attributes
+full_description: The xattr command can be used to display, modify or remove the extended attributes of one or more files, including directories and symbolic links.  Extended attributes are arbitrary metadata stored with a file, but separate from the filesystem attributes (such as modification time or file size).  The metadata is often a null-terminated UTF-8 string, but can also be arbitrary binary data.  xattr can be used to bypass Gatekeeper.
+created: 2023-04-20
+example_use_cases:
+- name: Bypass Gatekeeper via xattr
+  description: Use xattr to remove quaratine extended attribute from a file.
+  code: xattr -d com.apple.quarantine FILE
+  tactics:
+  - Execution
+  - Privilege Escalation
+  - Defense Evasion
+  tags:
+  - xattr
+  - quarantine
+- name: Bypass Gatekeeper via xattr
+  description: Use xattr to remove quaratine extended attribute from multiple files or directories.
+  code: xattr -d -r com.apple.quarantine *
+  tactics:
+  - Execution
+  - Privilege Escalation
+  - Defense Evasion
+  tags:
+  - xattr
+  - quarantine
+paths:
+- /usr/bin/xattr
+detections:
+- name: Gatekeeper Bypass via Xattr
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_xattr_gatekeeper_bypass.yml
+resources:
+- name: 'Threat Hunting the macOS edition Megan Carney (Report)'
+  url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf
+- name: 'GrrCon 2018: Threat Hunting the macOS edition Megan Carney'
+  url: https://www.youtube.com/watch?v=_K4gnSuDkRM&feature=youtu.be
