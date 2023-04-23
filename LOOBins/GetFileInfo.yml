@@ -1,0 +1,24 @@
+name: GetFileInfo
+author: Chris Campbell (@texasbe2trill)
+short_description: A tool to get attributes of files and directories.
+full_description: Uses the CommandLine/Terminal to return type, creator, attributes, created, and modified file information of a file or directory.
+created: 2023-04-23
+example_use_cases:
+  - name: Iterate through a directory to GetFileInfo
+    description: A bash or zsh oneliner can provide an attacker with information about specific files of interest.
+    code: for FILE in ~/Downloads/*; do echo $(GetFileInfo $FILE) >> fileinfo.txt; sleep 2; done
+    tactics:
+      - Reconnaissance
+      - Discovery
+    tags:
+      - bash
+      - zsh
+      - oneliner
+paths:
+  - /usr/bin/GetFileInfo
+detections:
+  - name: No detections at time of publishing
+    url: n/a
+resources:
+  - name: "macOS/binaries/GetFileInfo"
+    url: https://macosbin.com/bin/getfileinfo
