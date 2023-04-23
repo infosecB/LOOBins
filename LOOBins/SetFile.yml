@@ -1,0 +1,24 @@
+name: SetFile
+author: Chris Campbell (@texasbe2trill)
+short_description: A tool to set attributes of files and directories.
+full_description: Uses the CommandLine/Terminal to set file and or directory attributes. It can set attributes, creator, creation date, modification date, and file type for multiple files at a time.
+created: 2023-04-23
+example_use_cases:
+  - name: Set a file or directory attribute to invisible.
+    description: A bash or zsh oneliner can allow an attacker to set the file attribute to invisible. This action can establish persistence and evade detection for malicious files on the system.
+    code: for FILE in ~/*; do echo $(SetFile -a V $FILE && echo $(GetFileInfo $FILE)) >> /tmp/fileinfo.txt; sleep 2; done
+    tactics:
+      - Persistence
+      - Defense Evasion
+    tags:
+      - bash
+      - zsh
+      - oneliner
+paths:
+  - /usr/bin/SetFile
+detections:
+  - name: No detections at time of publishing
+    url: n/a
+resources:
+  - name: "The Invisible Bit"
+    url: https://daringfireball.net/2008/04/the_invisible_bit
