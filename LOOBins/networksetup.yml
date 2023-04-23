@@ -46,7 +46,7 @@ example_use_cases:
     - configuration
     - dns
   - name: Enumerate configured web proxy URL for an interface
-    description:
+    description: Displays web proxy auto-configuration information for the specified interface.
     code: networksetup -getautoproxyurl "Thunderbolt Ethernet"
     tactics:
     - Discovery
@@ -55,7 +55,7 @@ example_use_cases:
     - configuration
     - proxy
   - name: Enumerate configured web proxy for an interface
-    description:
+    description: Displays standard web proxy information for the specified interface.
     code: networksetup -getwebproxy "Wi-Fi"
     tactics:
     - Discovery
