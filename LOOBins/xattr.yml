@@ -31,6 +31,6 @@ detections:
   url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_xattr_gatekeeper_bypass.yml
 resources:
 - name: 'Threat Hunting the macOS edition Megan Carney (Report)'
-    url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf
+  url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf
 - name: 'GrrCon 2018: Threat Hunting the macOS edition Megan Carney'
   url: https://www.youtube.com/watch?v=_K4gnSuDkRM&feature=youtu.be
