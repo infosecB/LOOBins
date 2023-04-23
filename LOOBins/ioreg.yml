@@ -1,14 +1,14 @@
 name: ioreg
 author: Cedric Owens (@cedowens)
-short_description: Use ioreg to remotely check whether the target macOS host's screen is locked.
+short_description: Displays a hierarchial view of the I/O Kit registry.
 full_description: The I/O Kit registry (ioreg) is a useful binary that can be used to gather data such as detecting if a VM is used, getting USB device vendor names, checking if a screen is locked, etc.
 created: 2023-04-20
 example_use_cases:
 - name: Use ioreg to check whether the remote macOS screen is locked.
-  description: A pbpaste bash loop can continously collect clipboard contents every x minutes and write contents to a file (or another location). This may allow an attacker to gather user credentials or collect other sensitive information.
+  description: The following command will display of list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" us present, the screen is actively locked.
   code: ioreg -n Root -d1 -a | grep CGSSession
   tactics:
-  - Collection
+  - Reconnaissance
   tags:
   - bash
   - oneliner
