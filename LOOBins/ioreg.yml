@@ -1,0 +1,23 @@
+name: ioreg
+author: Cedric Owens (@cedowens)
+short_description: Displays a hierarchial view of the I/O Kit registry.
+full_description: The I/O Kit registry (ioreg) is a useful binary that can be used to gather data such as detecting if a VM is used, getting USB device vendor names, checking if a screen is locked, etc.
+created: 2023-04-20
+example_use_cases:
+- name: Use ioreg to check whether the remote macOS screen is locked.
+  description: The following command will display of list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" us present, the screen is actively locked.
+  code: ioreg -n Root -d1 -a | grep CGSSession
+  tactics:
+  - Reconnaissance
+  tags:
+  - bash
+  - oneliner
+  - lockscreen
+paths:
+- /usr/sbin/ioreg
+detections:
+- name: No detections at time of publishing
+  url: https://loobins.io/binaries/ioreg
+resources:
+- name: 'SwiftBelt-JXA.js situational awareness tool'
+  url: https://github.com/cedowens/SwiftBelt-JXA/blob/main/SwiftBelt-JXA.js#L520
