@@ -1,10 +1,10 @@
 name: osascript
 author: Cedric Owens (@cedowens)
 short_description: Executes AppleScripts and other OSA language scripts and commands.
-full_description: osascript is a command-line utility included in macOS that allows users to run AppleScript and Open Scripting Architecture (OSA) scripts or commands. AppleScript is a scripting language that is designed for power users to automate various tasks, application actions, and to interact with the operating system.
+full_description: The osascript binary is a command-line utility included in macOS that allows users to run AppleScript and Open Scripting Architecture (OSA) scripts or commands. AppleScript is a scripting language that is designed for power users to automate various tasks, application actions, and to interact with the operating system.
 created: 2023-04-19
 example_use_cases:
-  - name: Use osascript to gather sensitive clipboard data  
+  - name: Use the osascript binary to gather sensitive clipboard data  
     description: A bash loop can gather clipboard contents over a defined time period. The following command calls /usr/bin/osascript -e 'return (the clipboard)' indefinitely every 10 seconds and writes clipboard content to a text file.  
     code: while true; do echo $(osascript -e 'return (the clipboard)') >> clipdata.txt; sleep 10; done  
     tactics:    
@@ -14,6 +14,34 @@ example_use_cases:
       - clipboard  
       - bash  
       - oneliner
+      - osascript
+  - name: Use the osascript binary to gather system information
+    description: osascript can be used to gather the operating system version, current username, user ID, computer name, IP address, and other information.
+    code: osascript -e 'return (system info)'
+    tactics:
+      - Collection
+      - Reconnaissance
+    tags:
+      - systeminfo
+      - oneliner
+      - osascript
+  - name: Use the osascript binary to prompt the user for credentials
+    description: osascript can be used to generate a dialogue box and request the user to enter the keychain password.
+    code: osascript -e 'set popup to display dialog "Keychain Access wants to use the login keychain" & return & return & "Please enter the keychain password" & return default answer "" with icon file "System:Library:CoreServices:CoreTypes.bundle:Contents:Resources:FileVaultIcon.icns" with title "Authentication Needed" with hidden answer'
+    tactics:
+      - Credential Access
+    tags:
+      - oneliner
+      - prompt
+      - osascript
+  - name: Use the osascript binary to execute a JXA (JavaScript for Automation) file.
+    description: JXA is often used by red teams (and potentially attackers) as a macOS payload, as JXA is native to macOS and can access various internal macOS APIs (such as Cocoa, Foundation, OSAKit, etc.). The osascript binary can be used to execute JXA payloads by simply running "osascript [file.js]" but some malware or offensive tools may also use "osascript -l JavaScript [file.js]".
+    code: echo "ObjC.import('Cocoa');\nObjC.import('stdlib');\nvar currentApp = Application.currentApplication();\ncurrentApp.includeStandardAdditions = true;\ncurrentApp.doShellScript('open -a Calculator.app');" > calc.js && osascript -l JavaScript calc.js
+    tactics:
+      - Execution
+    tags:
+      - jxa
+      - osascript
 paths:
   - /usr/bin/osascript
 detections:
