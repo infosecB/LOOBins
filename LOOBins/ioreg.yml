@@ -13,11 +13,40 @@ example_use_cases:
   - bash
   - oneliner
   - lockscreen
+- name: Use ioreg to check whether the host is on a phusical machine or a VM
+  description: Check the output of this command (specifically the IOPlatformSerialNumber, board-id, and manufacturer fields) to check whether or not this host is in a virtual machine.
+  code: ioreg -rd1 -c IOPlatformExpertDevice
+  tactics:
+  - Reconnaissance
+  - Collection
+  tags:
+  - oneliner
+  - vmcheck
+- name: Use ioreg to check USB device vendor names
+  description: Grep for "USB Vendor Name" values to view USB vendor names. On virtualized hardware these values may contain the hypervisor name such as "VirtualBox". This is an additional way to check for virtualization.  
+  code: ioreg -rd1 -c IOUSBHostDevice
+  tactics:
+  - Reconnaissance
+  - Collection
+  tags:
+  - oneliner
+  - vmcheck
+- name: Check all ioreg properties for hypervisor names.
+  description: Grep for "virtual box", "oralce", and "vmware" from the output of the ioreg -l command. This is an additional way to check for virtualization.
+  code: ioreg -l
+  tactics:
+  - Reconnaissance
+  - Collection
+  tags:
+  - oneliner
+  - vmcheck
 paths:
 - /usr/sbin/ioreg
 detections:
 - name: No detections at time of publishing
   url: https://loobins.io/binaries/ioreg
 resources:
-- name: 'SwiftBelt-JXA.js situational awareness tool'
-  url: https://github.com/cedowens/SwiftBelt-JXA/blob/main/SwiftBelt-JXA.js#L520
+  - name: 'Evasions: macOS'
+    url: https://evasions.checkpoint.com/techniques/macos.html
+  - name: 'SwiftBelt-JXA Situational Awareness Tool'
+    url: https://github.com/cedowens/SwiftBelt-JXA/blob/main/SwiftBelt-JXA.js#520
