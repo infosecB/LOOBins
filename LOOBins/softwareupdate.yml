@@ -1,0 +1,28 @@
+name: softwareupdate
+author: Jonathan Bar Or (@yo_yo_yo_jbo)
+short_description: Software update utility.
+full_description: a command-line utility for running software updates.
+created: 2023-04-25
+example_use_cases:
+  - name: os and browser version information
+    description: Conclude OS and Safari version by enumerating the available software updates.
+    code: softwareupdate --list
+    tactics:
+      - Discovery
+    tags:
+      - os
+  - name: get os update policy
+    description: Get the OS update policy.
+    code: softwareupdate --schedule
+    tactics:
+      - Discovery
+    tags:
+      - os
+paths:
+  - /usr/sbin/softwareupdate
+detections:
+  - name: No detections at time of publishing
+    url: n/a
+resources:
+  - name: 'softwareupdate Man Page'
+    url: https://ss64.com/osx/softwareupdate.html
