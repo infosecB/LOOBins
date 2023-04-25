@@ -1,0 +1,45 @@
+name: security
+author: Pratik Jeware (@Pratik-987), Brendan Chamberlain (@infosecb)
+short_description: Interact with Keychain, macOS's built-in password manager.
+full_description: security is a command-line utility included in macOS that allows users to interact with the Keychain app. Keychains allow users to manager passwords and credentials for many services and features, including Wi-Fi and website passwords, secure notes, certificates, and Kerberos.
+created: 2023-04-24
+example_use_cases:
+  - name: Dump credentials, keys, certificates, and other senstive information from Keychain
+    description: This command will dump keychain passwords from login.keychain
+    code: sudo security dump-keychain -d login.keychain
+    tactics:
+      - Credential Access
+    tags:
+      - bash
+  - name: Retrieve Chrome's "Chrome Safe Storage" password manager secret
+    description: This command will retrieve the Chrome Safe Storage password manager secret from the keychain.
+    code: security find-generic-password -w -s "Chrome Safe Storage"
+    tactics:
+      - Credential Access
+    tags:
+      - bash
+      - chrome
+  - name: Add an arbitrary trusted certificate to aid a MITM attack
+    description: This command will add a certificate to the keychain.
+    code: security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain bad_cert.crt
+    tactics:
+      - Defense Evasion
+    tags:
+      - bash
+      - certificate 
+paths:
+- /usr/bin/security
+detections:
+  - name: "Sigma: Credentials from Password Stores - Keychain"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_creds_from_keychain.yml
+  - name: "Elastic: Access to Keychain Credentials Directories"
+    url: https://github.com/elastic/detection-rules/blob/main/rules/macos/credential_access_credentials_keychains.toml
+  - name: "Elastic: Credential Access Dumping Keychain Security"
+    url: https://github.com/elastic/detection-rules/blob/main/rules/macos/credential_access_dumping_keychain_security.toml
+  - name: "Elastic: Keychain Password Retrieval via Command Line"
+    url: https://github.com/elastic/detection-rules/blob/main/rules/macos/credential_access_keychain_pwd_retrieval_security_cmd.toml
+resources:
+  - name: Using the OS X Keychain to store and retrieve passwords
+    url: https://www.netmeister.org/blog/keychain-passwords.html
+  - name: SS64 security man page
+    url: https://ss64.com/osx/security.html
