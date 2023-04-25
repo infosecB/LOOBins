@@ -1,0 +1,109 @@
+name: dscl
+author: Jonathan Bar Or (@yo_yo_yo_jbo)
+short_description: Directory Services command-line utility.
+full_description: an extensive tool for communicating with the Directory Services, useful for Discovery.
+created: 2023-04-25
+example_use_cases:
+  - name: local user enumeration
+    description: Enumerate all local users.
+    code: dscl . -list /Users
+    tactics:
+      - Discovery
+    tags:
+      - users
+  - name: active directory user enumeration
+    description: Enumerate all Active Directory users.
+    code: dscl "/Active Directory/TEST/All Domains" -list /Users
+    tactics:
+      - Discovery
+    tags:
+      - network
+      - users
+  - name: local user information gathering
+    description: Gain useful local user information such as when their password was last set, their keyboard layout, their avatar, their home directory, UID and default shell.
+    code: dscl . -read /Users/$USERNAME
+    tactics:
+    - Discovery
+    tags:
+    - users
+    - configuration
+  - name: active directory user information gathering
+    description: Gain useful Active Directory user information such as when their password was last set, their keyboard layout, their avatar, their home directory, UID and default shell.
+    code: dscl "/Active Directory/TEST/All Domains" -read /Users/$USERNAME
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - users
+    - configuration
+  - name: local group enumeration
+    description: Enumerate all local groups.
+    code: dscl . -list /Groups
+    tactics:
+    - Discovery
+    tags:
+    - groups
+  - name: active directory group enumeration
+    description: Enumerate all Active Directory groups.
+    code: dscl "/Active Directory/TEST/All Domains" -list /Groups
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - groups
+  - name: local group information gathering
+    description: Gain useful local group information such as which users belong to that group, SMB SIDs and group ID. Especially useful for the "admin" group.
+    code: dscl . -read /Groups/$GROUPNAME
+    tactics:
+    - Discovery
+    tags:
+    - groups
+    - configuration
+  - name: active directory group information gathering
+    description: Gain useful Active Directory group information such as which users belong to that group, SMB SIDs and group ID. Especially useful for the "admin" group.
+    code: dscl "/Active Directory/TEST/All Domains" -read /Groups/$GROUPNAME
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - groups
+    - configuration
+  - name: computer enumration
+    description: Enumerate all computers in an Active Directory.
+    code: dscl  "/Active Directory/TEST/All Domains" -list /Computers
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - shares
+  - name: share enumration
+    description: Enumerate all shares.
+    code: dscl . -list /SharePoints
+    tactics:
+    - Discovery
+    tags:
+    - network
+    - shares
+  - name: password policy discovery
+    description: Gain password policy information
+    code: dscl . -read /Config/shadowhash
+    tactics:
+    - Discovery
+    tags:
+    - password
+    - policy
+  - name: change a user password
+    description: Change an existing user's password.
+    code: dscl . passwd /Users/$USERNAME oldPassword newPassword
+    tactics:
+    - Persistence
+    tags:
+    - password
+paths:
+  - /usr/bin/dscl
+detections:
+  - name: No detections at time of publishing
+    url: n/a
+resources:
+  - name: 'MacOS Red Teaming - HackTricks'
+    url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-red-teaming
