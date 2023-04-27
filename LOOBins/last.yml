@@ -1,0 +1,38 @@
+name: last
+author: Will Huang (@In0de_16)
+short_description: Indicate last logins of users and ttys.
+full_description: The command shows a list of user sessions including the user name, terminal used, host name, start and stop times, and duration. It also indicates if a session is still active or was terminated unexpectedly.
+created: 2023-04-27
+example_use_cases:
+- name: Enumerate the users who are currently logged into the system.
+  description: The following command will display sessions that are currently active.
+  code: last | grep "still logged in"
+  tactics:
+  - Discovery
+  tags:
+  - oneliner
+  - account
+- name: Enumerate all user accounts that have logged into the system previously.
+  description: The last command can be used to output users who have previously logged in, by specifying the tty interface 'console'.
+  code: last -t console
+  tactics:
+  - Discovery
+  tags:
+  - oneliner
+  - account
+- name: Enumerate all hosts that have remotely logged into the system before.
+  description: An attacker can use 'last' with a filter to retrieve the connection date and remote host information for remote logins.
+  code: last | grep -E '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'
+  tactics:
+  - Discovery
+  tags:
+  - oneliner
+  - network
+paths:
+- /usr/bin/last
+detections:
+- name: "System Network Connections Discovery"
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_system_network_connections_discovery.yml
+resources:
+- name: "last Man Page"
+  url: https://ss64.com/osx/last.html
