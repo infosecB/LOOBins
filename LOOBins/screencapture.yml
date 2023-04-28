@@ -1,0 +1,21 @@
+name: screencapture
+author: Brendan Chamberlain (@infosecB)
+short_description: Capture a screenshot from command line.
+full_description: A tools that allows users to take screenshots of their desktop or specific app windows. The tool can be used by malicious actors to collect sensitve information from the targeted system.
+created: 2023-04-27
+example_use_cases:
+- name: Continously capture screenshots
+  description: The following command demonstrates how an attacker can use the tool to capture screenshots every 10 seconds. The -x flag prevents snapshot sounds from being played.
+  code: while true; do ts=$(date +"%Y%m%d-%H%M%S"); o="/tmp/screenshots"; screencapture -x "$o/ss-$ts.png"; sleep 10; done
+  tactics:
+  - Collection
+  tags:
+  - oneliner
+paths:
+- /usr/sbin/screencapture
+detections:
+- name: "Sigma: Screen Capture - macOS"
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_screencapture.yml
+resources:
+- name: SS64 screencapture man page
+  url: https://ss64.com/osx/screencapture.html
