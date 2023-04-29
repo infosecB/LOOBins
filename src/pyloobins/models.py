@@ -82,11 +82,11 @@ class LOOBin(BaseModel):
 
     def combine_tactics(self) -> List[str]:
         """Returns a list of all tactics across all LOOBin example use cases"""
-        return [t for euc in self.example_use_cases for t in euc.tactics]  # type: ignore
+        return list(dict.fromkeys([t for euc in self.example_use_cases for t in euc.tactics]))  # type: ignore
 
     def combine_tags(self) -> List[str]:
         """Returns a list of all tags across all LOOBin example use cases"""
-        return [t for euc in self.example_use_cases for t in euc.tags]  # type: ignore
+        return list(dict.fromkeys([t for euc in self.example_use_cases for t in euc.tags]))  # type: ignore
 
     def to_yaml(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a YAML string"""
