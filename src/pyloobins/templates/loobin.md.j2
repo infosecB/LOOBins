@@ -33,12 +33,19 @@ tags: {{ tags }}
 #### {{ example.name }}
 {{ example.description }}
 
-`{{ example.code }}`
+```
+{{ example.code }}
+```
+
 {% endfor %}
 
 ## Detections
 {% for detection in loobin.detections %}
+{% if detection.url in "N/A" %}
+- {{ detection.name }}
+{% else %}
 - [{{ detection.name }}]({{ detection.url }})
+{% endif %}
 {% endfor %}
 
 {% if loobin.resources %}
