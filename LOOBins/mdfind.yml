@@ -28,7 +28,7 @@ paths:
   - /usr/bin/mdfind
 detections:
   - name: No detections at time of publishing
-    url: n/a
+    url: N/A
 resources:
   - name: '"Farming The Apple Orchards: Living off the Land Techniques" - Chris Ross & Cedric Owens'
     url: https://youtu.be/Snwh4mMe-Cg?t=45

@@ -17,7 +17,7 @@ paths:
 - /usr/bin/pbpaste
 detections:
 - name: No detections at time of publishing
-  url: https://loobins.io/binaries/pbpaste
+  url: N/A
 resources:
 - name: 'Hacking macOS: How to Dump 1Password, KeePassX & LastPass Passwords in Plaintext'
   url: https://medium.com/@NullByteWht/hacking-macos-how-to-dump-1password-keepassx-lastpass-passwords-in-plaintext-723c5b1c311b

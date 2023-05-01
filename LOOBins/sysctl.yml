@@ -17,8 +17,7 @@ paths:
 - /usr/sbin/sysctl
 detections:
 - name: No detections at time of publishing
-  url: https://loobins.io/binaries/sysctl
+  url: N/A
 resources:
 - name: 'Evasions: macOS'
   url: https://evasions.checkpoint.com/techniques/macos.html
-

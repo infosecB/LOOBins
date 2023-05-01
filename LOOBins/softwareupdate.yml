@@ -22,7 +22,7 @@ paths:
   - /usr/sbin/softwareupdate
 detections:
   - name: No detections at time of publishing
-    url: n/a
+    url: N/A
 resources:
   - name: 'softwareupdate Man Page'
     url: https://ss64.com/osx/softwareupdate.html

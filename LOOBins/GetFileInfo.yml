@@ -18,7 +18,7 @@ paths:
   - /usr/bin/GetFileInfo
 detections:
   - name: No detections at time of publishing
-    url: n/a
+    url: N/A
 resources:
   - name: "macOS/binaries/GetFileInfo"
     url: https://macosbin.com/bin/getfileinfo
