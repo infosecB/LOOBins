@@ -103,7 +103,7 @@ paths:
   - /usr/bin/dscl
 detections:
   - name: No detections at time of publishing
-    url: n/a
+    url: N/A
 resources:
   - name: 'MacOS Red Teaming - HackTricks'
     url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-red-teaming

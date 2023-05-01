@@ -103,7 +103,7 @@ paths:
   - /usr/sbin/networksetup
 detections:
   - name: No detections at time of publishing
-    url: n/a
+    url: N/A
 resources:
   - name: 'Threat Hunting the macOS edition Megan Carney (Report)'
     url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf
