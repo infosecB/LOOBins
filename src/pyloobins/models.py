@@ -115,3 +115,9 @@ class LOOBin(BaseModel):
 
     def __repr__(self) -> str:
         return self.to_yaml()
+
+
+class AllLOOBins(BaseModel):
+    """LOOBin list base class"""
+
+    __root__: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
