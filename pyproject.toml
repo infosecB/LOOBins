@@ -24,6 +24,7 @@ pylint = "^2.17.0"
 black = "^23.1.0"
 pre-commit = "^3.2.2"
 pytest = "^7.3.1"
+tox = "^4.5.1"
 
 [tool.poetry.scripts]
 pyloobins = 'pyloobins.cli:cli'
@@ -37,3 +38,20 @@ disable=[
   'no-name-in-module',
   'too-few-public-methods'
 ]
+
+[tool.tox]
+legacy_tox_ini = """
+  [tox]
+  env_list =
+      py38,py39,py310,py311
+  minversion = 4.5.1
+
+  [testenv]
+  description = run the tests with pytest
+  package = wheel
+  wheel_build_env = .pkg
+  deps =
+      pytest>=6
+  commands =
+      pytest {tty:--color=yes} {posargs}
+"""
