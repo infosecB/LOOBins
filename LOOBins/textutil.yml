@@ -1,7 +1,7 @@
 name: textutil
 author: ezaspy
 short_description: Manipulate text files in various formats.
-full_description: The textutil binary is a command-line utility included in macOS that allows users to manipulate text files of various formats, using the mechanisms provided by the Cocoa text system. Formats include rtf, html, docx
+full_description: The textutil binary is a command-line utility included in macOS that allows users to manipulate text files of various formats, using the mechanisms provided by the Cocoa text system. Formats include rtf, html, docx and others
 created: 2023-05-05
 example_use_cases:
   - name: Use the textutil to read several files and build a new file
@@ -15,7 +15,7 @@ example_use_cases:
       - oneliner
       - textutil
   - name: Capture clipboard content
-    description: By leveraging another command line tool, pbpaste, it is possible to write a one-liner which captures to content of the clipboard. If an attacker already has access to the system, the attacker could run this command to obtain sensitive information such as a password and then elevate their privileges or exfiltrate the information.
+    description: By leveraging another command line tool, pbpaste, it is possible to write a one-liner which captures the content of the clipboard. If an attacker already has access to the system, the attacker could run this command to obtain sensitive information such as a password and then elevate their privileges or exfiltrate the information.
     code: pbpaste | textutil -stdin -info > Clipboard.txt
     tactics:
       - Credential Access
@@ -32,9 +32,5 @@ detections:
   - name: Command Line Argument Detection (args contain textutil AND (-convert OR -stdin OR pbpaste))
     url: n/a
 resources:
-  - name: textutil
-    url: https://osxdaily.com/tag/textutil/
-  - name: textutil
-    url: https://osxdaily.com/tag/textutil/
   - name: textutil
     url: https://osxdaily.com/tag/textutil/
