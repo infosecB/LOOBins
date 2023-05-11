@@ -1,0 +1,24 @@
+name: plutil
+author: Brendan Chamberlain (@infosecB)
+short_description: Read, create or edit plist files.
+full_description: plutil is a command-line utility used for managing property list (.plist) files. These files are commonly used by macOS to store a app settings and other configuration info. The utility allows users to check the validity of plist files `plutil -lint`, convert plist files between XML and binary formats (plutil -convert), and add, modify or remove plist key value pairs.
+created: 2023-05-07
+example_use_cases:
+- name: Set app to run with dock icon hidden
+  description: plutil can be used to set the "LSUIElement" attribute to tue which will force the targeted app to run without the UI and dock icon.
+  code: >-
+    plutil -insert LSUIElement -string "1" /Applications/TargetApp.app/Contents/Info.plist
+  tactics:
+  - Defense Evasion
+  tags:
+  - plist
+paths:
+- /usr/bin/plutil
+detections:
+- name: "Splunk Security Content: MacOS plutil"
+  url: https://research.splunk.com/endpoint/c11f2b57-92c1-4cd2-b46c-064eafb833ac/
+resources:
+- name: Editing Property Lists with plutil
+  url: https://scriptingosx.com/2016/11/editing-property-lists/
+- name: Plist File Modification (MITRE ATT&CK)
+  url: https://attack.mitre.org/techniques/T1647/
