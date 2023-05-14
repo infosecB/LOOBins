@@ -24,6 +24,15 @@ example_use_cases:
       - bash
       - zsh
       - oneliner
+  - name: Use mdfind to search for apps to infect
+    description: Allows an attacker to determine if specific applications are installed and can be leveraged
+    code: set appId to do shell script "mdfind kMDItemCFBundleIdentifier = '" & bundleId & "'"
+    tactics:
+      - Reconnaissance
+      - Discovery
+      - Defense Evasion
+    tags:
+      - osascript
 paths:
   - /usr/bin/mdfind
 detections:
@@ -32,3 +41,5 @@ detections:
 resources:
   - name: '"Farming The Apple Orchards: Living off the Land Techniques" - Chris Ross & Cedric Owens'
     url: https://youtu.be/Snwh4mMe-Cg?t=45
+  - name: '"Zero-Day TCC bypass discovered in XCSSET malware" - Jaron Bradley'
+    url: https://www.jamf.com/blog/zero-day-tcc-bypass-discovered-in-xcsset-malware/
