@@ -33,6 +33,7 @@ example_use_cases:
       - Defense Evasion
     tags:
       - osascript
+      - XCSSET
 paths:
   - /usr/bin/mdfind
 detections:
