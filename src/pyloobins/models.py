@@ -84,14 +84,24 @@ class LOOBin(BaseModel):
     def combine_tactics(self) -> List[str]:
         """Returns a list of all tactics across all LOOBin example use cases"""
         return list(
-            dict.fromkeys([t for euc in self.example_use_cases for t in euc.tactics])
-        )  # type: ignore
+            dict.fromkeys(
+                tactic
+                for euc in self.example_use_cases
+                if euc.tactics is not None
+                for tactic in euc.tactics
+            )
+        )
 
     def combine_tags(self) -> List[str]:
         """Returns a list of all tags across all LOOBin example use cases"""
         return list(
-            dict.fromkeys([t for euc in self.example_use_cases for t in euc.tags])
-        )  # type: ignore
+            dict.fromkeys(
+                tag
+                for euc in self.example_use_cases
+                if euc.tags is not None
+                for tag in euc.tags
+            )
+        )
 
     def to_yaml(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a YAML string"""
