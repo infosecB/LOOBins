@@ -8,14 +8,14 @@ example_use_cases:
     description: disable SIP (System Integrity Protection) - requires booting into recovery mode
     code: csrutil disable
     tactics:
-      - Defense evasion
+      - Defense Evasion
     tags:
       - users
   - name: Disable authenticated-root
     description: When authenticated-root is disabled, booting is allowed from non-sealed system snapshots - requires booting into recovery mode
     code: csrutil authenticated-root disable
     tactics:
-      - Defense evasion
+      - Defense Evasion
     tags:
       - users
   - name: Add a netboot server
