@@ -39,5 +39,5 @@ detections:
   - name: No detections at time of publishing
     url: N/A
 resources:
-  - name: 
+  - name: "Discussion on how SIP interacts with bless and netboot"
     url: https://developer.apple.com/forums/thread/4002
