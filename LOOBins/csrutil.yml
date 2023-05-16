@@ -22,10 +22,17 @@ example_use_cases:
     description: Insert a new IPv4 address in the list of allowed NetBoot sources
     code: csrutil netboot add <address>
     tactics:
-    - Defense Evasion
+      - Defense Evasion
     tags:
-    - users
-    - configuration
+      - configuration
+  - name: Map infrastructure
+    description: List allowed NetBoot sources
+    code: csrutil netboot list
+    tactics:
+      - Reconnaissance
+      - Discovery
+    tags:
+      - configuration
 paths:
   - /usr/bin/csrutil
 detections:
