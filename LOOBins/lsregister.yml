@@ -1,0 +1,33 @@
+name: lsregister
+author: Brendan Chamberlain (@infosecB)
+short_description: Interact with the macOS Launch Services database.
+full_description: lsregister is used to build, dump, and check the validity of the Launch Services database. This database is often abused to create custom URL scheme handlers that point to malicious apps.
+created: 2023-05-15
+example_use_cases:
+- name: Force an update of the Launch Services database
+  description: The -f flag can be used to force an update of the Launch Services database. This can be used to quickly register a custom URL scheme that points to a malicious app.
+  code: '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f'
+  tactics:
+  - Discovery
+- name: Get a list of apps and their bindings
+  description: The -dump flag can be used to get a list of apps and their bindings
+  code: '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump | grep -E "path:|bindings:|name: | more"'
+  tactics:
+  - Discovery
+- name: Delete the Launch Services database
+  description: The -delete flag can be used to delete the Launch Services database to impact normal operation of the system.
+  code: lsregister -delete
+  tactics:
+  - Impact
+paths:
+- /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: Remote Mac Exploitation Via Custom URL Schemes
+  url: https://www.jamf.com/blog/remote-mac-exploitation-via-custom-url-schemes/
+- name: macOS Security & Privilege Escalation
+  url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation
+acknowledgements:
+  - Patrick Wardle (@patrickwardle)
