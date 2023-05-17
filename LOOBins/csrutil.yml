@@ -1,0 +1,43 @@
+name: csrutil
+author: Megan Carney (https://infosec.exchange/@PwnieFan)
+short_description: Configure or view system security policies
+full_description: Used to enable/disable SIP, configure netboot and authenticated-root settings 
+created: 2023-05-14
+example_use_cases:
+  - name: Disable SIP
+    description: disable SIP (System Integrity Protection) - requires booting into recovery mode
+    code: csrutil disable
+    tactics:
+      - Defense Evasion
+    tags:
+      - users
+  - name: Disable authenticated-root
+    description: When authenticated-root is disabled, booting is allowed from non-sealed system snapshots - requires booting into recovery mode
+    code: csrutil authenticated-root disable
+    tactics:
+      - Defense Evasion
+    tags:
+      - users
+  - name: Add a netboot server
+    description: Insert a new IPv4 address in the list of allowed NetBoot sources
+    code: csrutil netboot add <address>
+    tactics:
+      - Defense Evasion
+    tags:
+      - configuration
+  - name: Map infrastructure
+    description: List allowed NetBoot sources
+    code: csrutil netboot list
+    tactics:
+      - Reconnaissance
+      - Discovery
+    tags:
+      - configuration
+paths:
+  - /usr/bin/csrutil
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "Discussion on how SIP interacts with bless and netboot"
+    url: https://developer.apple.com/forums/thread/4002
