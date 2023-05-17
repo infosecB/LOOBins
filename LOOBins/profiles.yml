@@ -1,0 +1,28 @@
+name: profiles
+author: Will Huang (@In0de_16)
+short_description: List and remove configuration profiles.
+full_description: Profiles on macOS are responsible for managing different types of profiles including configuration, provisioning, bootstraptoken, or enrollment. However, starting from macOS 11.0, this tool cannot be used for installing configuration profiles.
+created: 2023-05-16
+example_use_cases:
+- name: Collect system DEP information.
+  description: The following command determines whether device is DEP(Device Enrolment Program) enabled and output the DEP information.
+  code: sudo profiles show -type enrollment
+  tactics:
+  - Discovery
+  tags:
+  - oneliner
+- name: Remove configuration profiles.
+  description: The following command deletes the specified profiles. An optional password used when removing a configuration profile which requires the password removal option.
+  code: profiles remove -identifier com.profile.identifier -password <password>
+  tactics:
+  - Impact
+  tags:
+  - oneliner
+paths:
+- /usr/bin/profiles
+detections:
+- name: No detections at time of publishing.
+  url: N/A
+resources:
+- name: macOS MDM introduction.
+  url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-mdm
