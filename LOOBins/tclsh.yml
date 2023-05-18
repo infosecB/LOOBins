@@ -13,7 +13,6 @@ example_use_cases:
   - dylib
 paths:
 - /usr/bin/tclsh
-- /opt/homebrew/bin/tclsh
 detections:
 - name: Recommendations included in resource below. No formal detection content at this time.
   url: https://medium.com/specter-ops-posts/dylib-loads-that-tickle-your-fancy-d25196addd8c
