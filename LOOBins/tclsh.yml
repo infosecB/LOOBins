@@ -1,0 +1,23 @@
+name: tclsh
+author: Brendan Chamberlain (@infosecB)
+short_description: Run Tcl files or shell commands from standard input
+full_description: tclsh is a shell-like utility that runs Tcl from standard input or a file. tclsh holds the "com.apple.security.cs.disable-library-validation" entitlement and is capable of loading arbitary plug-ins, framework, and libraries without requiring signed code.
+created: 2023-05-17
+example_use_cases:
+- name: Execute malicious dynamic library (.dylib) from standard input
+  description: An attacker can execute a malicious .dylib from stdin by echoing a load command and piping to tclsh. This will bypass code signing requirements.
+  code:  echo "load bad.dylib" | tclsh
+  tactics:
+  - Execution
+  tags:
+  - dylib
+paths:
+- /usr/bin/tclsh
+detections:
+- name: Recommendations included in resource below. No formal detection content at this time.
+  url: https://medium.com/specter-ops-posts/dylib-loads-that-tickle-your-fancy-d25196addd8c
+resources:
+- name: Dylib Loads that Tickle your Fancy
+  url: https://medium.com/specter-ops-posts/dylib-loads-that-tickle-your-fancy-d25196addd8c
+acknowledgements:
+- Leo Pitt (@_D00mfist)
