@@ -1,0 +1,44 @@
+name: dns-sd
+author: Brendan Chamberlain (@infosecB)
+short_description: Discover local network services using the DNS-Based Service Discovery (SD) protocol.
+full_description: dns-sd can be used to interact with the Multicast DNS (mDNS) and DNS Service Discovery (DNS-SD) protocols. The tool is useful for administrators but can also be abused by malicious actors to discover local network services.
+created: 2023-05-19
+example_use_cases:
+- name: Discover SSH hosts
+  description: Hosts serving SSH can be discovered using the _ssh._tcp service string.
+  code: dns-sd -B _ssh._tcp
+  tactics:
+  - Discovery
+  tags:
+  - network
+- name: Discover web hosts
+  description: Hosts serving web services can be discovered using the _http._tcp service string.
+  code: dns-sd -B _http._tcp
+  tactics:
+  - Discovery
+  tags:
+  - network
+- name: Discover hosts serving remote screen sharing
+  description: Hosts serving remote screen sharing can be discovered using the _rfb._tcp service string.
+  code: dns-sd -B _rfb._tcp
+  tactics:
+  - Discovery
+  tags:
+  - network
+- name: Discover hosts serving SMB
+  description: Hosts serving SMB can be discovered using the _smb._tcp service string.
+  code: dns-sd -B _smb._tcp
+  tactics:
+  - Discovery
+  tags:
+  - network
+paths:
+- /usr/bin/dns-sd
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: mDNS / Bonjour Bible - List of Common Service Strings for various vendors
+  url: https://jonathanmumm.com/tech-it/mdns-bonjour-bible-common-service-strings-for-various-vendors/
+acknowledgements:
+- "Chris Ross, Cedric Owens: Farming The Apple Orchards: Living Off The Land Techniques"
