@@ -3,7 +3,7 @@ name = "PyLOOBins"
 version = "0.1.6"
 description = "Python package for managing the LOOBins model and schema."
 authors = ["infosecB <brendan@infosecb.com>"]
-readme = "README.md"
+readme = "docs/pyloobins/README.md"
 packages = [{include = "pyloobins", from = "src"}]
 include = ["LOOBins/*.yml"]
 homepage = "https://loobins.io/"
