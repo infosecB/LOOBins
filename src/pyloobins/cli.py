@@ -14,10 +14,10 @@ def cli():
 
 @cli.command()
 @click.option(
-    "--file",
+    "--path",
     type=str,
     required=True,
-    help="File location of the LOOBin YAML file to validate.",
+    help="The path of the LOOBin YAML file to validate.",
 )
 def validate(file: str) -> None:
     """Validate a LOOBin YAML file."""
