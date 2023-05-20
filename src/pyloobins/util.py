@@ -47,10 +47,10 @@ def validate_loobin(yml_path: str) -> bool:
         return False
 
 
-def make_template() -> LOOBin:
+def make_template(name: str = "") -> LOOBin:
     """Creates a template LOOBin object"""
     loobin_template = LOOBin(
-        name="Template",
+        name=name if name else "Template",
         short_description="A short description of the binary goes here.",
         full_description="A full length description of the binary goes here.",
         author="Enter your name or alias here.",
