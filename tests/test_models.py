@@ -1,6 +1,7 @@
 """Test the models in the pyloobins.models module."""
+from datetime import date
 
-from pyloobins.models import *
+from pyloobins.models import Detection, ExampleUseCase, LOOBin, LOOBinsGroup, Resource
 
 
 def test_detection():
@@ -60,7 +61,7 @@ def test_loobin():
 
 def test_loobin_group():
     """Test the LOOBin group model."""
-    l = LOOBin(
+    loobin = LOOBin(
         name="Template",
         short_description="A short description of the binary goes here.",
         full_description="A full length description of the binary goes here.",
@@ -90,4 +91,4 @@ def test_loobin_group():
         ],
         acknowledgements=["Enter any acknowledgements here."],
     )
-    assert LOOBinsGroup(__root__=[l])
+    assert LOOBinsGroup(__root__=[loobin])
