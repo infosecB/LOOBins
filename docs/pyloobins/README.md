@@ -1,5 +1,5 @@
 # PyLOOBins
-PyLOOBins is a Python SDK and command-line utility for interacting with LOOBins.
+PyLOOBins is a Python SDK and command-line utility for programmatically interacting with [LOOBins](https://loobins.io).
 
 You can download PyLOOBins from PyPI by running the following command:
 `pip install pyloobins`
