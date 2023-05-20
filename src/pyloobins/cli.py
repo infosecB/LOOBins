@@ -4,12 +4,12 @@ import sys
 
 import click
 
-from .util import make_template, normalize_file_name, validate_loobin
+from .util import get_loobins, make_template, normalize_file_name, validate_loobin
 
 
 @click.group()
 def cli():
-    """Create, manage, and validate LOOBin objects."""
+    """Create, validate, and view LOOBin objects."""
 
 
 @cli.command()
@@ -20,7 +20,7 @@ def cli():
     help="File location of the LOOBin YAML file to validate.",
 )
 def validate(file: str) -> None:
-    """Validate a LOOBin object."""
+    """Validate a LOOBin YAML file."""
     if validate_loobin(yml_path=file):
         print(f"LOOBin at {file} is valid.")
         sys.exit(0)
@@ -37,9 +37,9 @@ def validate(file: str) -> None:
     required=False,
     help="Enter the path where you would like to create the template YAML file.",
 )
-def create_template(name: str, path: str) -> None:
-    """Create a new LOOBin template file."""
-    template = make_template().to_yaml()
+def create(name: str, path: str) -> None:
+    """Create a YAML template file for a new LOOBin."""
+    template = make_template(name=name).to_yaml()
     file_name = normalize_file_name(name) if name else "template"
     file_path = path if path and os.path.exists(path) else "./"
     if not os.path.exists(file_path):
@@ -52,6 +52,29 @@ def create_template(name: str, path: str) -> None:
     ) as out_file:
         out_file.write(template)
         out_file.close()
+
+
+@cli.command()
+@click.option("--name", type=str, required=True, help="Enter the name of the binary")
+@click.option(
+    "--path",
+    type=str,
+    required=False,
+    help="Enter the path where you would like to create the template YAML file.",
+)
+def get(name: str, path: str = "") -> None:
+    """Get a LOOBin object."""
+    if path:
+        loobins = get_loobins(path=path)
+    else:
+        loobins = get_loobins()
+
+    res = [loobin for loobin in loobins if loobin.name == name]
+
+    if len(res) == 0:
+        print(f"No LOOBin found for {name}.")
+    else:
+        print(res[0].json(indent=True, exclude_none=True))
 
 
 if __name__ == "__main__":
