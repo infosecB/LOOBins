@@ -29,5 +29,5 @@ jobs:
     - name: Checking the YAML files with pyloobins
       run: |
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-          pyloobins validate --file $file
+          pyloobins validate --path $file
         done
