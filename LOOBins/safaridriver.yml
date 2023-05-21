@@ -1,0 +1,28 @@
+name: safaridriver
+author: Brendan Chamberlain (@infosecB)
+short_description: Enable the WebDriver Safari browser API for Selenium testing.
+full_description: safaridriver is a tool that is used to enable Selenium testing via the macOS WebDriver protocol. Once enabled, the WebDriver API could be abused by attackers to communicate with external servers for command and control or exfiltration purposes.
+created: 2023-05-20
+example_use_cases:
+- name: Enable safaridriver
+  description: The following command can be used to enable the WebDriver Safari browser API. The command must be run as root or with sudo privileges. 
+  code: sudo safaridriver --enable
+  tactics:
+  - Command and Control
+  - Exfiltration
+  tags:
+  - safari
+  - selenium
+paths:
+- /System/Cryptexes/App/usr/bin/safaridriver
+- /usr/bin/safaridriver
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: About WebDriver for Safari
+  url: https://developer.apple.com/documentation/webkit/about_webdriver_for_safari
+- name: You Talking To Me? 
+  url: https://starlabs.sg/blog/2021/04-you-talking-to-me/
+acknowledgements:
+- "Chris Ross, Cedric Owens: Farming The Apple Orchards: Living Off The Land Techniques"
