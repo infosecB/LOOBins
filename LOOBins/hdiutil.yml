@@ -1,0 +1,69 @@
+name: hdiutil
+author: Mark Morowczynsk (@markmorow)
+short_description: Uses the DiskImages framework to manipulate disk images
+full_description: hdiutil manipulates disk images such as DMG and ISO files. You can mount, unmount, create, resize and verify disk images. Including encrypted images.  
+created: 2023-05-21
+example_use_cases:
+- name: Mount a malicious dmg file
+  description: Uses hdiutil to mount a malicious dmg file to 
+  code: hdiutil mount malicious.dmg
+  tactics:
+  - Execution
+  tags:
+  - bash
+  - zsh
+  - disk
+- name: Mount a malicious dmg file
+  description: Uses hdiutil to mount a malicious dmg file to 
+  code: hdiutil attach malicious.dmg
+  tactics:
+  - Execution
+  tags:
+  - bash
+  - zsh
+  - disk
+- name: Mount a malicious iso file
+  description: Uses hdiutil to mount a malicious iso file to 
+  code: hdiutil mount malicious.iso
+  tactics:
+  - Execution
+  tags:
+  - bash
+  - zsh
+  - disk
+- name: Mount a malicious iso file
+  description: Uses hdiutil to mount a malicious iso file to 
+  code: hdiutil attach malicious.iso
+  tactics:
+  - Execution
+  tags:
+  - bash
+  - zsh
+  - disk
+- name: Exfiltrate data in dmg file
+  description: Uses hdiutil to create a dmg file to store exfiltrate data
+  code: hdiutil create -volname "Volume Name" -srcfolder /path/to/folder -ov diskimage.dmg
+  tactics:
+  - Collection
+  tags:
+  - bash
+  - zsh
+  - disk
+- name: Exfiltrate data in encrypted dmg file
+  description: Uses hdiutil to create a dmg file to store exfiltrate data
+  code: hdiutil create -encryption -stdinpass -volname "Volume Name" -srcfolder /path/to/folder -ov encrypteddiskimage.dmg
+  tactics:
+  - Collection
+  tags:
+  - bash
+  - zsh
+  - disk
+paths:
+- /usr/bin/hdiutil
+detections:
+- name: No detections at time of publishing
+  url: n/a
+resources:
+- name: 'Microsoft finds new macOS vulnerability, Shrootless, that could bypass System Integrity Protection'
+  url: https://www.microsoft.com/en-us/security/blog/2021/10/28/microsoft-finds-new-macos-vulnerability-shrootless-that-could-bypass-system-integrity-protection/
+
