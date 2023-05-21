@@ -19,13 +19,13 @@ def cli():
     required=True,
     help="The path of the LOOBin YAML file to validate.",
 )
-def validate(file: str) -> None:
+def validate(path: str) -> None:
     """Validate a LOOBin YAML file."""
-    if validate_loobin(yml_path=file):
-        print(f"LOOBin at {file} is valid.")
+    if validate_loobin(yml_path=path):
+        print(f"LOOBin at {path} is valid.")
         sys.exit(0)
     else:
-        print(f"LOOBin at {file} is NOT valid.")
+        print(f"LOOBin at {path} is NOT valid.")
         sys.exit(1)
 
 
