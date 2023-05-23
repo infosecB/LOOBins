@@ -1,0 +1,21 @@
+name: ssh-keygen
+author: Leo Pitt (@_D00mfist)
+short_description: Load unsigned dynamic libraries into the ssh-keygen binary 
+full_description: ssh-keygen is a tool for creating new authentication key pairs for SSH (Secure Shell). ssh-keygen holds the "com.apple.security.cs.disable-library-validation" entitlement and is capable of loading arbitary libraries without requiring signed code.
+created: 2023-05-22
+example_use_cases:
+- name: Execute malicious dynamic library (.dylib) from standard input
+  description: An attacker can execute a malicious .dylib from stdin by echoing a load command and piping to tclsh. This will bypass code signing requirements.
+  code:  ssh-keygen -D /private/tmp/evil.dylib
+  tactics:
+  - Execution
+  tags:
+  - dylib
+paths:
+- /usr/bin/ssh-keygen
+detections:
+- name: Recommendations included in resource below. No formal detection content at this time.
+  url: https://medium.com/@D00MFist/generate-keys-or-generate-dylib-loads-c99ed48f323d
+resources:
+- name: Generate Keys or Generate Dylib Loads?
+  url: https://medium.com/@D00MFist/generate-keys-or-generate-dylib-loads-c99ed48f323d
