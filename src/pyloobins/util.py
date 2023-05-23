@@ -1,10 +1,10 @@
 """Utility functions that support the CLI and library"""
 import pathlib
-import site
 from datetime import date
 
 import yaml
 
+import pyloobins
 from .models import Detection, ExampleUseCase, LOOBin, Resource
 
 
@@ -14,7 +14,7 @@ def get_loobins(path: str = "") -> list:
     if path:
         yml_files = pathlib.Path(path).glob("**/*.yml")
     else:
-        yml_files = (pathlib.Path(site.getsitepackages()[0]) / "LOOBins").glob(
+        yml_files = (pathlib.Path(pyloobins.__file__).parents[1]/"LOOBins").glob(
             "**/*.yml"
         )
     for yml_file in yml_files:
