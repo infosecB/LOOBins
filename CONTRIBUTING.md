@@ -28,11 +28,11 @@ Additionally, you can help us develop the [pyloobins Python SDK](https://pypi.or
     You can use the "pyloobins" Python command-line utility to generate a template file:
 
     `pip install pyloobins`
-    `pyloobins create-template --name "Test"`
+    `pyloobins create --name "Test"`
 
     You can validate a new schema by running:
 
-    `pyloobins validate --file "test.yml"`
+    `pyloobins validate --path "test.yml"`
 
 7. **Commit Your Changes**: Add the new YAML file to the staging area and commit the changes with a descriptive commit message:
 
