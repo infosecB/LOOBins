@@ -5,7 +5,7 @@ full_description: sqlite is a command-line utility that allows users to query an
 created: 2023-05-23
 example_use_cases:
 - name: Get apps with Full Disk access
-  description: A description of the use case goes here.
+  description: The following command interacts with the TCC (Transparency, Consent, and Control) database to show the apps that have Full Disk access permission
   code: |-
     sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db \
     'select client from access where auth_value and service = "kTCCServiceSystemPolicyAllFiles"'
