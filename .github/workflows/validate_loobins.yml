@@ -1,4 +1,4 @@
-name: Validate LOOBin Schema
+name: Validate LOOBins
 
 on: [pull_request]
 

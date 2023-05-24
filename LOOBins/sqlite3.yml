@@ -1,0 +1,47 @@
+name: sqlite3
+author: Brendan Chamberlain (@infosecB)
+short_description: Query and manage sqlite databases.
+full_description: sqlite is a command-line utility that allows users to query and manage sqlite databases. Many components of macOS and apps used sqlite to store data. Attackers can leverage this tool to discover sensitive data.
+created: 2023-05-23
+example_use_cases:
+- name: Get apps with Full Disk access
+  description: The following command interacts with the TCC (Transparency, Consent, and Control) database to show the apps that have Full Disk access permission
+  code: |-
+    sqlite3 /Library/Application\ Support/com.apple.TCC/TCC.db \
+    'select client from access where auth_value and service = "kTCCServiceSystemPolicyAllFiles"'
+  tactics:
+  - Discovery
+  tags:
+  - permissions
+- name: Get Firefox cookie data
+  description: The following one-liner can be used to kill Firefox and dump cookie data from the user's Firefox profile.
+  code: |-
+    killall firefox; find ~/Library/Application\ Support/Firefox/Profiles/. | grep cookies.sqlite | xargs -I {} sqlite3 {} "select * from moz_cookies"
+  tactics:
+  - Collection
+  - Credential Access
+  tags:
+  - oneliner
+  - cookie-theft
+- name: View URL associated with file downloads
+  description: The following sqlite command is commonly used by macOS malware to view the URL in which the payload was downloaded from.
+  code: |-
+    sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'select LSQuarantineDataURLString from LSQuarantineEvent'
+  tactics:
+  - Collection
+  - Credential Access
+  tags:
+  - oneliner
+  - cookie-theft
+paths:
+- /usr/bin/sqlite3
+detections:
+- name: "Elastic Detection Rules: Potential Privacy Control Bypass via TCCDB Modification"
+  url: https://github.com/elastic/detection-rules/blob/e9baebc2bc18f90ae16501613cd9521a16a38ad7/rules/macos/defense_evasion_privacy_controls_tcc_database_modification.toml
+- name: "Splunk Security Content: Suspicious SQLite3 LSQuarantine Behavior"
+  url: https://github.com/splunk/security_content/blob/c65dda5c0aa73a97f28c49c20739971ec1ba18a6/dev/endpoint/suspicious_sqlite3_lsquarantine_behavior.yml#L2
+resources:
+- name: TCC.db Modifier Script
+  url: https://github.com/bp88/JSS-Scripts/blob/master/TCC.db%20Modifier.sh
+- name: "Clipping Silver Sparrow’s wings: Outing macOS malware before it takes flight"
+  url: https://redcanary.com/blog/clipping-silver-sparrows-wings/

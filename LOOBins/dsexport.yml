@@ -1,0 +1,29 @@
+name: dsexport
+author: Brendan Chamberlain (@infosecB)
+short_description: Export data from an Open Directory directory services server.
+full_description: dsexport is a command-line utility designed to export records from the directory services database on a local host or from a connected LDAP service. The tool can be used to gather information about users, groups, and computers. The tool can also be used to export the directory services database to a file for offline analysis.
+created: 2023-05-23
+example_use_cases:
+- name: Export local host users
+  description: Export the local host user information to a file
+  code: dsexport local_users.txt /Local/Default dsRecTypeStandard:Users
+  tactics:
+  - Reconnaissance
+  - Discovery
+  tags:
+  - ldap
+  - users
+- name: Export local host groups
+  description: Export the local host group information to a file
+  code: dsexport local_groups.txt /Local/Default dsRecTypeStandard:Groups
+  tactics:
+  - Reconnaissance
+  - Discovery
+  tags:
+  - ldap
+  - groups
+paths:
+- /usr/bin/dsexport
+detections:
+- name: No detections at time of publishing
+  url: N/A
