@@ -4,7 +4,6 @@
 ![Build Status](https://img.shields.io/github/actions/workflow/status/infosecB/LOOBins/validate_loobins.yml?style=for-the-badge)
 ![pyloobins badge](https://img.shields.io/pypi/v/pyloobins?color=blue&label=pyloobins&style=for-the-badge)
 ![Help Wanted Issues Badge](https://img.shields.io/github/issues/infosecb/LOOBins/help%20wanted?style=for-the-badge)
-![License](https://img.shields.io/github/license/infosecB/LOOBins?style=for-the-badge)
 
 The LOOBins web app can be found here: [https://loobins.io](https://loobins.io)
 
@@ -28,4 +27,4 @@ LOOBins is a living project and will likely never be complete. It will require c
 - Help develop and maintain the PyLOOBins Python SDK/CLI
 - Submit an issue for any problems that you are experiencing with the website or PyLOOBins SDK/CLI
 
-If you would like to contribute, please see our contribution guidelines.
+If you would like to contribute, please [see our contribution guidelines](https://github.com/infosecB/LOOBins/blob/main/CONTRIBUTING.md).
