@@ -1,0 +1,23 @@
+name: spctl
+author: Brendan Chamberlain (@infosecB)
+short_description: Manage the security assessment policy subsystem, Gatekeeper settings, and control which apps are allowed to run on the system.
+full_description: A full length description of the binary goes here.
+created: 2023-05-23
+example_use_cases:
+- name: Disable Gatekeeper
+  description: The --master-disable switch disables Gatekeeper. The command must be run with root/sudo permission.
+  code: sudo spctl --master-disable
+  tactics:
+  - Defense Evasion
+  tags:
+  - gatekeeper
+paths:
+- /usr/sbin/spctl
+detections:
+- name: "Elastic Detection Rules: Attempt to Disable Gatekeeper"
+  url: https://github.com/elastic/detection-rules/blob/e9baebc2bc18f90ae16501613cd9521a16a38ad7/rules/macos/defense_evasion_attempt_to_disable_gatekeeper.toml
+- name: "Sigma Rules: Disable Security Tools"
+  url: https://github.com/SigmaHQ/sigma/blob/cd71edc09ca915f389e50df5b1bbb5ecd4b7f89d/rules/macos/process_creation/proc_creation_macos_disable_security_tools.yml
+resources:
+- name: Disable Gatekeeper on macOS Big Sur (11.x)
+  url: https://disable-gatekeeper.github.io/
