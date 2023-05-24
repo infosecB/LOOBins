@@ -1,0 +1,33 @@
+name: defaults
+author: Brendan Chamberlain (@infosecB)
+short_description: Read, write, and delete user preference values.
+full_description: A full length description of the binary goes here.
+created: 2023-05-24
+example_use_cases:
+- name: Disable Gatekeeper's auto rearm functionality
+  description: The following command can be used to disable Gatekeepers rearm functionality. This command requires root privileges.
+  code: sudo defaults write /Library/Preferences/com.apple.security GKAutoRearm -bool NO
+  tactics:
+  - Defense Evasion
+  tags:
+  - gatekeeper
+- name: Show mounted servers
+  description: Show all mounted servers on the desktop.
+  code: defaults read com.apple.finder "ShowMountedServersOnDesktop"
+  tactics:
+  - Discovery
+- name: Add a login item to the current user
+  description: An attacker can use defaults to add a login hook in attempt to gain persistence. This command requires root privileges.
+  code: sudo defaults write /Library/Preferences/com.apple.loginwindow LoginHook gain_persistence.sh
+  tactics:
+  - Persistence
+paths:
+- /usr/bin/defaults
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: "macOS defaults list: Uncomplete list of macOS defaults commands with demos"
+  url: https://macos-defaults.com/
+- name: Insistence on Persistence
+  url: https://www.huntress.com/blog/insistence-on-persistence

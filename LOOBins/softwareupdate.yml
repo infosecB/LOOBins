@@ -1,6 +1,6 @@
 name: softwareupdate
 author: Jonathan Bar Or (@yo_yo_yo_jbo)
-short_description: Software update utility.
+short_description: Interact with the macOS software update service.
 full_description: A command-line utility for running software updates.
 created: 2023-04-25
 example_use_cases:

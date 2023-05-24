@@ -1,6 +1,6 @@
 name: osascript
 author: Cedric Owens (@cedowens)
-short_description: Executes AppleScripts and other OSA language scripts and commands.
+short_description: Execute AppleScripts and other OSA language scripts and commands.
 full_description: The osascript binary is a command-line utility included in macOS that allows users to run AppleScript and Open Scripting Architecture (OSA) scripts or commands. AppleScript is a scripting language that is designed for power users to automate various tasks, application actions, and to interact with the operating system.
 created: 2023-04-19
 example_use_cases:

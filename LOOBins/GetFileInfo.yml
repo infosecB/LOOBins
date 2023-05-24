@@ -1,6 +1,6 @@
 name: GetFileInfo
 author: Chris Campbell (@texasbe2trill)
-short_description: A tool to get attributes of files and directories.
+short_description: Get attributes of files and directories.
 full_description: Uses the CommandLine/Terminal to return type, creator, attributes, created, and modified file information of a file or directory.
 created: 2023-04-23
 example_use_cases:

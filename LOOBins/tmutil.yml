@@ -1,6 +1,6 @@
 name: tmutil
 author: Brendan Chamberlain (@infosecb)
-short_description: A tool for managing Time Machine backups.
+short_description: Manage Time Machine backups.
 full_description: A tool for managing Time Machine, the native macOS backup utility. 
 created: 2023-05-01
 example_use_cases:

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PyLOOBins"
-version = "0.1.9"
+version = "1.0.0"
 description = "Python package for managing the LOOBins model and schema."
 authors = ["infosecB <brendan@infosecb.com>"]
 readme = "docs/pyloobins/README.md"

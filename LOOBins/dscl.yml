@@ -1,6 +1,6 @@
 name: dscl
 author: Jonathan Bar Or (@yo_yo_yo_jbo)
-short_description: Directory Services command-line utility.
+short_description: Interact with Directory Services.
 full_description: An extensive tool for communicating with the Directory Services, useful for Discovery.
 created: 2023-04-25
 example_use_cases:

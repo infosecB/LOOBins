@@ -1,6 +1,6 @@
 name: hdiutil
 author: Mark Morowczynsk (@markmorow)
-short_description: Uses the DiskImages framework to manipulate disk images
+short_description: Manipulate disk images using the DiskImages framework.
 full_description: hdiutil manipulates disk images such as DMG and ISO files. You can mount, unmount, create, resize and verify disk images. Including encrypted images.  
 created: 2023-05-21
 example_use_cases:
@@ -66,4 +66,3 @@ detections:
 resources:
 - name: 'Microsoft finds new macOS vulnerability, Shrootless, that could bypass System Integrity Protection'
   url: https://www.microsoft.com/en-us/security/blog/2021/10/28/microsoft-finds-new-macos-vulnerability-shrootless-that-could-bypass-system-integrity-protection/
-
