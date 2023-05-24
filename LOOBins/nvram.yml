@@ -1,0 +1,21 @@
+name: nvram
+author: Brendan Chamberlain (@infosecB)
+short_description: Access and manage the host's non-volatile random-access memory (NVRAM).
+full_description: A full length description of the binary goes here.
+created: 2023-05-23
+example_use_cases:
+- name: Get nvram variables
+  description: The -p option prints all the nvram variables that contain some potentially sensitive information like WiFi SSIDs and Bluetooth devices.
+  code: nvram -p
+  tactics:
+  - Discovery
+paths:
+- /usr/sbin/nvram
+detections:
+- name: No detections at time of publishing.
+  url: N/A
+resources:
+- name: SS64 man page
+  url: https://ss64.com/osx/nvram.html
+acknowledgements:
+- Jonathan Bar Or (@yo_yo_yo_jbo)
