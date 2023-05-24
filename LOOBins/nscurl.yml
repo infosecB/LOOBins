@@ -1,6 +1,6 @@
 name: nscurl
 author: Leo Pitt (@_D00mfist)
-short_description: Download, upload, and read files
+short_description: Download, upload, and read files.
 full_description: macOS version of curl that is used to download files to a target without applying the quarantine extended attribute
 created: 2023-05-22
 example_use_cases:

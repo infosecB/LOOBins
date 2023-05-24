@@ -1,7 +1,7 @@
 name: mdfind
 author: Chris Campbell (@texasbe2trill)
-short_description: CommandLine alternative to Spotlight in MacOS
-full_description: Uses the CommandLine/Terminal to locate files on MacOS by searching a pre-built database.
+short_description: Locate files using the Spotlight database.
+full_description: mdfind to locate files on MacOS by searching a pre-built database. It is a command-line alternative to Spotlight in MacOS
 created: 2023-04-22
 example_use_cases:
   - name: Use mdfind to provide live updates to the number of files matching the query

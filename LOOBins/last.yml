@@ -1,6 +1,6 @@
 name: last
 author: Will Huang (@In0de_16)
-short_description: Indicate last logins of users and ttys.
+short_description: Show last user logins and TTYs.
 full_description: The command shows a list of user sessions including the user name, terminal used, host name, start and stop times, and duration. It also indicates if a session is still active or was terminated unexpectedly.
 created: 2023-04-27
 example_use_cases:

@@ -1,6 +1,6 @@
 name: SetFile
 author: Chris Campbell (@texasbe2trill)
-short_description: A tool to set attributes of files and directories.
+short_description: Set attributes of files and directories.
 full_description: Uses the CommandLine/Terminal to set file and or directory attributes. It can set attributes, creator, creation date, modification date, and file type for multiple files at a time.
 created: 2023-04-23
 example_use_cases:
