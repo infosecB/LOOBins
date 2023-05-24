@@ -27,4 +27,4 @@ LOOBins is a living project and will likely never be complete. It will require c
 - Help develop and maintain the PyLOOBins Python SDK/CLI
 - Submit an issue for any problems that you are experiencing with the website or PyLOOBins SDK/CLI
 
-If you would like to contribute, please see our contribution guidelines.
+If you would like to contribute, please [see our contribution guidelines](https://github.com/infosecB/LOOBins/blob/main/CONTRIBUTING.md).
