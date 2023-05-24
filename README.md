@@ -4,7 +4,7 @@
 
 The LOOBins web app can be found here: [https://loobins.io](https://loobins.io)
 
-**L**iving **O**ff the **O**rchard: macOS Binaries (LOOBins) is a resource designed to provide detailed information on various built-in macOS binaries and how they can be used by threat actors for nefarious purposes. The goal of this website is to serve as a one-stop resource for cybersecurity professionals and researchers attempting to understand and defend against the potential risks associated with each binary.
+**L**iving **O**ff the **O**rchard: macOS Binaries (LOOBins) is a resource designed to provide detailed information on various built-in macOS binaries and how they can be used by threat actors for malicious purposes. The goal of this website is to serve as a one-stop resource for cybersecurity professionals and researchers attempting to understand and defend against the potential risks associated with each binary.
 
 This website contains a working list of "living off the land" macOS binaries that can be leveraged for malicious purposes to achieve command execution, privilege escalation, persistence, and data exfiltration. By outlining the functions and potential misuse of each binary, this resource aims to raise awareness about the growing threat landscape in the macOS ecosystem.
 
