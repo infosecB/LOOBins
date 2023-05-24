@@ -1,6 +1,6 @@
 # LOOBins
 ![GitHub license](https://img.shields.io/github/license/infosecB/LOOBins)
-![LOOBin Validity](https://github.com/infosecB/LOOBins/actions/workflows/validate_loobin_schema.yml/badge.svg)
+![LOOBin Validity](https://github.com/infosecB/LOOBins/actions/workflows/validate_loobins.yml/badge.svg)
 
 The LOOBins web app can be found here: [https://loobins.io](https://loobins.io)
 
