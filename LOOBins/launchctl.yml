@@ -24,3 +24,5 @@ resources:
   url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
 - name: 'Mitre Attack Technique: launchctl T1569'
   url: https://attack.mitre.org/techniques/T1569/001/
+
+
