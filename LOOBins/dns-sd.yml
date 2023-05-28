@@ -38,6 +38,8 @@ detections:
 - name: No detections at time of publishing
   url: N/A
 resources:
+- name: What does APT Activity Look Like on macOS?
+  url: https://themittenmac.com/what-does-apt-activity-look-like-on-macos
 - name: mDNS / Bonjour Bible - List of Common Service Strings for various vendors
   url: https://jonathanmumm.com/tech-it/mdns-bonjour-bible-common-service-strings-for-various-vendors/
 acknowledgements:
