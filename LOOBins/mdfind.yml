@@ -42,5 +42,5 @@ detections:
 resources:
   - name: '"Farming The Apple Orchards: Living off the Land Techniques" - Chris Ross & Cedric Owens'
     url: https://youtu.be/Snwh4mMe-Cg?t=45
-  - name: '"Zero-Day TCC bypass discovered in XCSSET malware" - Jaron Bradley'
+  - name: '"Zero-Day TCC bypass discovered in XCSSET malware" - Jaron Bradley, Ferdous Saljooki, Stuart Ashenbrenner'
     url: https://www.jamf.com/blog/zero-day-tcc-bypass-discovered-in-xcsset-malware/
