@@ -1,0 +1,28 @@
+name: launchctl
+author: Josh Carullo
+short_description: Interact with LaunchAgents and LaunchDaemons. 
+full_description: launchctl can be used to load, start, stop, and unload macOS services. It is a command-line frontend to launchd.
+created: 2023-05-27
+example_use_cases:
+- name: Use launchctl to execute an application 
+  description: A oneliner that will load a plist as a LaunchAgent or LaunchDaemon, achieving persistence on a target machine. This command requires root privileges.
+  code: sudo launchctl load /Library/LaunchAgent/com.apple.installer
+  tactics:
+  - Execution
+  - Persistence
+  tags:
+  - bash
+  - zsh
+  - oneliner
+paths:
+- /bin/launchctl
+detections:
+- name: LaunchAgents and LaunchDaemons must have a plist file on disk in the root, system, or user Library directory. Monitoring for plist's with executables located in /tmp or /Shared could identify suspicious applications. 
+  url: N/A
+resources:
+- name: '20 Common Tools & Techniques used by macOS threat Actors & Malware' 
+  url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
+- name: 'Mitre Attack Technique: launchctl T1569'
+  url: https://attack.mitre.org/techniques/T1569/001/
+
+
