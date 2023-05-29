@@ -1,0 +1,26 @@
+name: mdls
+author: Daniel Stinson-Diess (@shellcromancer)
+short_description: List metadata attributes for the specified file.
+full_description: mdls list file metadata across standard metadata (creation date, size), extended attribute (quarantine), and Spotlight APIs (Finder flags).
+created: 2023-05-29
+example_use_cases:
+  - name: Validate file download information
+    description: Use mdls to validate payload download sources and timestamps to guard against sandbox executions.
+    code: mdls -name "kMDItemWhereFroms" -name "kMDItemDownloadedDate"
+    tactics:
+      - Defense Evasion
+    tags:
+      - Genieo
+      - Shlayer
+  - name: Query File Paths
+    description: Use mdls to print file paths and sizes when enumerating host resources.
+    code: xargs -0 mdls -n kMDItemPath -n kMDItemFSSize
+    tactics:
+      - Discovery
+    tags:
+      - CleanMaster
+paths:
+  - /usr/bin/mdls
+detections:
+  - name: No detections at time of publishing
+    url: N/A
