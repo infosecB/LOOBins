@@ -15,9 +15,9 @@ example_use_cases:
     description: Get the current proxy configuration of the systems
     code: scutil --proxy
     tactics:
-      - network
-      - configuration
+      - Discovery
     tags:
+      - network
       - configuration
   - name: Network reachability
     description: Check if the destination host is reachable from your Mac
