@@ -1,0 +1,46 @@
+name: scutil
+author: Ethan Nay
+short_description: Display basic network information, check the dns config, set the computer hostname and perform several other tasks.
+full_description: scutil provides a command line interface to the dynamic store data maintained by configd. Interaction with this data (using the SystemConfiguration.framework SCDynamicStore APIs) is handled with a set of commands read from standard input.
+created: 2023-06-21
+example_use_cases:
+  - name: DNS configuration
+    description: Get the current DNS configuration of the systems
+    code: scutil --dns
+    tactics:
+      - Discovery
+    tags:
+      - network
+  - name: Proxy configuration
+    description: Get the current proxy configuration of the systems
+    code: scutil --proxy
+    tactics:
+      - Discovery
+    tags:
+      - network
+      - configuration
+  - name: Network reachability
+    description: Check if the destination host is reachable from your Mac
+    code: scutil -r { nodename | address | local-address remote-address }
+    tactics:
+      - Discovery
+    tags:
+      - network
+      - configuration
+  - name: Hostname, localhost name and computername
+    description: Display the current hostname, localhost name and computername
+    code: scutil --get { HostName | LocalHostName | ComputerName }
+    tactics:
+      - Discovery
+    tags:
+      - configuration
+paths:
+  - /usr/bin/scutil
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "macOS/binaries/scutil"
+    url: https://macosbin.com/bin/scutil
+  - name: "scutil man page"
+    url: https://ss64.com/osx/scutil.html
