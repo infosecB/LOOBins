@@ -5,16 +5,15 @@ full_description: The mktemp binary located in "usr/bin/mktemp" can generate uni
 created: 2023-06-28
 example_use_cases:
   - name: Generate payload directory (Shlayer)
-    description: The following command can be used to generate random, unique file
-      and directory names for payloads
-    code: export tmpDir="$(mktemp -d /tmp/XXXXXXXXXXXX)
+    description: The following command can be used to generate random, unique file and directory names for payloads
+    code: export tmpDir="$(mktemp -d /tmp/XXXXXXXXXXXX)"
     tactics:
       - Defense Evasion
     tags:
       - Payload
   - name: Generate directory based on template file (Bundlore)
     description: Show all mounted servers on the desktop.
-    code: TMP_DIR=`mktemp -d -t x
+    code: TMP_DIR="mktemp -d -t x"
     tactics:
       - Defense Evasion
     tags:
