@@ -1,6 +1,6 @@
 name: mktemp
 author: Tim Peck (@B0bby_Tablez)
-short_description: Generate unique/random filnemes for payloads
+short_description: Create a temporary file or directory and return the file/directory name to stdout
 full_description: The mktemp binary located in "usr/bin/mktemp" can generate unique directory or file names and has historically been used to generate unique payloads.
 created: 2023-06-28
 example_use_cases:
@@ -19,7 +19,7 @@ example_use_cases:
     tags:
       - Payload
 paths:
-  - /usr/bin/defaults
+  - /usr/bin/mktemp
 detections:
   - name: No detections at time of publishing
     url: N/A
