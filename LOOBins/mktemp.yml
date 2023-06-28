@@ -1,30 +1,31 @@
 name: mktemp
 author: Tim Peck (@B0bby_Tablez)
 short_description: Generate unique/random filnemes for payloads
-full_description: The mktemp binary located in "usr/bin/mktemp" can generate unique directory or file names and has historically been used to generate unique payloads
+full_description: The mktemp binary located in "usr/bin/mktemp" can generate unique directory or file names and has historically been used to generate unique payloads.
 created: 2023-06-28
 example_use_cases:
-- name: Generate payload directory (Shlayer)
-  description: The following command can be used to generate random, unique file and directory names for payloads
-  code: 'export tmpDir="$(mktemp -d /tmp/XXXXXXXXXXXX)'
-  tactics:
-  - Defense Evasion
-  tags:
-  - Payload
-- name: Generate directory based on template file (Bundlore)
-  description: Show all mounted servers on the desktop.
-  code: "TMP_DIR=`mktemp -d -t x"
-  tactics:
-  - Defense Evasion
-   tags:
-  - Payload
+  - name: Generate payload directory (Shlayer)
+    description: The following command can be used to generate random, unique file
+      and directory names for payloads
+    code: export tmpDir="$(mktemp -d /tmp/XXXXXXXXXXXX)
+    tactics:
+      - Defense Evasion
+    tags:
+      - Payload
+  - name: Generate directory based on template file (Bundlore)
+    description: Show all mounted servers on the desktop.
+    code: TMP_DIR=`mktemp -d -t x
+    tactics:
+      - Defense Evasion
+    tags:
+      - Payload
 paths:
-- /usr/bin/defaults
+  - /usr/bin/defaults
 detections:
-- name: No detections at time of publishing
-  url: N/A
+  - name: No detections at time of publishing
+    url: N/A
 resources:
-- name: "Shlayer malware abusing Gatekeeper bypass on macOS"
-  url: https://www.jamf.com/blog/shlayer-malware-abusing-gatekeeper-bypass-on-macos/
-- name: "20 Common Tools & Techniques Used by macOS Threat Actors & Malware"
-  url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
+  - name: Shlayer malware abusing Gatekeeper bypass on macOS
+    url: https://www.jamf.com/blog/shlayer-malware-abusing-gatekeeper-bypass-on-macos/
+  - name: 20 Common Tools & Techniques Used by macOS Threat Actors & Malware
+    url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
