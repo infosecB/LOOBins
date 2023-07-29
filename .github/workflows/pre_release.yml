@@ -3,7 +3,13 @@ on:
   push:
     tags:
       - '*.*.*'
-
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+        default: '0.0.0'
+        
 jobs:
   test_pypi_release:
     runs-on: ubuntu-latest
