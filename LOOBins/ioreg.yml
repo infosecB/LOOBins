@@ -5,7 +5,7 @@ full_description: The I/O Kit registry (ioreg) is a useful binary that can be us
 created: 2023-04-20
 example_use_cases:
 - name: Use ioreg to check whether the remote macOS screen is locked.
-  description: The following command will display of list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" us present, the screen is actively locked.
+  description: The following command will display a list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" is present, the screen is actively locked.
   code: ioreg -n Root -d1 -a | grep CGSSession
   tactics:
   - Reconnaissance
@@ -13,7 +13,7 @@ example_use_cases:
   - bash
   - oneliner
   - lockscreen
-- name: Use ioreg to check whether the host is on a phusical machine or a VM
+- name: Use ioreg to check whether the host is on a physical machine or a VM
   description: Check the output of this command (specifically the IOPlatformSerialNumber, board-id, and manufacturer fields) to check whether or not this host is in a virtual machine.
   code: ioreg -rd1 -c IOPlatformExpertDevice
   tactics:
@@ -32,7 +32,7 @@ example_use_cases:
   - oneliner
   - vmcheck
 - name: Check all ioreg properties for hypervisor names.
-  description: Grep for "virtual box", "oralce", and "vmware" from the output of the ioreg -l command. This is an additional way to check for virtualization.
+  description: Grep for "virtual box", "oracle", and "vmware" from the output of the ioreg -l command. This is an additional way to check for virtualization.
   code: ioreg -l
   tactics:
   - Reconnaissance
