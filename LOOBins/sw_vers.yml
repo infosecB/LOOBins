@@ -1,0 +1,48 @@
+name: sw_vers
+author: Eliott (@Koyiott)
+short_description: Prints macOS version information.
+full_description: sw_vers prints macOS version information, including the exact macOS version number.
+created: 2023-09-11
+example_use_cases:
+  - name: Retrieving macOS Version Information
+    description: Fetch detailed macOS version information including the build version, product name, and product version.
+    code: sw_vers
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - configuration
+  - name: Retrieving macOS Product Version
+    description: Fetch macOS product version.
+    code: sw_vers -productVersion
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - configuration
+  - name: Retrieving macOS Product Name
+    description: Fetch detailed macOS product name.
+    code: sw_vers -productName
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - configuration
+  - name: Retrieving macOS Build Version
+    description: Fetch detailed macOS build version.
+    code: sw_vers -buildVersion
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - configuration
+paths:
+  - /usr/bin/sw_vers
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "macOS/binaries/sw_vers"
+    url: https://macosbin.com/bin/sw_vers
+  - name: "sw_vers man page"
+    url: https://ss64.com/osx/sw_vers.html
