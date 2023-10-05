@@ -9,7 +9,6 @@ example_use_cases:
   code: xattr -d com.apple.quarantine FILE
   tactics:
   - Execution
-  - Privilege Escalation
   - Defense Evasion
   tags:
   - xattr
