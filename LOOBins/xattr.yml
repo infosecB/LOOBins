@@ -9,7 +9,6 @@ example_use_cases:
   code: xattr -d com.apple.quarantine FILE
   tactics:
   - Execution
-  - Privilege Escalation
   - Defense Evasion
   tags:
   - xattr
@@ -19,7 +18,6 @@ example_use_cases:
   code: xattr -d -r com.apple.quarantine *
   tactics:
   - Execution
-  - Privilege Escalation
   - Defense Evasion
   tags:
   - xattr
