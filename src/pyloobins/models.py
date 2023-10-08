@@ -41,11 +41,24 @@ class Resource(BaseModel):
 class Entitlement(BaseModel):
     """macOS entitlement class"""
 
-    name: str
-    short_description: str
-    description: str
+    name: str = Field(title="Name", description="Name of the macOS entitlement")
+    short_description: str = Field(
+        title="Short Description",
+        description="A short description of the entitlement."
+        "This will display in the entitlement card list and the"
+        "LOOBins website search results.",
+    )
+    full_description: str = Field(
+        title="Full Description",
+        description="A full description of the entitlement."
+        "This will display on the entitlement's single page.",
+    )
     tactics: Optional[List[AttackTactics]] = None
     tags: Optional[List[str]] = None
+    resources: Optional[List[Resource]] = Field(
+        title="Resource",
+        description="A list of useful resources for the LOOBin",
+    )
 
 
 class ExampleUseCase(BaseModel):
