@@ -38,6 +38,16 @@ class Resource(BaseModel):
     url: str
 
 
+class Entitlement(BaseModel):
+    """macOS entitlement class"""
+
+    name: str
+    short_description: str
+    description: str
+    tactics: Optional[List[AttackTactics]] = None
+    tags: Optional[List[str]] = None
+
+
 class ExampleUseCase(BaseModel):
     """Use case base class"""
 
