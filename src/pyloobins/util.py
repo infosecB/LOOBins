@@ -126,6 +126,8 @@ def make_entitlement_template(name: str = "") -> Entitlement:
     """Creates a template LOOBin object"""
     entitlement_template = Entitlement(
         name=name if name else "Entitlement Template",
+        entitlement_key="com.apple.x.x.x",
+        created=date.today(),
         short_description="A short description for the entitlement",
         full_description="A long description of how the entitlement can be abused by attackers.",
         tactics=["Execution"],
