@@ -5,7 +5,8 @@ from datetime import date
 import yaml
 
 import pyloobins
-from .models import Detection, ExampleUseCase, LOOBin, Resource
+
+from .models import Detection, Entitlement, ExampleUseCase, LOOBin, Resource
 
 
 def get_loobins(path: str = "") -> list:
@@ -14,7 +15,7 @@ def get_loobins(path: str = "") -> list:
     if path:
         yml_files = pathlib.Path(path).glob("**/*.yml")
     else:
-        yml_files = (pathlib.Path(pyloobins.__file__).parents[1]/"LOOBins").glob(
+        yml_files = (pathlib.Path(pyloobins.__file__).parents[1] / "LOOBins").glob(
             "**/*.yml"
         )
     for yml_file in yml_files:
@@ -29,6 +30,29 @@ def get_loobins(path: str = "") -> list:
             # TODO add more specific Exception handling
             print(exc)
     return loobins
+
+
+def get_entitlements(path: str = "") -> list:
+    """Returns a list of Entitlement objects"""
+    entitlements = []
+    if path:
+        yml_files = pathlib.Path(path).glob("**/*.yml")
+    else:
+        yml_files = (
+            pathlib.Path(pyloobins.__file__).parents[1] / "LOOEntitlements"
+        ).glob("**/*.yml")
+    for yml_file in yml_files:
+        with open(yml_file, "r", encoding="utf-8") as stream:
+            try:
+                yml_content = yaml.safe_load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+        try:
+            entitlements.append(Entitlement(**yml_content))  # type: ignore
+        except Exception as exc:
+            # TODO add more specific Exception handling
+            print(exc)
+    return entitlements
 
 
 def validate_loobin(yml_path: str) -> bool:
