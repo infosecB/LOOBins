@@ -1,0 +1,13 @@
+name: Allow DYLD Environment Variables Entitlement
+created: 2023-10-14
+entitlement_key: com.apple.security.cs.allow-dyld-environment-variables
+short_description: A Boolean value that indicates whether the app may be affected by dynamic linker environment variables, which you can use to inject code into your app’s process.
+full_description: An attacker can inject dynamic libraries (dylibs) into a binary which holds the "com.apple.security.cs.allow-dyld-environment-variables" entitlement. This is acheived by including an enviornemnt variable that points to and ultimately loads a malicious dylib.
+tactics:
+- Execution
+tags:
+  - Cryptomator
+  - dylib
+resource:
+- "[macOS documention](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_security_cs_allow-dyld-environment-variables)"
+- "[Cryptomator 1.6.5 Dylib Injection](https://tehwinsam.medium.com/cryptomator-1-6-5-dylib-injection-8004a1e90b26)"
