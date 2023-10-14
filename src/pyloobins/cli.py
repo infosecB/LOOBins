@@ -4,7 +4,13 @@ import sys
 
 import click
 
-from .util import get_loobins, make_template, normalize_file_name, validate_loobin
+from .util import (
+    get_loobins,
+    make_template,
+    normalize_file_name,
+    validate_entitlement,
+    validate_loobin,
+)
 
 
 @click.group()
@@ -19,14 +25,27 @@ def cli():
     required=True,
     help="The path of the LOOBin YAML file to validate.",
 )
-def validate(path: str) -> None:
-    """Validate a LOOBin YAML file."""
-    if validate_loobin(yml_path=path):
-        print(f"LOOBin at {path} is valid.")
-        sys.exit(0)
-    else:
-        print(f"LOOBin at {path} is NOT valid.")
-        sys.exit(1)
+@click.option(
+    "--obj", type=click.Choice(["LOOBin", "Entitlement"], case_sensitive=False)
+)
+def validate(path: str, obj: str) -> None:
+    """Validate a an object's YAML file."""
+    obj = obj.lower()
+    match obj:
+        case "loobin":
+            if validate_loobin(yml_path=path):
+                print(f"LOOBin at {path} is valid.")
+                sys.exit(0)
+            else:
+                print(f"LOOBin at {path} is NOT valid.")
+                sys.exit(1)
+        case "entitlement":
+            if validate_entitlement(yml_path=path):
+                print(f"Entitlement at {path} is valid.")
+                sys.exit(0)
+            else:
+                print(f"Entitlement at {path} is NOT valid.")
+                sys.exit(1)
 
 
 @cli.command()
