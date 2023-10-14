@@ -66,6 +66,30 @@ class Entitlement(BaseModel):
         description="A list of useful resources for the LOOBin",
     )
 
+    def to_yaml(self, exclude_null: bool = True) -> str:
+        """Convert a Entitlement object to a YAML string"""
+        return yaml.dump(
+            self.dict(exclude_none=exclude_null),
+            Dumper=yaml.Dumper,
+            sort_keys=False,
+        )
+
+    def to_md(self) -> str:
+        """Convert a Entitlement object to a Markdown string"""
+        env = Environment(
+            loader=PackageLoader("pyloobins", "templates"),
+            autoescape=select_autoescape(),
+        )
+
+        template = env.get_template("entitlement.md.j2").render(entitlement=self)
+        return template
+
+    def __str__(self) -> str:
+        return self.to_yaml()
+
+    def __repr__(self) -> str:
+        return self.to_yaml()
+
 
 class ExampleUseCase(BaseModel):
     """Use case base class"""
