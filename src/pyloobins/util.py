@@ -71,6 +71,22 @@ def validate_loobin(yml_path: str) -> bool:
         return False
 
 
+def validate_entitlement(yml_path: str) -> bool:
+    """Validates Entitlement YAML file"""
+    with open(yml_path, "r", encoding="utf-8") as stream:
+        try:
+            yml_content = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+    try:
+        Entitlement(**yml_content)  # type: ignore
+        return True
+    except Exception as exc:
+        # TODO add more specific Exception handling
+        print(exc)
+        return False
+
+
 def make_template(name: str = "") -> LOOBin:
     """Creates a template LOOBin object"""
     loobin_template = LOOBin(
@@ -106,6 +122,19 @@ def make_template(name: str = "") -> LOOBin:
     return loobin_template
 
 
+def make_entitlement_template(name: str = "") -> Entitlement:
+    """Creates a template LOOBin object"""
+    entitlement_template = Entitlement(
+        name=name if name else "Entitlement Template",
+        short_description="A short description for the entitlement",
+        full_description="A long description of how the entitlement can be abused by attackers.",
+        tactics=["Execution"],
+        tags=["Test"],
+        resources=[Resource(name="Name of resource", url="https://google.com")],
+    )
+    return entitlement_template
+
+
 def normalize_file_name(title: str) -> str:
-    """Accepts a binary title and normalizes it for the file name"""
+    """Accepts an object title and normalizes it for the file name"""
     return title.lower().replace(" ", "_")
