@@ -1,0 +1,100 @@
+---
+title: {{ entitlement.name }}
+description: {{ entitlement.short_description }}
+date: {{ entitlement.created }}
+draft: false
+menu:
+  showcase:
+    parent: "browse"
+weight: 100
+toc: false
+pinned: false
+featured: false
+entitlement_tactics: {{ tactics }}
+entitlement_tags: {{ tags }}
+---
+
+# {{ entitlement.name }}
+**Key:** `entitlement.key`
+
+{{ entitlement.short_description }}
+
+## Description
+{{ entitlement.full_description }}
+| Created | Tactics | Tags |
+|---|---|---|
+| {{ entitlement.created }} | {% for t in tactics %}<span class="badge text-bg-danger">{{ t }}</span> {% endfor %}  | {% for t in tags %}<span class="badge text-bg-secondary">{{ t }}</span> {% endfor %} | 
+
+{% if entitlement.resources %}
+## Resources
+{% for resource in entitlement.resources %}
+- [{{ resource.name }}]({{ resource.url }})
+{% endfor %}
+{% endif %}
+
+
+------------------------------------------------------------------------------------------------------------
+
+---
+title: {{ entitlement.name }}
+description: {{ entitlement.short_description }}
+date: {{ entitlement.created }}
+draft: false
+menu:
+  showcase:
+    parent: "browse"
+weight: 100
+toc: false
+pinned: false
+featured: false
+tactics: {{ tactics }}
+tags: {{ tags }}
+---
+
+# {{ entitlement.name }}
+*Created by {{ entitlement.author }}*
+
+## Description
+{{ entitlement.full_description }}
+| Created | Tactics | Tags |
+|---|---|---|
+| {{ entitlement.created }} | {% for t in tactics %}<span class="badge text-bg-danger">{{ t }}</span> {% endfor %}  | {% for t in tags %}<span class="badge text-bg-secondary">{{ t }}</span> {% endfor %} | 
+
+## Paths
+{% for path in entitlement.paths %}
+- `{{ path }}`
+{% endfor %}
+
+## Use Cases
+{% for example in entitlement.example_use_cases %}
+#### {{ example.name }}
+{{ example.description }}
+
+```
+{{ example.code }}
+```
+
+{% endfor %}
+
+## Detections
+{% for detection in entitlement.detections %}
+{% if detection.url in "N/A" %}
+- {{ detection.name }}
+{% else %}
+- [{{ detection.name }}]({{ detection.url }})
+{% endif %}
+{% endfor %}
+
+{% if entitlement.resources %}
+## Resources
+{% for resource in entitlement.resources %}
+- [{{ resource.name }}]({{ resource.url }})
+{% endfor %}
+{% endif %}
+
+{% if entitlement.acknowledgements %}
+## Acknowledgements
+{% for acknowledgement in entitlement.acknowledgements %}
+- {{ acknowledgement }}
+{% endfor %}
+{% endif %}
