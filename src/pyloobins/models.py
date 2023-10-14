@@ -42,6 +42,12 @@ class Entitlement(BaseModel):
     """macOS entitlement class"""
 
     name: str = Field(title="Name", description="Name of the macOS entitlement")
+    entitlement_key: str = Field(
+        title="Entitlement Key", description="The of the macOS entitlement"
+    )
+    created: date = Field(
+        title="Created", description="Date the Entitlement was created"
+    )
     short_description: str = Field(
         title="Short Description",
         description="A short description of the entitlement."
