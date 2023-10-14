@@ -6,6 +6,7 @@ import click
 
 from .util import (
     get_loobins,
+    make_entitlement_template,
     make_template,
     normalize_file_name,
     validate_entitlement,
@@ -26,12 +27,13 @@ def cli():
     help="The path of the LOOBin YAML file to validate.",
 )
 @click.option(
-    "--obj", type=click.Choice(["LOOBin", "Entitlement"], case_sensitive=False)
+    "--object-type",
+    type=click.Choice(["LOOBin", "Entitlement"], case_sensitive=False),
 )
-def validate(path: str, obj: str) -> None:
+def validate(path: str, object_type: str) -> None:
     """Validate a an object's YAML file."""
-    obj = obj.lower()
-    match obj:
+    object_type = object_type.lower()
+    match object_type:
         case "loobin":
             if validate_loobin(yml_path=path):
                 print(f"LOOBin at {path} is valid.")
@@ -56,21 +58,41 @@ def validate(path: str, obj: str) -> None:
     required=False,
     help="Enter the path where you would like to create the template YAML file.",
 )
-def create(name: str, path: str) -> None:
-    """Create a YAML template file for a new LOOBin."""
-    template = make_template(name=name).to_yaml()
-    file_name = normalize_file_name(name) if name else "template"
-    file_path = path if path and os.path.exists(path) else "./"
-    if not os.path.exists(file_path):
-        click.echo(
-            f"The specified path did not exist. "
-            f"Creating the {file_name}.yml file in the current directory."
-        )
-    with open(
-        file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
-    ) as out_file:
-        out_file.write(template)
-        out_file.close()
+@click.option(
+    "--object-type", type=click.Choice(["LOOBin", "Entitlement"], case_sensitive=False)
+)
+def create(name: str, path: str, object_type: str) -> None:
+    """Create a YAML template file for a new object."""
+    object_type = object_type.lower()
+    match object_type:
+        case "loobin":
+            template = make_template(name=name).to_yaml()
+            file_name = normalize_file_name(name) if name else "template"
+            file_path = path if path and os.path.exists(path) else "./"
+            if not os.path.exists(file_path):
+                click.echo(
+                    f"The specified path did not exist. "
+                    f"Creating the {file_name}.yml file in the current directory."
+                )
+            with open(
+                file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
+            ) as out_file:
+                out_file.write(template)
+                out_file.close()
+        case "entitlement":
+            template = make_entitlement_template(name=name).to_yaml()
+            file_name = normalize_file_name(name) if name else "template"
+            file_path = path if path and os.path.exists(path) else "./"
+            if not os.path.exists(file_path):
+                click.echo(
+                    f"The specified path did not exist. "
+                    f"Creating the {file_name}.yml file in the current directory."
+                )
+            with open(
+                file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
+            ) as out_file:
+                out_file.write(template)
+                out_file.close()
 
 
 @cli.command()
