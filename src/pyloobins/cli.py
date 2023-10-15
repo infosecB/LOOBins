@@ -5,6 +5,7 @@ import sys
 import click
 
 from .util import (
+    get_entitlements,
     get_loobins,
     make_entitlement_template,
     make_template,
@@ -103,19 +104,39 @@ def create(name: str, path: str, object_type: str) -> None:
     required=False,
     help="Enter the path where you would like to create the template YAML file.",
 )
-def get(name: str, path: str = "") -> None:
-    """Get a LOOBin object."""
-    if path:
-        loobins = get_loobins(path=path)
-    else:
-        loobins = get_loobins()
+@click.option(
+    "--object-type", type=click.Choice(["LOOBin", "Entitlement"], case_sensitive=False)
+)
+def get(name: str, object_type: str, path: str = "") -> None:
+    """Get an object."""
+    object_type = object_type.lower()
+    match object_type:
+        case "loobin":
+            if path:
+                loobins = get_loobins(path=path)
+            else:
+                loobins = get_loobins()
 
-    res = [loobin for loobin in loobins if loobin.name == name]
+            res = [loobin for loobin in loobins if loobin.name == name]
 
-    if len(res) == 0:
-        print(f"No LOOBin found for {name}.")
-    else:
-        print(res[0].json(indent=True, exclude_none=True))
+            if len(res) == 0:
+                print(f"No LOOBin found for {name}.")
+            else:
+                print(res[0].json(indent=True, exclude_none=True))
+        case "entitlement":
+            if path:
+                entitlements = get_entitlements(path=path)
+            else:
+                entitlements = get_entitlements()
+
+            res = [
+                entitlement for entitlement in entitlements if entitlement.name == name
+            ]
+
+            if len(res) == 0:
+                print(f"No Entitlement found for {name}.")
+            else:
+                print(res[0].json(indent=True, exclude_none=True))
 
 
 if __name__ == "__main__":
