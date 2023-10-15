@@ -2,11 +2,11 @@ name: Get Task Allow
 entitlement_key: com.apple.security.get-task-allow
 created: 2023-10-15
 short_description: Allows other applications to attach to the entitled app.
-full_description: An app signed with the "com.apple.security.get-task-allow" entitlement will allow any other process to use its entitlements and any TCC permissions which the user granted to it.
+full_description: An app signed with the "com.apple.security.get-task-allow" entitlement will allow an attacker to escalate privileges by using the affect app's entitlements and any TCC privileges which were granted by the user.
 tactics:
 - Privilege Escalation
 tags:
-- sandbox escape
+- Process Injection
 resources:
 - name: Dangerous Get Task Allow Entitlement on iExplorer example (@_r3ggi)
   url: https://wojciechregula.blog/post/dangerous-get-task-allow-entitlement/
