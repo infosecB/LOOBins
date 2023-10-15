@@ -189,3 +189,11 @@ class LOOBinsGroup(BaseModel):
     """LOOBin list base class"""
 
     __root__: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
+
+
+class EntitlementsGroup(BaseModel):
+    """Entitlement list base class"""
+
+    __root__: List[Entitlement] = Field(
+        title="Entitlements", description="A list of Entitlements"
+    )
