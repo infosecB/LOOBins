@@ -2,12 +2,17 @@
 import os
 from pathlib import Path
 
-from pyloobins.util import get_loobins, make_template, validate_loobin
+from pyloobins.util import get_entitlements, get_loobins, make_template, validate_loobin
 
 
 def test_get_loobins():
     """Test the get_loobins function."""
-    assert get_loobins("../LOOBins")
+    assert len(get_loobins(path="./LOOBins")) > 0
+
+
+def test_get_entitlements():
+    """Test the get_entitlements function."""
+    assert len(get_entitlements(path="./Entitlements")) > 0
 
 
 def test_make_template():
