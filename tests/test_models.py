@@ -4,6 +4,7 @@ from datetime import date
 from pyloobins.models import (
     Detection,
     Entitlement,
+    EntitlementsGroup,
     ExampleUseCase,
     LOOBin,
     LOOBinsGroup,
@@ -113,3 +114,18 @@ def test_loobin_group():
         acknowledgements=["Enter any acknowledgements here."],
     )
     assert LOOBinsGroup(__root__=[loobin])
+
+
+def test_entitlement_group():
+    """Test the Entitlement group model."""
+    entitlement = Entitlement(
+        name="Test",
+        entitlement_key="Test",
+        created=date.today(),
+        short_description="A test desc",
+        full_description="A test full desc",
+        tactics=["Initial Access"],
+        tags=["Test"],
+        resources=[Resource(name="Test", url="https://test")],
+    )
+    assert EntitlementsGroup(__root__=[entitlement])
