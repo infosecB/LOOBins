@@ -1,7 +1,14 @@
 """Test the models in the pyloobins.models module."""
 from datetime import date
 
-from pyloobins.models import Detection, ExampleUseCase, LOOBin, LOOBinsGroup, Resource
+from pyloobins.models import (
+    Detection,
+    Entitlement,
+    ExampleUseCase,
+    LOOBin,
+    LOOBinsGroup,
+    Resource,
+)
 
 
 def test_detection():
@@ -22,6 +29,20 @@ def test_example_use_case():
         code="Test code.",
         tactics=["Discovery"],
         tags=["test_tag"],
+    )
+
+
+def test_entitlement():
+    """Test the Entitlement model."""
+    assert Entitlement(
+        name="Test",
+        entitlement_key="Test",
+        created=date.today(),
+        short_description="A test desc",
+        full_description="A test full desc",
+        tactics=["Initial Access"],
+        tags=["Test"],
+        resources=[Resource(name="Test", url="https://test")],
     )
 
 
