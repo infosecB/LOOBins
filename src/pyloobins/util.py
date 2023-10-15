@@ -38,9 +38,9 @@ def get_entitlements(path: str = "") -> list:
     if path:
         yml_files = pathlib.Path(path).glob("**/*.yml")
     else:
-        yml_files = (
-            pathlib.Path(pyloobins.__file__).parents[1] / "LOOEntitlements"
-        ).glob("**/*.yml")
+        yml_files = (pathlib.Path(pyloobins.__file__).parents[1] / "Entitlements").glob(
+            "**/*.yml"
+        )
     for yml_file in yml_files:
         with open(yml_file, "r", encoding="utf-8") as stream:
             try:
