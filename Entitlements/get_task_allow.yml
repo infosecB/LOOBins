@@ -4,6 +4,7 @@ created: 2023-10-15
 short_description: Allows other applications to attach to the entitled app.
 full_description: An app signed with the "com.apple.security.get-task-allow" entitlement will allow an attacker to escalate privileges by using the affect app's entitlements and any TCC privileges which were granted by the user.
 tactics:
+- Defense Evasion
 - Privilege Escalation
 tags:
 - Process Injection
