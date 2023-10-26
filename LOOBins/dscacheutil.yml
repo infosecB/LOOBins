@@ -9,7 +9,6 @@ example_use_cases:
     description: List the user information
     code: dscacheutil -q user -a name <USER_NAME>
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -18,7 +17,6 @@ example_use_cases:
     description: List the all users information
     code: dscacheutil -q user
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
