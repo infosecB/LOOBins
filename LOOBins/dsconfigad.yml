@@ -9,7 +9,6 @@ example_use_cases:
     description: Retrieves the Active Directory configuration
     code: dsconfigad -show
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -18,7 +17,6 @@ example_use_cases:
     description: Retrieves the Active Directory name
     code: dsconfigad -show |awk '/Active Directory Domain/{print $NF}'
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
