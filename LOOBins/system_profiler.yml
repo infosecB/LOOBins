@@ -8,7 +8,6 @@ example_use_cases:
     description: List all available sub-systems to get information from.
     code: system_profiler -listDataTypes
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -17,7 +16,6 @@ example_use_cases:
     description: Prints an overview of the hardware of the current machine, including its model name and serial number.
     code: system_profiler SPHardwareDataType
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -26,7 +24,6 @@ example_use_cases:
     description: Prints an overview of the software of the current machine, including the exact macOS version number.
     code: system_profiler SPSoftwareDataType
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -35,7 +32,6 @@ example_use_cases:
     description: Prints the currently active version of the Xcode developer tools and SDK.
     code: system_profiler SPDeveloperToolsDataType
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -44,7 +40,6 @@ example_use_cases:
     description: Prints power and battery information, including the current AC wattage and battery cycle count.
     code: system_profiler SPPowerDataType
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash

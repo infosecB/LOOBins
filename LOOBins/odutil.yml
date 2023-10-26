@@ -8,7 +8,6 @@ example_use_cases:
     description: List all available node names
     code: odutil show nodenames
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -17,7 +16,6 @@ example_use_cases:
     description: Retrieves the all active sessions
     code: odutil show sessions
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -26,7 +24,6 @@ example_use_cases:
     description: Retrieves the configuration of "Default search policy"
     code: odutil show configuration /Search
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
@@ -35,7 +32,6 @@ example_use_cases:
     description: Retrieves the configuration of "Contact search policy"
     code: odutil show configuration /Contacts
     tactics:
-      - Execution
       - Discovery
     tags:
       - bash
