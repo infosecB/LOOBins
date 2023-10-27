@@ -8,9 +8,10 @@ created: 2023-07-12
 example_use_cases:
   - name: Fork a process
     description: Make caffeinate fork a process and hold an assertion that prevents idle sleep as long as that process is running
-    code: caffeinate -i <process>
+    code: caffeinate -i /tmp/evil
     tactics:
       - Execution
+      - Defense Evasion
     tags:
       - bash
       - zsh
