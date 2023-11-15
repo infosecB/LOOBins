@@ -8,7 +8,7 @@ example_use_cases:
   description: The following command will display a list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" is present, the screen is actively locked.
   code: ioreg -n Root -d1 -a | grep CGSSession
   tactics:
-  - Reconnaissance
+  - Discovery
   tags:
   - bash
   - oneliner
@@ -17,7 +17,7 @@ example_use_cases:
   description: Check the output of this command (specifically the IOPlatformSerialNumber, board-id, and manufacturer fields) to check whether or not this host is in a virtual machine.
   code: ioreg -rd1 -c IOPlatformExpertDevice
   tactics:
-  - Reconnaissance
+  - Discovery
   - Collection
   tags:
   - oneliner
@@ -26,7 +26,7 @@ example_use_cases:
   description: Grep for "USB Vendor Name" values to view USB vendor names. On virtualized hardware these values may contain the hypervisor name such as "VirtualBox". This is an additional way to check for virtualization.  
   code: ioreg -rd1 -c IOUSBHostDevice
   tactics:
-  - Reconnaissance
+  - Discovery
   - Collection
   tags:
   - oneliner
@@ -35,7 +35,7 @@ example_use_cases:
   description: Grep for "virtual box", "oracle", and "vmware" from the output of the ioreg -l command. This is an additional way to check for virtualization.
   code: ioreg -l
   tactics:
-  - Reconnaissance
+  - Discovery
   - Collection
   tags:
   - oneliner
