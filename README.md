@@ -22,8 +22,8 @@ It's important to note that LOOBins does not include overlapping Unix binaries t
 ## We Need Your Help!
 LOOBins is a living project and will likely never be complete. It will require continuous updating as new binaries and/or use cases are discovered by the community. Here are a few ways you can help:
 
-- Add new LOOBin binaries
-- Update existing LOOBin binaries by adding new use cases, detection sources, resources, or by simply fixing a typo
+- Add new LOOBin binaries or entitlements
+- Update existing LOOBin binaries or entitlements by adding new use cases, detection sources, resources, or by simply fixing a typo
 - Help develop and maintain the PyLOOBins Python SDK/CLI
 - Submit an issue for any problems that you are experiencing with the website or PyLOOBins SDK/CLI
 
