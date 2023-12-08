@@ -1,0 +1,19 @@
+name: killall
+author: Pratik Jeware
+short_description: kill terminal.
+full_description: Uses the killall terminal command to prevent users inspecting processes.
+created: 2023-12-08
+example_use_cases:
+  - name: kill terminal
+    code: killall Terminal
+    tactics:
+      - Impair Defenses: Disable or Modify Tools T1562
+
+paths:
+  - /usr/bin/killall
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "Sentinleone Blog"
+    url:https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
