@@ -27,7 +27,7 @@ example_use_cases:
       - zsh
   - name: Execute Swift one-liner with swift 5.8 / Xcode 14.3 Beta 1 or greater
     description: Executes a Swift one-liner that executes the ls command to list the current directory using the -e option that was implemented in swift 5.8 / Xcode 14.3 Beta 1
-    code: swift -e 'import Foundation; let process = Process(); process.executableURL = URL(fileURLWithPath:"/bin/bash"); process.arguments = ["-c", "ls -alh"]; let stdout = Pipe(); let stderr = Pipe(); process.standardOutput = stdout; process.standardError = stderr; try process.run(); print(String(decoding: stdout.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)); print(String(decoding: stderr.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self));'
+    code: "swift -e 'import Foundation; let process = Process(); process.executableURL = URL(fileURLWithPath:\"/bin/bash\"); process.arguments = [\"-c\", \"ls -alh\"]; let stdout = Pipe(); let stderr = Pipe(); process.standardOutput = stdout; process.standardError = stderr; try process.run(); print(String(decoding: stdout.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)); print(String(decoding: stderr.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self));'"
     tactics:    
       - Execution
       - Defense Evasion
