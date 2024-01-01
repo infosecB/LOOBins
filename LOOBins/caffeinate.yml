@@ -1,9 +1,10 @@
 name: caffeinate
 author: Ethan Nay
 short_description: Prevent the system from sleeping on behalf of a utility.
-full_description: caffeinate creates assertions to alter system sleep behavior.  If no assertion flags are specified, caffeinate creates an assertion to prevent idle sleep.
-                  If a utility is specified, caffeinate creates the assertions on the utility's behalf, and those assertions will persist for the duration of the utility's execution.
-                  Otherwise, caffeinate creates the assertions directly, and those assertions will persist until caffeinate exits.
+full_description: |- 
+      caffeinate creates assertions to alter system sleep behavior.  If no assertion flags are specified, caffeinate creates an assertion to prevent idle sleep.
+      If a utility is specified, caffeinate creates the assertions on the utility's behalf, and those assertions will persist for the duration of the utility's execution.
+      Otherwise, caffeinate creates the assertions directly, and those assertions will persist until caffeinate exits.
 created: 2023-07-12
 example_use_cases:
   - name: Fork a process
