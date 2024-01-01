@@ -1,7 +1,7 @@
 name: defaults
 author: Brendan Chamberlain (@infosecB)
 short_description: Read, write, and delete user preference values.
-full_description: A full length description of the binary goes here.
+full_description: The defaults binary is normally used to interact with the user defaults system, a database of macOS used to manage system settings much like the Windows Registry. The database can be abused by threat actors to change settings in attempt to evade defenses or to gain persistence.
 created: 2023-05-24
 example_use_cases:
 - name: Disable Gatekeeper's auto rearm functionality
