@@ -1,8 +1,7 @@
 name: dsconfigad
 author: Ethan Nay
 short_description: retrieves/changes configuration for Directory Services Active Directory Plugin.
-full_description: This tool allows command-line configuration of the Active Directory Plug-in. dsconfigad has the same functionality for configuring
-                  the Active Directory plugin as the Directory Utility application. It requires "admin" privileges to the local workstation and to the Directory to make changes.
+full_description: This tool allows command-line configuration of the Active Directory Plug-in. dsconfigad has the same functionality for configuring the Active Directory plugin as the Directory Utility application. It requires "admin" privileges to the local workstation and to the Directory to make changes.
 created: 2023-08-23
 example_use_cases:
   - name: Retrieves the Active Directory configuration

@@ -1,8 +1,9 @@
 name: dscacheutil
 author: Ethan Nay
 short_description: gather information, statistics and initiate queries to the Directory Service cache.
-full_description: dscacheutil does various operations against the Directory Service cache including gathering statistics, initiating lookups, inspection, cache flush, etc.
-                  This tool replaces most of the functionality of the lookupd tool previously available in the OS.
+full_description: |-
+  dscacheutil does various operations against the Directory Service cache including gathering statistics, initiating lookups, inspection, cache flush, etc.
+  This tool replaces most of the functionality of the lookupd tool previously available in the OS.
 created: 2023-08-23
 example_use_cases:
   - name: Lookup  a user
