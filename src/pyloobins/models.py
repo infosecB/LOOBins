@@ -76,9 +76,12 @@ class LOOBin(BaseModel):
     resources: Optional[List[Resource]] = Field(
         title="Resource",
         description="A list of useful resources for the LOOBin",
+        default=None,
     )
     acknowledgements: Optional[List[str]] = Field(
-        title="Acknowledgements", description="Acknowledgements for the LOOBin"
+        title="Acknowledgements",
+        description="Acknowledgements for the LOOBin",
+        default=None,
     )
 
     def combine_tactics(self) -> List[str]:
