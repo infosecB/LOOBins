@@ -109,7 +109,7 @@ class LOOBin(BaseModel):
     def to_yaml(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a YAML string"""
         return yaml.dump(
-            self.dict(exclude_none=exclude_null),
+            self.model_dump(exclude_none=exclude_null),
             Dumper=yaml.Dumper,
             sort_keys=False,
         )
