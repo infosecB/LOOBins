@@ -4,7 +4,7 @@ from typing import List, Literal, Optional
 
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 AttackTactics = Literal[
     "Reconnaissance",
