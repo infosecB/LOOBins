@@ -135,7 +135,7 @@ class LOOBin(BaseModel):
         return self.to_yaml()
 
 
-class LOOBinsGroup(BaseModel):
+class LOOBinsGroup(RootModel[List[str]]):
     """LOOBin list base class"""
 
-    __root__: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
+    root: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
