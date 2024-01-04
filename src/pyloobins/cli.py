@@ -8,6 +8,7 @@ from .util import get_loobins, make_template, normalize_file_name, validate_loob
 
 
 @click.group()
+@click.version_option(prog_name="PyLOOBins")
 def cli():
     """Create, validate, and view LOOBin objects."""
 
