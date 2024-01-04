@@ -4,7 +4,7 @@ from typing import List, Literal, Optional
 
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, RootModel
 
 AttackTactics = Literal[
     "Reconnaissance",
@@ -76,9 +76,12 @@ class LOOBin(BaseModel):
     resources: Optional[List[Resource]] = Field(
         title="Resource",
         description="A list of useful resources for the LOOBin",
+        default=None,
     )
     acknowledgements: Optional[List[str]] = Field(
-        title="Acknowledgements", description="Acknowledgements for the LOOBin"
+        title="Acknowledgements",
+        description="Acknowledgements for the LOOBin",
+        default=None,
     )
 
     def combine_tactics(self) -> List[str]:
@@ -106,7 +109,7 @@ class LOOBin(BaseModel):
     def to_yaml(self, exclude_null: bool = True) -> str:
         """Convert a LOOBin object to a YAML string"""
         return yaml.dump(
-            self.dict(exclude_none=exclude_null),
+            self.model_dump(exclude_none=exclude_null),
             Dumper=yaml.Dumper,
             sort_keys=False,
         )
@@ -132,7 +135,7 @@ class LOOBin(BaseModel):
         return self.to_yaml()
 
 
-class LOOBinsGroup(BaseModel):
+class LOOBinsGroup(RootModel[List[str]]):
     """LOOBin list base class"""
 
-    __root__: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
+    root: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")

@@ -91,4 +91,4 @@ def test_loobin_group():
         ],
         acknowledgements=["Enter any acknowledgements here."],
     )
-    assert LOOBinsGroup(__root__=[loobin])
+    assert LOOBinsGroup(root=[loobin])
