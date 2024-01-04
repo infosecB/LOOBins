@@ -52,6 +52,7 @@ class ExampleUseCase(BaseModel):
     name: str
     description: str
     code: Optional[str] = None
+    event_samples: List[EventSample]
     tactics: Optional[List[AttackTactics]] = None
     tags: Optional[List[str]] = None
 
