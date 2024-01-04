@@ -38,6 +38,14 @@ class Resource(BaseModel):
     url: str
 
 
+class EventSample(BaseModel):
+    """ESF sample event class"""
+
+    process_name: str
+    event_type: str
+    event_json: str
+
+
 class ExampleUseCase(BaseModel):
     """Use case base class"""
 
