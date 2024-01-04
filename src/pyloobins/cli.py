@@ -74,7 +74,7 @@ def get(name: str, path: str = "") -> None:
     if len(res) == 0:
         print(f"No LOOBin found for {name}.")
     else:
-        print(res[0].json(indent=True, exclude_none=True))
+        print(res[0].model_dump_json(indent=True, exclude_none=True))
 
 
 if __name__ == "__main__":
