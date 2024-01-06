@@ -44,7 +44,7 @@ disable=[
 legacy_tox_ini = """
   [tox]
   env_list =
-      py38,py39,py310,py311
+      py38,py39,py310,py311,py312
   minversion = 4.5.1
 
   [testenv]
