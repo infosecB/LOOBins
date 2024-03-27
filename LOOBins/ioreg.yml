@@ -43,8 +43,8 @@ example_use_cases:
 paths:
 - /usr/sbin/ioreg
 detections:
-- name: No detections at time of publishing
-  url: N/A
+- name: System Information Discovery Using Ioreg
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_ioreg_discovery.yml
 resources:
   - name: 'Evasions: macOS'
     url: https://evasions.checkpoint.com/techniques/macos.html
