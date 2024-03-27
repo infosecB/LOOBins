@@ -47,8 +47,8 @@ example_use_cases:
 paths:
   - /usr/sbin/system_profiler
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: System Information Discovery Using System_Profiler
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_system_profiler_discovery.yml
 resources:
   - name: "macOS/binaries/system_profiler"
     url: https://macosbin.com/bin/system_profiler
