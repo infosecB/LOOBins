@@ -9,6 +9,19 @@ example_use_cases:
     code: nscurl -k https://google.com -o /private/tmp/google
     tactics:
       - Defense Evasion
+      - Command and Control
+  - name: Download file
+    description: Download file to the Downloads directory using -dl 
+    code: nscurl https://google.com -dl
+    tactics:
+      - Defense Evasion
+      - Command and Control
+  - name: Download file
+    description: Download file to a designated directory using -dir 
+    code: nscurl https://google.com -dir /private/tmp/google
+    tactics:
+      - Defense Evasion
+      - Command and Control             
 paths:
   - /usr/bin/nscurl
 detections:
@@ -17,3 +30,5 @@ detections:
 resources:
   - name: "How to Diagnose App Transport Security Issues using nscurl and OpenSSL"
     url: https://www.agnosticdev.com/content/how-diagnose-app-transport-security-issues-using-nscurl-and-openssl
+  - name: "Living-off-the-Land: Exploring macOS LOOBins and Crafting Detection Rules - nscurl"
+    url: https://danielcortez.substack.com/p/living-off-the-land-exploring-macos  
