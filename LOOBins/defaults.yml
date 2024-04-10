@@ -21,6 +21,11 @@ example_use_cases:
   code: sudo defaults write /Library/Preferences/com.apple.loginwindow LoginHook gain_persistence.sh
   tactics:
   - Persistence
+- name: Get Active Directory user info from Jamf Connect
+  description: Retrieve Active Directory user info from Jamf Connect defaults configuration.
+  code: defaults read com.jamf.connect.state
+  tactics:
+  - Discovery
 paths:
 - /usr/bin/defaults
 detections:
