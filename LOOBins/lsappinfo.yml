@@ -1,0 +1,24 @@
+name: lsappinfo
+author: Brendan Chamberlain (@infosecb)
+short_description: Control and query CoreApplicationServices about the app state on the system
+full_description: lsappinfo (Launch Services Application Information) is a command line utility normally designed for troubleshooting macOS applications. It allows a user to gain information about running applications and their states. The binary can be abused by attackers to create or delete files, launch applications, or to send commands from a file.
+created: 2024-04-27
+example_use_cases:
+- name: An Example Use Case
+  description: A description of the use case goes here.
+  code: A code snippet goes here.
+  tactics:
+  - Discovery
+  tags:
+  - example_tag
+  - another_tag
+paths:
+- /usr/bin/lsappinfo
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: "@philofishal post on X (Twitter)"
+  url: https://x.com/philofishal/status/1783820719257747797
+acknowledgements:
+- Phil Stokes (@philofishal)
