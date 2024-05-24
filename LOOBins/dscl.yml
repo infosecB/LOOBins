@@ -132,6 +132,11 @@ example_use_cases:
     - Persistence
     tags:
     - password
+  - name: Local account creation
+    description: Create a local account
+    code: dscl -create
+    tactics:
+    - Persistence  
 paths:
   - /usr/bin/dscl
 detections:
@@ -140,3 +145,5 @@ detections:
 resources:
   - name: 'MacOS Red Teaming - HackTricks'
     url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-red-teaming
+  - name: 'MITRE ATT&CK T1136.001 Create Account: Local Account'
+    url: https://attack.mitre.org/techniques/T1136/001/
