@@ -7,7 +7,7 @@ full_description: |-
 created: 2023-08-23
 example_use_cases:
   - name: Lookup  a user
-    description: List the user information for <USER_NAME>
+    description: List the user information
     code: dscacheutil -q user -a name <USER_NAME>
     tactics:
       - Discovery
@@ -15,24 +15,8 @@ example_use_cases:
       - bash
       - zsh
   - name: Lookup all users
-    description: List all the users information
+    description: List the all users information
     code: dscacheutil -q user
-    tactics:
-      - Discovery
-    tags:
-      - bash
-      - zsh
-  - name: Lookup a group
-    description: List the group information for <GROUP_NAME>
-    code: dscacheutil -q group -a name <GROUP_NAME>
-    tactics:
-      - Discovery
-    tags:
-      - bash
-      - zsh
-  - name: Lookup all groups
-    description: List all the groups information
-    code: dscacheutil -q group
     tactics:
       - Discovery
     tags:
@@ -48,7 +32,3 @@ resources:
     url: https://macosbin.com/bin/dscacheutil
   - name: "dscacheutil man page"
     url: https://ss64.com/osx/dscacheutil.html
-  - name: "MITRE ATT&CK: T1069.002 Permission Groups Discovery: Domain Groups"
-    url: https://attack.mitre.org/techniques/T1069/002/
-  - name: "MITRE ATT&CK: T1087.002 Account Discovery: Domain Account"
-    url: https://attack.mitre.org/techniques/T1087/002/
