@@ -32,4 +32,4 @@ resources:
 - name: 'MITRE ATT&CK T1543.001  Create or Modify System Process: Launch Agent '
   url: https://attack.mitre.org/techniques/T1543/001/
 - name: 'Sofacy’s ‘Komplex’ OS X Trojan'
-	url: https://unit42.paloaltonetworks.com/unit42-sofacys-komplex-os-x-trojan/
+  url: https://unit42.paloaltonetworks.com/unit42-sofacys-komplex-os-x-trojan/
