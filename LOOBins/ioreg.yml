@@ -47,6 +47,6 @@ detections:
   url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_ioreg_discovery.yml
 resources:
   - name: 'Evasions: macOS'
-    url: https://evasions.checkpoint.com/techniques/macos.html
+    url: https://evasions.checkpoint.com/src/MacOS/macos.html
   - name: 'SwiftBelt-JXA Situational Awareness Tool'
     url: https://github.com/cedowens/SwiftBelt-JXA/blob/main/SwiftBelt-JXA.js#520

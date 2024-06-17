@@ -20,4 +20,4 @@ detections:
   url: N/A
 resources:
 - name: 'Evasions: macOS'
-  url: https://evasions.checkpoint.com/techniques/macos.html
+  url: https://evasions.checkpoint.com/src/MacOS/macos.html
