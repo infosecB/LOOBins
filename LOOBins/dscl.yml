@@ -140,8 +140,8 @@ example_use_cases:
 paths:
   - /usr/bin/dscl
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: "Jamf Protect: Detect user account creation with dscl"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/user_created_by_dscl
 resources:
   - name: 'MacOS Red Teaming - HackTricks'
     url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-red-teaming

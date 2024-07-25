@@ -38,6 +38,8 @@ detections:
     url: https://github.com/elastic/detection-rules/blob/main/rules/macos/credential_access_dumping_keychain_security.toml
   - name: "Elastic: Keychain Password Retrieval via Command Line"
     url: https://github.com/elastic/detection-rules/blob/main/rules/macos/credential_access_keychain_pwd_retrieval_security_cmd.toml
+  - name: "Jamf Protect: Detect Keychain dumping using security"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/keychain_dumped
 resources:
   - name: Using the OS X Keychain to store and retrieve passwords
     url: https://www.netmeister.org/blog/keychain-passwords.html

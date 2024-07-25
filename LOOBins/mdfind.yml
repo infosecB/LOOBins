@@ -37,8 +37,8 @@ example_use_cases:
 paths:
   - /usr/bin/mdfind
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: "Jamf Protect: Detect activity related to mdfind used to search for stored AWS keys"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/mdfind_search_aws_keys
 resources:
   - name: '"Farming The Apple Orchards: Living off the Land Techniques" - Chris Ross & Cedric Owens'
     url: https://youtu.be/Snwh4mMe-Cg?t=45
