@@ -26,6 +26,20 @@ example_use_cases:
   code: defaults read com.jamf.connect.state
   tactics:
   - Discovery
+- name: Enable Firewall
+  description: Enables macOS' default firewall. This command requires root privileges.
+  code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 1
+  tactics:
+  - Defense Evasion
+  tags:
+  - firewall
+- name: Disable Firewall
+  description: Disables macOS' default firewall. This command requires root privileges.
+  code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 0
+  tactics:
+  - Defense Evasion
+  tags:
+  - firewall
 paths:
 - /usr/bin/defaults
 detections:
