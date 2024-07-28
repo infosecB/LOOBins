@@ -55,8 +55,8 @@ example_use_cases:
 paths:
 - /usr/bin/tmutil
 detections:
-- name: No detection content available
-  url: N/A
+- name: "Jamf Protect: Detect the deletion of localsnapshots"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/tmutil_activity
 resources:
 - name: mount_apfs TCC bypass and privilege escalation
   url: https://theevilbit.github.io/posts/cve_2020_9771/
