@@ -35,8 +35,8 @@ example_use_cases:
 paths:
 - /usr/bin/dns-sd
 detections:
-- name: No detections at time of publishing
-  url: N/A
+- name: "Jamf Protect: Detect dns-sd discovery activity"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/dns_service_discovery
 resources:
 - name: What does APT Activity Look Like on macOS?
   url: https://themittenmac.com/what-does-apt-activity-look-like-on-macos

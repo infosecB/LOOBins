@@ -49,6 +49,8 @@ paths:
 detections:
   - name: System Information Discovery Using System_Profiler
     url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_system_profiler_discovery.yml
+  - name: "Jamf Protect: Detect system_profiler activity that gathers system information"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/system_profiler_activity
 resources:
   - name: "macOS/binaries/system_profiler"
     url: https://macosbin.com/bin/system_profiler

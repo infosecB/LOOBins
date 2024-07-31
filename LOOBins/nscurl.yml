@@ -25,8 +25,10 @@ example_use_cases:
 paths:
   - /usr/bin/nscurl
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: "Jamf Protect: Detect all curl and nscurl activity"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/all_curl_activity
+  - name: "Jamf Protect: Detect file downloads using the insecure argument for curl and nscurl"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/file_download_curl_insecure
 resources:
   - name: "How to Diagnose App Transport Security Issues using nscurl and OpenSSL"
     url: https://www.agnosticdev.com/content/how-diagnose-app-transport-security-issues-using-nscurl-and-openssl
