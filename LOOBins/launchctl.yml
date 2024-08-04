@@ -24,6 +24,8 @@ paths:
 detections:
 - name: LaunchAgents and LaunchDaemons must have a plist file on disk in the root, system, or user Library directory. Monitoring for plist's with executables located in /tmp or /Shared could identify suspicious applications. 
   url: N/A
+- name: "Jamf Protect: Detect launchctl activity that unloads or bootsout specific service"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/launchctl_unload_and_bootout_events
 resources:
 - name: '20 Common Tools & Techniques used by macOS threat Actors & Malware' 
   url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/

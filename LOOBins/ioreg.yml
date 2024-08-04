@@ -45,6 +45,8 @@ paths:
 detections:
 - name: System Information Discovery Using Ioreg
   url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_ioreg_discovery.yml
+- name: "Jamf Protect: Ioreg used to detect if the screen is locked"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/lockscreen_check
 resources:
   - name: 'Evasions: macOS'
     url: https://evasions.checkpoint.com/src/MacOS/macos.html

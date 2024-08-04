@@ -41,6 +41,8 @@ paths:
 detections:
   - name: Process & Command Line Argument Detection (process contains swift)
     url: N/A
+  - name: "Jamf Protect: Detect arbitrary code execution using a swift one-liner"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/swift_oneline_command_execution
 resources:
   - name: 'Introduction to the Swift REPL'
     url: https://developer.apple.com/swift/blog/?id=18

@@ -30,6 +30,8 @@ paths:
 detections:
   - name: Command line argument detection containing (args contain systemsetup AND (-setremoteappleevents OR -setremotelogin) AND on)
     url: https://www.elastic.co/guide/en/security/current/remote-ssh-login-enabled-via-systemsetup-command.html
+  - name: "Jamf Protect: Detect systemsetup activity that enables remotelogin or appleremoteevents"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/systemsetup_activity
 resources:
   - name: "systemsetup man page"
     url: https://ss64.com/osx/systemsetup.html
