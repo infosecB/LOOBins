@@ -4,7 +4,7 @@ on:
 
 jobs:
   poetry_bump:
-    name: Test
+    name: bump version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
