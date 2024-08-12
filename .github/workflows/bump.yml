@@ -10,7 +10,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.DEPLOY }}
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
