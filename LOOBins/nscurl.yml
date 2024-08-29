@@ -29,6 +29,8 @@ detections:
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/all_curl_activity
   - name: "Jamf Protect: Detect file downloads using the insecure argument for curl and nscurl"
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/file_download_curl_insecure
+  - name: "Sigma: File Download Via Nscurl - MacOS"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_nscurl_usage.yml
 resources:
   - name: "How to Diagnose App Transport Security Issues using nscurl and OpenSSL"
     url: https://www.agnosticdev.com/content/how-diagnose-app-transport-security-issues-using-nscurl-and-openssl
