@@ -66,7 +66,7 @@ detections:
 resources:
 - name: mount_apfs TCC bypass and privilege escalation
   url: https://theevilbit.github.io/posts/cve_2020_9771/
-- name: Manage Time Machine backups
+- name: "Manage Time Machine backups"
   url: https://github.molgen.mpg.de/pages/bs/macOSnotes/mac/mac_files_tmutil.html
-- name: Living-off-the-Land: Exploring macOS LOOBins and Crafting Detection Rules - tmutil
+- name: "Living-off-the-Land: Exploring macOS LOOBins and Crafting Detection Rules - tmutil"
   url: https://danielcortez.substack.com/p/living-off-the-land-exploring-macos-0fd
