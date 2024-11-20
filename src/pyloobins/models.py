@@ -1,10 +1,13 @@
 """Model that represents a LOOBin and its various components"""
+
 from datetime import date
 from typing import List, Literal, Optional
 
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
 from pydantic import BaseModel, Field
+
+from pydantic_factories import ModelFactory
 
 AttackTactics = Literal[
     "Reconnaissance",
@@ -136,3 +139,9 @@ class LOOBinsGroup(BaseModel):
     """LOOBin list base class"""
 
     __root__: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
+
+
+class LOOBinsFactory(ModelFactory):
+    """Used to create mock LOOBins for tests"""
+
+    __model__ = LOOBin

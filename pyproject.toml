@@ -4,7 +4,7 @@ version = "1.0.0"
 description = "Python package for managing the LOOBins model and schema."
 authors = ["infosecB <brendan@infosecb.com>"]
 readme = "docs/pyloobins/README.md"
-packages = [{include = "pyloobins", from = "src"}]
+packages = [{ include = "pyloobins", from = "src" }]
 include = ["LOOBins/*.yml"]
 homepage = "https://loobins.io/"
 repository = "https://github.com/infosecB/LOOBins"
@@ -17,6 +17,8 @@ pydantic = "^1.10.5"
 pyyaml = "^6.0"
 click = "^8.1.3"
 jinja2 = "^3.1.2"
+stix2 = "^3.0.1"
+pydantic-factories = "^1.17.3"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -35,10 +37,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pylint.'MESSAGES CONTROL']
-disable=[
-  'no-name-in-module',
-  'too-few-public-methods'
-]
+disable = ['no-name-in-module', 'too-few-public-methods']
 
 [tool.tox]
 legacy_tox_ini = """
