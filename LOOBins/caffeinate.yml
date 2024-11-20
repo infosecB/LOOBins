@@ -1,0 +1,36 @@
+name: caffeinate
+author: Ethan Nay
+short_description: Prevent the system from sleeping on behalf of a utility.
+full_description: |- 
+      caffeinate creates assertions to alter system sleep behavior.  If no assertion flags are specified, caffeinate creates an assertion to prevent idle sleep.
+      If a utility is specified, caffeinate creates the assertions on the utility's behalf, and those assertions will persist for the duration of the utility's execution.
+      Otherwise, caffeinate creates the assertions directly, and those assertions will persist until caffeinate exits.
+created: 2023-07-12
+example_use_cases:
+  - name: Fork a process
+    description: Make caffeinate fork a process and hold an assertion that prevents idle sleep as long as that process is running
+    code: caffeinate -i /tmp/evil
+    tactics:
+      - Execution
+      - Defense Evasion
+    tags:
+      - bash
+      - zsh
+  - name: Prevent a sleep
+    description: Prevent a macOS from going to sleep for 4 hours (14400 seconds)
+    code: caffeinate -u -t 14400
+    tactics:
+      - Execution
+    tags:
+      - bash
+      - zsh
+paths:
+  - /usr/bin/caffeinate
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "macOS/binaries/caffeinate"
+    url: https://macosbin.com/bin/caffeinate
+  - name: "caffeinate man page"
+    url: https://ss64.com/osx/caffeinate.html

@@ -1,0 +1,56 @@
+name: swift
+author: 0v3rride (https://github.com/0v3rride)
+short_description: Arbitrarily execute swift code from the terminal.
+full_description: The swift command is an interactive environment (REPL) for Swift.
+created: 2023-12-23
+example_use_cases:
+  - name: Execute Swift code file  
+    description: Executes the Swift code that is in a .swift file  
+    code: swift mycode.swift
+    tactics:    
+      - Execution
+    tags:  
+      - swift  
+      - repl
+      - bash
+      - zsh
+  - name: Execute Swift one-liner before swift 5.8 / Xcode 14.3 Beta 1
+    description: Executes a Swift one-liner by piping an echoed string into the swift command
+    code: echo 'print("loobins")' | swift -
+    tactics:    
+      - Execution
+      - Defense Evasion
+    tags:  
+      - swift  
+      - repl
+      - bash
+      - zsh
+  - name: Execute Swift one-liner with swift 5.8 / Xcode 14.3 Beta 1 or greater
+    description: Executes a Swift one-liner that executes the ls command to list the current directory using the -e option that was implemented in swift 5.8 / Xcode 14.3 Beta 1
+    code: "swift -e 'import Foundation; let process = Process(); process.executableURL = URL(fileURLWithPath:\"/bin/bash\"); process.arguments = [\"-c\", \"ls -alh\"]; let stdout = Pipe(); let stderr = Pipe(); process.standardOutput = stdout; process.standardError = stderr; try process.run(); print(String(decoding: stdout.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)); print(String(decoding: stderr.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self));'"
+    tactics:    
+      - Execution
+      - Defense Evasion
+    tags:  
+      - swift  
+      - repl
+      - bash
+      - zsh
+paths:
+  - /usr/bin/swift
+detections:
+  - name: Process & Command Line Argument Detection (process contains swift)
+    url: N/A
+  - name: "Jamf Protect: Detect arbitrary code execution using a swift one-liner"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/swift_oneline_command_execution
+resources:
+  - name: 'Introduction to the Swift REPL'
+    url: https://developer.apple.com/swift/blog/?id=18
+  - name: 'Scripting and Compiling Swift on the Command Line'
+    url: https://jblevins.org/log/swift
+  - name: 'Scripting in Swift is Pretty Awesome'
+    url: https://krakendev.io/blog/scripting-in-swift
+  - name: 'Swift -e runs code directly from the command line'  
+    url: https://blog.eidinger.info/swift-e-runs-code-directly-from-the-command-line
+  - name: 'Swift Programming From The Command Line'
+    url: https://ed.com/command-line-swift/

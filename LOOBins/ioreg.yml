@@ -5,19 +5,19 @@ full_description: The I/O Kit registry (ioreg) is a useful binary that can be us
 created: 2023-04-20
 example_use_cases:
 - name: Use ioreg to check whether the remote macOS screen is locked.
-  description: The following command will display of list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" us present, the screen is actively locked.
+  description: The following command will display a list of keys that contain "CGSSession". If the key "CGSSessionScreenIsLocked" is present, the screen is actively locked.
   code: ioreg -n Root -d1 -a | grep CGSSession
   tactics:
-  - Reconnaissance
+  - Discovery
   tags:
   - bash
   - oneliner
   - lockscreen
-- name: Use ioreg to check whether the host is on a phusical machine or a VM
+- name: Use ioreg to check whether the host is on a physical machine or a VM
   description: Check the output of this command (specifically the IOPlatformSerialNumber, board-id, and manufacturer fields) to check whether or not this host is in a virtual machine.
   code: ioreg -rd1 -c IOPlatformExpertDevice
   tactics:
-  - Reconnaissance
+  - Discovery
   - Collection
   tags:
   - oneliner
@@ -26,16 +26,16 @@ example_use_cases:
   description: Grep for "USB Vendor Name" values to view USB vendor names. On virtualized hardware these values may contain the hypervisor name such as "VirtualBox". This is an additional way to check for virtualization.  
   code: ioreg -rd1 -c IOUSBHostDevice
   tactics:
-  - Reconnaissance
+  - Discovery
   - Collection
   tags:
   - oneliner
   - vmcheck
 - name: Check all ioreg properties for hypervisor names.
-  description: Grep for "virtual box", "oralce", and "vmware" from the output of the ioreg -l command. This is an additional way to check for virtualization.
+  description: Grep for "virtual box", "oracle", and "vmware" from the output of the ioreg -l command. This is an additional way to check for virtualization.
   code: ioreg -l
   tactics:
-  - Reconnaissance
+  - Discovery
   - Collection
   tags:
   - oneliner
@@ -43,10 +43,12 @@ example_use_cases:
 paths:
 - /usr/sbin/ioreg
 detections:
-- name: No detections at time of publishing
-  url: N/A
+- name: System Information Discovery Using Ioreg
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_ioreg_discovery.yml
+- name: "Jamf Protect: Ioreg used to detect if the screen is locked"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/lockscreen_check
 resources:
   - name: 'Evasions: macOS'
-    url: https://evasions.checkpoint.com/techniques/macos.html
+    url: https://evasions.checkpoint.com/src/MacOS/macos.html
   - name: 'SwiftBelt-JXA Situational Awareness Tool'
     url: https://github.com/cedowens/SwiftBelt-JXA/blob/main/SwiftBelt-JXA.js#520

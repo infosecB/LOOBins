@@ -14,15 +14,24 @@ example_use_cases:
   - bash
   - zsh
   - oneliner
+- name: Persistent launch agent 
+  description: Creation of a persistent launch agent called with $HOME/Library/LaunchAgents/com.apple.updates.plist
+  code: launchctl load -w ~/Library/LaunchAgents/com.apple.updates.plist
+  tactics:
+  - Persistence
 paths:
 - /bin/launchctl
 detections:
 - name: LaunchAgents and LaunchDaemons must have a plist file on disk in the root, system, or user Library directory. Monitoring for plist's with executables located in /tmp or /Shared could identify suspicious applications. 
   url: N/A
+- name: "Jamf Protect: Detect launchctl activity that unloads or bootsout specific service"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/launchctl_unload_and_bootout_events
 resources:
 - name: '20 Common Tools & Techniques used by macOS threat Actors & Malware' 
   url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
 - name: 'Mitre Attack Technique: launchctl T1569'
   url: https://attack.mitre.org/techniques/T1569/001/
-
-
+- name: 'MITRE ATT&CK T1543.001  Create or Modify System Process: Launch Agent '
+  url: https://attack.mitre.org/techniques/T1543/001/
+- name: 'Komplex OS X Trojan (Sofacy)'
+  url: https://unit42.paloaltonetworks.com/unit42-sofacys-komplex-os-x-trojan/

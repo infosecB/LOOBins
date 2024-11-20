@@ -1,0 +1,23 @@
+name: kextstat
+author: Mark Morowczynsk (@markmorow)
+short_description: Display the status of loaded kernal extensions (kexts)
+full_description: Deprecated tool in favor of kmutil. Lists loaded kernal extensions
+created: 2023-07-30
+example_use_cases:
+- name: List kernel extensions 
+  description: Uses kexstat showloaded to display kernel extensions and address in kernel memory it has been loaded
+  code: kexstat
+  tactics:
+  - Discovery
+  tags:
+  - bash
+  - zsh
+  - kernel
+paths:
+- /usr/sbin/kextstat
+detections:
+- name: No detections at time of publishing
+  url: n/a
+resources:
+- name: 'kextstat man page'
+  url: https://ss64.com/osx/kextstat.html

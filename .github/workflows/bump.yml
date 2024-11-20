@@ -1,0 +1,44 @@
+name: Bump version
+on:
+  workflow_dispatch:
+
+jobs:
+  poetry_bump:
+    name: bump version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DEPLOY }}
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y
+
+      - name: Update PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Run Poetry bump (patch)
+        run: poetry version patch
+
+      - name: Commit new version
+        run: |
+          git config --global user.name "infosecB"
+          git config --global user.email "infosecB@users.noreply.github.com"
+          git commit -a -m "bump version"
+          git push
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.PAT }}

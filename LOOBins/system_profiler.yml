@@ -1,0 +1,58 @@
+name: system_profiler
+author: Ethan Nay
+short_description: Reports system hardware and software configuration.
+full_description: system_profiler reports on the hardware and software configuration of the system. It can generate plain text reports or XML reports which can be opened with System Information.app
+created: 2023-07-12
+example_use_cases:
+  - name: Listing the available datatypes
+    description: List all available sub-systems to get information from.
+    code: system_profiler -listDataTypes
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Print hardware information
+    description: Prints an overview of the hardware of the current machine, including its model name and serial number.
+    code: system_profiler SPHardwareDataType
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Print software information
+    description: Prints an overview of the software of the current machine, including the exact macOS version number.
+    code: system_profiler SPSoftwareDataType
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Print the information of developer tools
+    description: Prints the currently active version of the Xcode developer tools and SDK.
+    code: system_profiler SPDeveloperToolsDataType
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Print power and battery information
+    description: Prints power and battery information, including the current AC wattage and battery cycle count.
+    code: system_profiler SPPowerDataType
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+paths:
+  - /usr/sbin/system_profiler
+detections:
+  - name: System Information Discovery Using System_Profiler
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_system_profiler_discovery.yml
+  - name: "Jamf Protect: Detect system_profiler activity that gathers system information"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/system_profiler_activity
+resources:
+  - name: "macOS/binaries/system_profiler"
+    url: https://macosbin.com/bin/system_profiler
+  - name: "system_profiler man page"
+    url: https://ss64.com/osx/system_profiler.html

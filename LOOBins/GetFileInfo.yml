@@ -8,7 +8,6 @@ example_use_cases:
     description: A bash or zsh oneliner can provide an attacker with information about specific files of interest.
     code: for FILE in ~/Downloads/*; do echo $(GetFileInfo $FILE) >> fileinfo.txt; sleep 2; done
     tactics:
-      - Reconnaissance
       - Discovery
     tags:
       - bash

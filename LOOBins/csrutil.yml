@@ -33,11 +33,22 @@ example_use_cases:
       - Discovery
     tags:
       - configuration
+  - name: Determine if SIP is enabled
+    description: Determine if System Integrity Protection is enabled
+    code: csrutil status
+    tactics:
+      - Discovery
 paths:
   - /usr/bin/csrutil
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: "Sigma: System Integrity Protection (SIP) Disabled"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_csrutil_disable.yml
+  - name: "Sigma: System Integrity Protection (SIP) Enumeration"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_csrutil_status.yml
 resources:
   - name: "Discussion on how SIP interacts with bless and netboot"
     url: https://developer.apple.com/forums/thread/4002
+  - name: "MITRE ATT&CK T1518.001 Software Discovery: Security Software Discovery"
+    url: https://attack.mitre.org/techniques/T1518/001/
+  - name: "The XCSSET Malware: Inserts Malicious Code Into Xcode Projects, Performs UXSSBackdoor Planting in Safari, and LeveragesTwo Zero-day Exploits"
+    url: https://documents.trendmicro.com/assets/pdf/XCSSET_Technical_Brief.pdf

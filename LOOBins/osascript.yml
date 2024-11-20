@@ -20,7 +20,7 @@ example_use_cases:
     code: osascript -e 'return (system info)'
     tactics:
       - Collection
-      - Reconnaissance
+      - Discovery
     tags:
       - systeminfo
       - oneliner
@@ -47,6 +47,12 @@ paths:
 detections:
   - name: Command Line Argument Detection (args contain osascript AND -e AND clipboard)  
     url: N/A
+  - name: "Jamf Protect: Detect activity that is related to osascript gathering clipboard content"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_clipboard
+  - name: "Jamf Protect: Detect activity that is related to osascript pulling system information"  
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_system_information
+  - name: "Jamf Protect: Detect activity that is related to generating dialogs using osascript and asking for specific user input"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_dialog_activity
 resources:
   - name: 'Using macOS Internals for Post Exploitation'  
     url: https://medium.com/red-teaming-with-a-blue-team-mentality/using-macos-internals-for-post-exploitation-b5faaa11e121

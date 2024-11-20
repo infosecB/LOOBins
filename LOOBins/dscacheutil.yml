@@ -1,0 +1,34 @@
+name: dscacheutil
+author: Ethan Nay
+short_description: gather information, statistics and initiate queries to the Directory Service cache.
+full_description: |-
+  dscacheutil does various operations against the Directory Service cache including gathering statistics, initiating lookups, inspection, cache flush, etc.
+  This tool replaces most of the functionality of the lookupd tool previously available in the OS.
+created: 2023-08-23
+example_use_cases:
+  - name: Lookup  a user
+    description: List the user information
+    code: dscacheutil -q user -a name <USER_NAME>
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Lookup all users
+    description: List the all users information
+    code: dscacheutil -q user
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+paths:
+  - /usr/bin/dscacheutil
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "macOS/binaries/dscacheutil"
+    url: https://macosbin.com/bin/dscacheutil
+  - name: "dscacheutil man page"
+    url: https://ss64.com/osx/dscacheutil.html

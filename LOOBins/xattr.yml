@@ -9,7 +9,6 @@ example_use_cases:
   code: xattr -d com.apple.quarantine FILE
   tactics:
   - Execution
-  - Privilege Escalation
   - Defense Evasion
   tags:
   - xattr
@@ -19,7 +18,6 @@ example_use_cases:
   code: xattr -d -r com.apple.quarantine *
   tactics:
   - Execution
-  - Privilege Escalation
   - Defense Evasion
   tags:
   - xattr
@@ -29,6 +27,8 @@ paths:
 detections:
 - name: Gatekeeper Bypass via Xattr
   url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_xattr_gatekeeper_bypass.yml
+- name: "Jamf Protect: Detect activity related to xattr and extended attributes"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/xattr_extended_attributes_activity
 resources:
 - name: 'Threat Hunting the macOS edition Megan Carney (Report)'
   url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf

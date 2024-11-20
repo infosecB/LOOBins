@@ -7,7 +7,7 @@ from pyloobins.util import get_loobins, make_template, validate_loobin
 
 def test_get_loobins():
     """Test the get_loobins function."""
-    assert get_loobins()
+    assert len(get_loobins(path="./LOOBins")) > 0
 
 
 def test_make_template():

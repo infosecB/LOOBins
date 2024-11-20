@@ -1,7 +1,7 @@
 name: defaults
 author: Brendan Chamberlain (@infosecB)
 short_description: Read, write, and delete user preference values.
-full_description: A full length description of the binary goes here.
+full_description: The defaults binary is normally used to interact with the user defaults system, a database of macOS used to manage system settings much like the Windows Registry. The database can be abused by threat actors to change settings in attempt to evade defenses or to gain persistence.
 created: 2023-05-24
 example_use_cases:
 - name: Disable Gatekeeper's auto rearm functionality
@@ -21,6 +21,25 @@ example_use_cases:
   code: sudo defaults write /Library/Preferences/com.apple.loginwindow LoginHook gain_persistence.sh
   tactics:
   - Persistence
+- name: Get Active Directory user info from Jamf Connect
+  description: Retrieve Active Directory user info from Jamf Connect defaults configuration.
+  code: defaults read com.jamf.connect.state
+  tactics:
+  - Discovery
+- name: Enable Firewall
+  description: Enables macOS' default firewall. This command requires root privileges.
+  code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 1
+  tactics:
+  - Defense Evasion
+  tags:
+  - firewall
+- name: Disable Firewall
+  description: Disables macOS' default firewall. This command requires root privileges.
+  code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 0
+  tactics:
+  - Defense Evasion
+  tags:
+  - firewall
 paths:
 - /usr/bin/defaults
 detections:

@@ -1,0 +1,48 @@
+name: odutil
+author: Ethan Nay
+short_description: odutil allows caller to examine or change state of opendirectoryd
+full_description: To look at internal state information for opendirectoryd, enable or disable logging, or change statistics settings.
+created: 2023-07-12
+example_use_cases:
+  - name: Listing the available node names
+    description: List all available node names
+    code: odutil show nodenames
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Retrieves active session
+    description: Retrieves the all active sessions
+    code: odutil show sessions
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Retrieves "Default search policy"
+    description: Retrieves the configuration of "Default search policy"
+    code: odutil show configuration /Search
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Retrieves "Contact search policy"
+    description: Retrieves the configuration of "Contact search policy"
+    code: odutil show configuration /Contacts
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+paths:
+  - /usr/bin/odutil
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "macOS/binaries/odutil"
+    url: https://macosbin.com/bin/odutil
+  - name: "odutil man page"
+    url: https://www.unix.com/man-page/osx/1/odutil/

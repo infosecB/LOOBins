@@ -9,11 +9,30 @@ example_use_cases:
     code: nscurl -k https://google.com -o /private/tmp/google
     tactics:
       - Defense Evasion
+      - Command and Control
+  - name: Download file
+    description: Download file to the Downloads directory using -dl 
+    code: nscurl https://google.com -dl
+    tactics:
+      - Defense Evasion
+      - Command and Control
+  - name: Download file
+    description: Download file to a designated directory using -dir 
+    code: nscurl https://google.com -dir /private/tmp/google
+    tactics:
+      - Defense Evasion
+      - Command and Control             
 paths:
   - /usr/bin/nscurl
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: "Jamf Protect: Detect all curl and nscurl activity"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/all_curl_activity
+  - name: "Jamf Protect: Detect file downloads using the insecure argument for curl and nscurl"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/file_download_curl_insecure
+  - name: "Sigma: File Download Via Nscurl - MacOS"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_nscurl_usage.yml
 resources:
   - name: "How to Diagnose App Transport Security Issues using nscurl and OpenSSL"
     url: https://www.agnosticdev.com/content/how-diagnose-app-transport-security-issues-using-nscurl-and-openssl
+  - name: "Living-off-the-Land: Exploring macOS LOOBins and Crafting Detection Rules - nscurl"
+    url: https://danielcortez.substack.com/p/living-off-the-land-exploring-macos  

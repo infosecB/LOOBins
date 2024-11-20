@@ -1,0 +1,31 @@
+name: log
+author: Brendan Chamberlain (@infosecB)
+short_description: Access system log messages from Apple Unified Logging (AUL).
+full_description: The log command can be used to access system log messages from Apple Unified Logging (AUL). The tool can be used to inspect exiting logs, stream logs in realtime, and delete logs. This tool is normally used by system admins and application developers for troubleshooting purposes but can be used by an adversary to gain an understanding of the user's behavior or to cover up their tracks by deleting log messages.
+created: 2023-06-06
+example_use_cases:
+- name: Remove all log messages
+  description: An attacker can cover up their tracks by removing all log messages using the following command. Requires root privileges.
+  code: log erase --all
+  tactics:
+  - Defense Evasion
+  tags:
+  - requires_root
+- name: Search log messages for tokens
+  description: An attacker can potentially search log messages and review if they do contain sensitive information like jwt tokens.
+  code: log show --info --debug --predicate 'eventMessage CONTAINS[d] "eyJ"'
+  tactics:
+  - Credential Access
+  tags:
+  - bash
+  - zsh
+paths:
+- /usr/bin/log
+detections:
+- name: No detections at time of publishing
+  url: N/A
+resources:
+- name: Living off the land in macOS (Daniel Stinson)
+  url: https://shellcromancer.io/posts/living-off-of-macos/
+acknowledgements:
+- Daniel Stinson (@shellcromancer)

@@ -1,0 +1,38 @@
+name: chflags
+author: demonduck
+short_description: Changes file or directory flags
+full_description: |-
+    The chflags utility modifies the file flags of the listed files as 
+    specified by the flags operand.
+created: 2024-07-25
+example_use_cases:
+- name: Hide a file
+  description: |-
+      Add the hidden flag to a file or directory to prevent it from being 
+      visible in Finder and Terminal.
+  code: chflags hidden ~/evil
+  tactics:
+  - Defense Evasion
+  tags:
+  - finder
+- name: Remove hidden flag
+  description: |-
+      Remove the hidden flag to a file or directory to make it visible in Finder
+      and Terminal.
+  code: chflags nohidden ~/evil
+  tactics:
+  - Defense Evasion
+  tags:
+  - finder
+paths:
+- /usr/bin/chflags
+detections:
+- name: "Sigma: Hidden Flag Set On File/Directory Via Chflags"
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_chflags_hidden_flag.yml
+resources:
+- name: "chflags man page"
+  url: https://ss64.com/mac/chflags.html
+- name: "macOS/binaries/chflags"
+  url: https://macosbin.com/bin/chflags
+- name: "How to hide files and folders"
+  url: https://eclecticlight.co/2024/07/03/how-to-hide-files-and-folders/

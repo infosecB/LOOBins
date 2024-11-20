@@ -8,7 +8,7 @@ example_use_cases:
   description: sysctl can be used to gather interesting macOS host data, including hardware information, memory size, logical cpu information, etc.
   code: sysctl -n hw.model
   tactics:
-  - Reconnaissance
+  - Discovery
   tags:
   - bash
   - oneliner
@@ -16,8 +16,8 @@ example_use_cases:
 paths:
 - /usr/sbin/sysctl
 detections:
-- name: No detections at time of publishing
-  url: N/A
+- name: "Jamf Protect: Detect activity related to sysctl in an interactive shell"
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sysctl_activity
 resources:
 - name: 'Evasions: macOS'
-  url: https://evasions.checkpoint.com/techniques/macos.html
+  url: https://evasions.checkpoint.com/src/MacOS/macos.html

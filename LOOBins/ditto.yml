@@ -33,6 +33,7 @@ example_use_cases:
   - Collection
   - Exfiltration
   - Lateral Movement
+  - Defense Evasion
   tags:
   - files
 - name: DLL hjiacking

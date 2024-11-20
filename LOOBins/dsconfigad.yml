@@ -1,0 +1,32 @@
+name: dsconfigad
+author: Ethan Nay
+short_description: retrieves/changes configuration for Directory Services Active Directory Plugin.
+full_description: This tool allows command-line configuration of the Active Directory Plug-in. dsconfigad has the same functionality for configuring the Active Directory plugin as the Directory Utility application. It requires "admin" privileges to the local workstation and to the Directory to make changes.
+created: 2023-08-23
+example_use_cases:
+  - name: Retrieves the Active Directory configuration
+    description: Retrieves the Active Directory configuration
+    code: dsconfigad -show
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+  - name: Retrieves the Active Directory name
+    description: Retrieves the Active Directory name
+    code: dsconfigad -show |awk '/Active Directory Domain/{print $NF}'
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+paths:
+  - /usr/sbin/dsconfigad
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "macOS/binaries/dsconfigad"
+    url: https://macosbin.com/bin/dsconfigad
+  - name: "dsconfigad man page"
+    url: https://www.unix.com/man-page/osx/8/dsconfigad/

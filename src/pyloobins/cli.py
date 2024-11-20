@@ -8,6 +8,7 @@ from .util import get_loobins, make_template, normalize_file_name, validate_loob
 
 
 @click.group()
+@click.version_option(prog_name="PyLOOBins")
 def cli():
     """Create, validate, and view LOOBin objects."""
 
@@ -74,7 +75,7 @@ def get(name: str, path: str = "") -> None:
     if len(res) == 0:
         print(f"No LOOBin found for {name}.")
     else:
-        print(res[0].json(indent=True, exclude_none=True))
+        print(res[0].model_dump_json(indent=True, exclude_none=True))
 
 
 if __name__ == "__main__":

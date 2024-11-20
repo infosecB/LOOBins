@@ -1,0 +1,32 @@
+name: sfltool
+author: Eliott (@Koyiott)
+short_description: Binary to manage the Shared File List framework.
+full_description: sfltool allows interactions with the Shared File List framework, which can be used to modify application recent documents, favorites, and more.
+created: 2023-09-12
+example_use_cases:
+- name: Display Login Items
+  description: Identify all current login and background items configured on the system.
+  code: sfltool dumpbtm
+  tactics:
+    - Discovery
+  tags:
+    - bash
+    - startup
+- name: Reset Login Items to Defaults
+  description: Reset all third-party Login Items and revert to installation defaults.
+  code: sfltool resetbtm
+  tactics:
+    - Defense Evasion
+  tags:
+    - bash
+    - system_reset
+paths:
+  - /usr/bin/sfltool
+detections:
+  - name: "Jamf Protect: Detect attempts to dump BTM or being reverted to installation defaults"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sfltool_activity
+resources:
+  - name: "sfltool man page"
+    url: https://www.unix.com/man-page/mojave/1/sfltool/
+  - name: "Controlling login and background items"
+    url: https://eclecticlight.co/2023/02/15/controlling-login-and-background-items-in-ventura/

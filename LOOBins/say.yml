@@ -1,0 +1,35 @@
+name: say
+author: Pinar Sadioglu (@p_sadioglu)
+short_description: Convert text to audible speech.
+full_description: This tool uses the Speech Synthesis manager to convert input text to audible speech and either play it through the sound output device chosen in System Preferences or save it to an AIFF file.
+created: 2023-11-17
+example_use_cases:
+- name: Read sensitive data
+  description: The following command can read and process sensitive files and redirects the output to a file.. 
+  code:  say -f /home/user/sensitive-files -i  > loot.txt;  
+  tactics:
+  - Defense Evasion
+  - Collection
+  tags:
+  - bash
+- name: Collect clipboard data
+  description: The command is designed to enhance privacy by muting the system volume,using a less recognizable "Whisper" voice with the "say" command, processing the copied text in the clipboard, and saving the output to a file named "loot.txt."
+  code:  osascript -e 'set volume output muted true' ;   say $(pbpaste) -i  > loot.txt; 
+  tactics:
+  - Defense Evasion
+  - Reconnaissance
+  - Discovery
+  - Collection
+  tags:
+  - pbpaste
+  - clipboard
+  - bash
+  - osascript
+paths:
+- /usr/bin/say
+detections:
+- name: No detection content available
+  url: N/A
+resources:
+- name: say man page
+  url: https://ss64.com/osx/say.html

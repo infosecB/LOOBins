@@ -6,7 +6,7 @@ from datetime import date
 import yaml
 
 import pyloobins
-from .models import Detection, ExampleUseCase, LOOBin, Resource
+from pyloobins.models import Detection, ExampleUseCase, LOOBin, Resource
 
 
 def get_loobins(path: str = "") -> list:

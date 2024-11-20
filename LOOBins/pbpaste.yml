@@ -16,8 +16,10 @@ example_use_cases:
 paths:
 - /usr/bin/pbpaste
 detections:
-- name: No detections at time of publishing
-  url: N/A
+- name: 'Sigma: Clipboard Data Collection Via Pbpaste'
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules-threat-hunting/macos/process_creation/proc_creation_macos_pbpaste_execution.yml
 resources:
 - name: 'Hacking macOS: How to Dump 1Password, KeePassX & LastPass Passwords in Plaintext'
   url: https://medium.com/@NullByteWht/hacking-macos-how-to-dump-1password-keepassx-lastpass-passwords-in-plaintext-723c5b1c311b
+- name: 'Living-off-the-Land: Exploring macOS LOOBins and Crafting Detection Rules - pbpaste'
+  url: https://danielcortez.substack.com/p/living-off-the-land-exploring-macos-b65
