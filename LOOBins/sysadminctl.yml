@@ -45,6 +45,18 @@ example_use_cases:
       - Impact
     tags:
       - users
+  - name: Enable SMB Guest Access
+    description: sysadminctl can enable SMB Guest Access
+    code: |
+      sudo sysadminctl -smbGuestAccess on
+    tactics:
+      - Exfiltration
+  - name: Enable AFP Guest Access
+    description: sysadminctl can enable AFP Guest Access
+    code: |
+      sudo sysadminctl -afpGuestAccess on
+    tactics:
+      - Exfiltration
 paths:
   - /usr/sbin/sysadminctl
 detections:
