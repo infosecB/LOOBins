@@ -41,8 +41,10 @@ example_use_cases:
 paths:
   - /usr/bin/csrutil
 detections:
-  - name: No detections at time of publishing
-    url: N/A
+  - name: "Sigma: System Integrity Protection (SIP) Disabled"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_csrutil_disable.yml
+  - name: "Sigma: System Integrity Protection (SIP) Enumeration"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_csrutil_status.yml
 resources:
   - name: "Discussion on how SIP interacts with bless and netboot"
     url: https://developer.apple.com/forums/thread/4002
