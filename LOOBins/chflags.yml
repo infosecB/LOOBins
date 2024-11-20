@@ -27,8 +27,8 @@ example_use_cases:
 paths:
 - /usr/bin/chflags
 detections:
-- name: No detections at time of publishing
-  url: N/A
+- name: "Sigma: Hidden Flag Set On File/Directory Via Chflags"
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_chflags_hidden_flag.yml
 resources:
 - name: "chflags man page"
   url: https://ss64.com/mac/chflags.html

@@ -61,8 +61,10 @@ example_use_cases:
 paths:
 - /usr/bin/hdiutil
 detections:
-- name: No detections at time of publishing
-  url: n/a
+- name: "Sigma: Disk Image Mounting Via Hdiutil"
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_hdiutil_mount.yml
+- name: "Sigma: Disk Image Creation Via Hdiutil"
+  url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_hdiutil_create.yml
 resources:
 - name: 'Microsoft finds new macOS vulnerability, Shrootless, that could bypass System Integrity Protection'
   url: https://www.microsoft.com/en-us/security/blog/2021/10/28/microsoft-finds-new-macos-vulnerability-shrootless-that-could-bypass-system-integrity-protection/
