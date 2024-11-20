@@ -4,7 +4,7 @@ from pyloobins.models import LOOBin
 from pyloobins.util import get_loobins
 
 
-def loobin_to_stix_tool(loobins: list[LOOBin]):
+def convert_to_stix_tool(loobins: list[LOOBin]) -> list[Tool]:
     """Takes in a LOOBin and Converts to STIX2 Tool
     https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_z4voa9ndw8v
 
@@ -29,22 +29,16 @@ def loobin_to_stix_tool(loobins: list[LOOBin]):
             .replace("+00:00", "Z"),
         )
         stix_tools.append(tool)
-
-    # Create a STIX bundle containing all tools
-    stix_bundle = Bundle(objects=stix_tools)
-    return stix_bundle
+    return stix_tools
 
 
-def test_stix_tool():
-    from pyloobins.models import LOOBinsFactory
-
-    test_loo = LOOBinsFactory.build()
-    test_tools = loobin_to_stix_tool([test_loo])
-    print(test_tools)
+def generate_loobin_tool_stix_bundle(stix_tools: list[Tool]) -> Bundle:
+    return Bundle(objects=stix_tools)
 
 
 if __name__ == "__main__":
-    """Retrieve all current LOOBin YML"""
     loobins = get_loobins("./")
-    stix_bundle = loobin_to_stix_tool(loobins)
-    print(stix_bundle)
+    tools = convert_to_stix_tool(loobins)
+    print(tools)
+    bundle = generate_loobin_tool_stix_bundle(tools)
+    print(bundle)
