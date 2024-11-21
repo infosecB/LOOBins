@@ -1,0 +1,71 @@
+name: sysadminctl
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Create/delete local accounts, guest account, enable SMB/AFP Guest access.
+full_description: |
+  sysadminctl can administer system user accounts. sysadminctl can be used to change user passwords, create new 
+  users (including automatically provisioning the user home folder) or to check the status of a user's SecureToken.
+created: 2024-11-19
+example_use_cases:
+  - name: Enable Guest Account
+    description: sysadminctl can be used to enable the guest account
+    code: |
+      sudo sysadminctl -guestAccount on
+    tactics:
+      - Initial Access
+  - name: Create Local User Account
+    description: sysadminctl can be used to create a local user account
+    code: |
+      sudo sysadminctl -addUser randomUser -password "randomPassword"
+    tactics:
+      - Persistence
+    tags:
+      - users
+  - name: Create a Local Admin Account
+    description: sysadminctl can be used to create a local admin account
+    code: |
+      sudo sysadminctl -addUser randomUser -password "randomPassword" -admin
+    tactics:
+      - Persistence
+    tags:
+      - users
+  - name: Reset user password
+    description: sysadminctl can be used to reset password for a particular user account
+    code: |
+      sudo sysadminctl -resetPasswordFor randomUser -newPassword "randomPassword"
+    tactics:
+      - Persistence
+    tags:
+      - password
+      - users
+  - name: Delete a local account
+    description: sysadminctl can delete the specified user account
+    code: |
+      sudo sysadminctl -deleteUser randomUser
+    tactics:
+      - Impact
+    tags:
+      - users
+  - name: Enable SMB Guest Access
+    description: sysadminctl can enable SMB Guest Access
+    code: |
+      sudo sysadminctl -smbGuestAccess on
+    tactics:
+      - Exfiltration
+  - name: Enable AFP Guest Access
+    description: sysadminctl can enable AFP Guest Access
+    code: |
+      sudo sysadminctl -afpGuestAccess on
+    tactics:
+      - Exfiltration
+paths:
+  - /usr/sbin/sysadminctl
+detections:
+  - name: "Sigma: Creation Of A Local User Account"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_create_account.yml
+  - name: "Sigma: User Added To Admin Group Via Sysadminctl"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_sysadminctl_add_user_to_admin_group.yml
+  - name: "Sigma: Guest Account Enabled Via Sysadminctl"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_sysadminctl_enable_guest_account.yml
+resources:
+  - name: "sysadminctl man page"
+    url: https://ss64.com/mac/sysadminctl.html
