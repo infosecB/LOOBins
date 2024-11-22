@@ -151,7 +151,7 @@ class LOOBin(BaseModel):
             .isoformat(timespec="milliseconds")
             .replace("+00:00", "Z"),
             labels=['living-off-the-land','loobins'],
-            external_references=[{"source_name":"LOOBins","description":"Living off the Orchard: macOS binaries.","url":f"https://www.loobins.io/{self.name}/caffeinate/"}]
+            external_references=[{"source_name":"LOOBins","description":"Living off the Orchard: macOS binaries.","url":f"https://www.loobins.io/binaries/{self.name}/"}]
         )
 
     def __str__(self) -> str:
