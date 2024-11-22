@@ -1,6 +1,6 @@
 """Model that represents a LOOBin and its various components"""
 
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, time
 from typing import List, Literal, Optional
 
 import yaml
@@ -147,7 +147,7 @@ class LOOBin(BaseModel):
         return Tool(
             name=self.name,
             description=self.full_description,
-            created=datetime.now(timezone.utc)
+            created=datetime.combine(self.created, time(0,0,0),timezone.utc)
             .isoformat(timespec="milliseconds")
             .replace("+00:00", "Z"),
             labels=['living-off-the-land','loobins'],
