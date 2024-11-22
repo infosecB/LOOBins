@@ -1,13 +1,12 @@
 """Model that represents a LOOBin and its various components"""
 
-from datetime import date
+from datetime import date, datetime, timezone
 from typing import List, Literal, Optional
 
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
 from pydantic import BaseModel, Field, RootModel
-
-from pydantic_factories import ModelFactory
+from stix2 import Tool, Bundle
 
 AttackTactics = Literal[
     "Reconnaissance",
@@ -131,6 +130,30 @@ class LOOBin(BaseModel):
         )
         return template
 
+    def to_stix(self) -> Tool:
+        """Convert a LOOBin to a STIX2 Tool object
+        https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_z4voa9ndw8v
+
+        Required fields per STIX2 spec:
+            - type: must be 'tool'
+            - name: str
+
+        Optional fields:
+            - description (str)
+            - tool_types (list of open-vocab -> tool-type-ov)
+            - aliases (list of str)
+            - kill_chain_phases (list of kill-chain-phase)
+        """
+        return Tool(
+            name=self.name,
+            description=self.full_description,
+            created=datetime.now(timezone.utc)
+            .isoformat(timespec="milliseconds")
+            .replace("+00:00", "Z"),
+            labels=['living-off-the-land','loobins'],
+            external_references=[{"source_name":"LOOBins","description":"Living off the Orchard: macOS binaries.","url":f"https://www.loobins.io/{self.name}/caffeinate/"}]
+        )
+
     def __str__(self) -> str:
         return self.to_yaml()
 
@@ -141,10 +164,7 @@ class LOOBin(BaseModel):
 class LOOBinsGroup(RootModel[List[str]]):
     """LOOBin list base class"""
 
-    __root__: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
+    root: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
 
-
-class LOOBinsFactory(ModelFactory):
-    """Used to create mock LOOBins for tests"""
-
-    __model__ = LOOBin
+    def to_stix_bundle(self) -> Bundle:
+        return Bundle(objects=[loobin.to_stix() for loobin in self.root])
