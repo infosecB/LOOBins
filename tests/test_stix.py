@@ -1,11 +1,9 @@
-from pyloobins.models import LOOBinsFactory
-from pyloobins.stix import convert_to_stix_tool
+from test_data import LOOBinFactory
 
 
-def test_convert_to_stix_tool():
-    loobins = LOOBinsFactory.batch(size=5)
-
-    tools = convert_to_stix_tool(loobins)
+def test_to_stix():
+    loobins = LOOBinFactory.batch(5)
+    tools = [loobin.to_stix() for loobin in loobins]
 
     assert len(tools) == len(loobins), "Mismatch in number of tools converted"
 
