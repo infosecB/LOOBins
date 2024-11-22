@@ -1,10 +1,12 @@
 """Model for CLI functions"""
+
 import os
 import sys
 
 import click
 
 from .util import get_loobins, make_template, normalize_file_name, validate_loobin
+from .models import LOOBinsGroup
 
 
 @click.group()
@@ -76,6 +78,22 @@ def get(name: str, path: str = "") -> None:
         print(f"No LOOBin found for {name}.")
     else:
         print(res[0].model_dump_json(indent=True, exclude_none=True))
+
+
+@cli.command()
+@click.option(
+    "--path",
+    type=str,
+    required=False,
+    help="Enter the path where you would like to create the template YAML file.",
+    default=".",
+)
+def export_stix(path: str = ".") -> None:
+    """Export the LOOBins STIX bundle file."""
+    all_loobins = get_loobins()
+    stix_bundle = LOOBinsGroup(all_loobins)
+    with open(f"{path}/loobins_stix.bundle", mode="w+", encoding="utf-8") as f:
+        f.write(stix_bundle.to_stix_bundle().serialize(pretty=True))
 
 
 if __name__ == "__main__":
