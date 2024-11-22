@@ -158,10 +158,10 @@ class LOOBin(BaseModel):
         return self.to_yaml()
 
     def __repr__(self) -> str:
-        return self.to_yaml()
+        return self.name
 
 
-class LOOBinsGroup(RootModel[List[str]]):
+class LOOBinsGroup(RootModel):
     """LOOBin list base class"""
 
     root: List[LOOBin] = Field(title="LOOBins", description="A list of LOOBins")
