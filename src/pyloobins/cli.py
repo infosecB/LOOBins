@@ -92,7 +92,7 @@ def export_stix(path: str = ".") -> None:
     """Export the LOOBins STIX bundle file."""
     all_loobins = get_loobins()
     stix_bundle = LOOBinsGroup(all_loobins)
-    with open(f"{path}/loobins_stix.bundle", mode="w+", encoding="utf-8") as f:
+    with open(f"{path}/loobins_stix.json", mode="w+", encoding="utf-8") as f:
         f.write(stix_bundle.to_stix_bundle().serialize(pretty=True))
 
 
