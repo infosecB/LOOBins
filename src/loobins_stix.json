@@ -1,0 +1,1066 @@
+{
+    "type": "bundle",
+    "id": "bundle--cc55ca8a-694b-45fe-9072-70cff8194f90",
+    "objects": [
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--d1811402-3ca0-4014-9995-ba43fb5a54e4",
+            "created": "2023-06-06T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.403586Z",
+            "name": "log",
+            "description": "The log command can be used to access system log messages from Apple Unified Logging (AUL). The tool can be used to inspect exiting logs, stream logs in realtime, and delete logs. This tool is normally used by system admins and application developers for troubleshooting purposes but can be used by an adversary to gain an understanding of the user's behavior or to cover up their tracks by deleting log messages.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/log/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--ff1626fb-c4e9-40cb-bb99-9badc9f5e268",
+            "created": "2023-05-24T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.403881Z",
+            "name": "defaults",
+            "description": "The defaults binary is normally used to interact with the user defaults system, a database of macOS used to manage system settings much like the Windows Registry. The database can be abused by threat actors to change settings in attempt to evade defenses or to gain persistence.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/defaults/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--0b776cac-9d7a-40c4-96af-8ecf160cf4d4",
+            "created": "2023-08-31T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404048Z",
+            "name": "systemsetup",
+            "description": "systemsetup configures certain per-machine settings typically configured in the System Preferences application.\nThe systemsetup command requires at least \"admin\" privileges to run.\n",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/systemsetup/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--7ab886dc-ef1c-4d5c-bc0c-416149279eaf",
+            "created": "2023-05-10T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404204Z",
+            "name": "open",
+            "description": "The open command-line utility can be used to open files, folders, app, URLs or header files in their associate macOS app.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/open/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--77c6ffb7-d01d-4478-93ad-90f058a7470b",
+            "created": "2023-04-20T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404355Z",
+            "name": "ioreg",
+            "description": "The I/O Kit registry (ioreg) is a useful binary that can be used to gather data such as detecting if a VM is used, getting USB device vendor names, checking if a screen is locked, etc.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/ioreg/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--70cd0900-9eef-40a3-b6c1-5601aa1e7740",
+            "created": "2023-04-24T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404502Z",
+            "name": "security",
+            "description": "security is a command-line utility included in macOS that allows users to interact with the Keychain app. Keychains allow users to manager passwords and credentials for many services and features, including Wi-Fi and website passwords, secure notes, certificates, and Kerberos.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/security/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--e4c4aadd-8db5-45e7-8fc2-6d91d49fc997",
+            "created": "2023-08-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404646Z",
+            "name": "dsconfigad",
+            "description": "This tool allows command-line configuration of the Active Directory Plug-in. dsconfigad has the same functionality for configuring the Active Directory plugin as the Directory Utility application. It requires \"admin\" privileges to the local workstation and to the Directory to make changes.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/dsconfigad/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--a61c8571-39e0-4ae1-8a5b-6302d96c3e82",
+            "created": "2023-11-17T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404788Z",
+            "name": "say",
+            "description": "This tool uses the Speech Synthesis manager to convert input text to audible speech and either play it through the sound output device chosen in System Preferences or save it to an AIFF file.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/say/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--3cedf22e-a24f-471b-82af-58c9c41897fe",
+            "created": "2023-05-16T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.404937Z",
+            "name": "profiles",
+            "description": "Profiles on macOS are responsible for managing different types of profiles including configuration, provisioning, bootstraptoken, or enrollment. However, starting from macOS 11.0, this tool cannot be used for installing configuration profiles.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/profiles/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--45eee7f6-1582-418b-8758-30fd52fd69b9",
+            "created": "2024-07-15T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.405088Z",
+            "name": "streamzip",
+            "description": "streamzip is a system utility that can be utilized to compress data from \"stdin\" and write the data directly to \"stdout\", no temporary files are created. The tool can be used by malicious actors to collect and exfiltrate sensitive data without leaving staged data archive artifacts on disk.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/streamzip/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--9e33ef71-fd4e-435d-b97c-954095fee9d8",
+            "created": "2024-07-25T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.40524Z",
+            "name": "chflags",
+            "description": "The chflags utility modifies the file flags of the listed files as \nspecified by the flags operand.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/chflags/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--9cd7c808-c282-4435-93bc-8559aa8d917d",
+            "created": "2023-04-20T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.405393Z",
+            "name": "xattr",
+            "description": "The xattr command can be used to display, modify or remove the extended attributes of one or more files, including directories and symbolic links.  Extended attributes are arbitrary metadata stored with a file, but separate from the filesystem attributes (such as modification time or file size).  The metadata is often a null-terminated UTF-8 string, but can also be arbitrary binary data.  xattr can be used to bypass Gatekeeper.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/xattr/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--44fd26c7-7a48-4fcb-b6bf-e6f5f6b6b45a",
+            "created": "2023-07-12T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.405548Z",
+            "name": "caffeinate",
+            "description": "caffeinate creates assertions to alter system sleep behavior.  If no assertion flags are specified, caffeinate creates an assertion to prevent idle sleep.\nIf a utility is specified, caffeinate creates the assertions on the utility's behalf, and those assertions will persist for the duration of the utility's execution.\nOtherwise, caffeinate creates the assertions directly, and those assertions will persist until caffeinate exits.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/caffeinate/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--3e38fc6c-e7a4-40e7-9dad-d76ebb355290",
+            "created": "2023-05-17T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.405708Z",
+            "name": "tclsh",
+            "description": "tclsh is a shell-like utility that runs Tcl from standard input or a file. tclsh holds the \"com.apple.security.cs.disable-library-validation\" entitlement and is capable of loading arbitary plug-ins, framework, and libraries without requiring signed code.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/tclsh/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--dcf76c69-3bde-4534-a83f-7dd3fbde50ef",
+            "created": "2023-06-21T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.405864Z",
+            "name": "scutil",
+            "description": "scutil provides a command line interface to the dynamic store data maintained by configd. Interaction with this data (using the SystemConfiguration.framework SCDynamicStore APIs) is handled with a set of commands read from standard input.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/scutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--850f7cff-f078-4c9d-883c-f635830d8e20",
+            "created": "2023-04-27T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406008Z",
+            "name": "screencapture",
+            "description": "A tools that allows users to take screenshots of their desktop or specific app windows. The tool can be used by malicious actors to collect sensitve information from the targeted system.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/screencapture/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--e23578ae-56f0-4f3e-929f-56e92dcff96a",
+            "created": "2023-05-07T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406149Z",
+            "name": "plutil",
+            "description": "plutil is a command-line utility used for managing property list (.plist) files. These files are commonly used by macOS to store a app settings and other configuration info. The utility allows users to check the validity of plist files `plutil -lint`, convert plist files between XML and binary formats (plutil -convert), and add, modify or remove plist key value pairs.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/plutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--836897c9-2766-4099-bcda-fbf2b80613d9",
+            "created": "2023-05-27T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406292Z",
+            "name": "launchctl",
+            "description": "launchctl can be used to load, start, stop, and unload macOS services. It is a command-line frontend to launchd.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/launchctl/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--911d6a94-cd5c-465f-a23d-eff2cfb825a8",
+            "created": "2023-07-12T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406432Z",
+            "name": "odutil",
+            "description": "To look at internal state information for opendirectoryd, enable or disable logging, or change statistics settings.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/odutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--48d74768-92b0-4fcc-9a87-d829c51c9d83",
+            "created": "2023-05-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406573Z",
+            "name": "dsexport",
+            "description": "dsexport is a command-line utility designed to export records from the directory services database on a local host or from a connected LDAP service. The tool can be used to gather information about users, groups, and computers. The tool can also be used to export the directory services database to a file for offline analysis.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/dsexport/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--7b47d292-48a9-4684-8989-bc26b0352550",
+            "created": "2023-05-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406712Z",
+            "name": "nvram",
+            "description": "A full length description of the binary goes here.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/nvram/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--402db00a-f377-4783-8dbd-c98fdec66d3e",
+            "created": "2023-06-28T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406852Z",
+            "name": "mktemp",
+            "description": "The mktemp binary located in \"usr/bin/mktemp\" can generate unique directory or file names and has historically been used to generate unique payloads.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/mktemp/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--895f447a-4dd8-4aa3-a0c5-3ddaa7a47387",
+            "created": "2023-07-30T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.406994Z",
+            "name": "kextstat",
+            "description": "Deprecated tool in favor of kmutil. Lists loaded kernal extensions",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/kextstat/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--d3ee6ce0-2e22-4d8d-a0c2-adf7fd689100",
+            "created": "2023-05-19T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.407139Z",
+            "name": "dns-sd",
+            "description": "dns-sd can be used to interact with the Multicast DNS (mDNS) and DNS Service Discovery (DNS-SD) protocols. The tool is useful for administrators but can also be abused by malicious actors to discover local network services.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/dns-sd/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--49826ad0-4daa-4fb6-a3c4-4f693524ad49",
+            "created": "2023-05-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.407279Z",
+            "name": "sqlite3",
+            "description": "sqlite is a command-line utility that allows users to query and manage sqlite databases. Many components of macOS and apps used sqlite to store data. Attackers can leverage this tool to discover sensitive data.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/sqlite3/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--12bd05d3-3e8c-4a41-97c4-32200c72bcdf",
+            "created": "2023-12-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.40742Z",
+            "name": "swift",
+            "description": "The swift command is an interactive environment (REPL) for Swift.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/swift/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--4f07105e-4a01-4968-8b8f-6702bc15f057",
+            "created": "2023-04-22T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.407564Z",
+            "name": "networksetup",
+            "description": "networksetup extensive tool for reading and setting various network configuration details useful for Discovery and Command and Control.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/networksetup/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--7f7119bc-7bec-48d0-ba1d-e848c658f8bc",
+            "created": "2023-05-14T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.407705Z",
+            "name": "osacompile",
+            "description": "osacompile is a utility used to compile scripts into executables. It's a component of Open Scripting Architecture (OSA) that Apple uses for its scripting languages, like AppleScript and JavaScript for Automation (JXA). osacompile accepts AppleScript code as input and produces a compiled script file, which can be either a script file (.scpt), an app (.app), a droplet, or a script bundle.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/osacompile/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--b204ace8-fb44-4b54-9fef-ec94b1feffce",
+            "created": "2023-04-27T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.407847Z",
+            "name": "last",
+            "description": "The command shows a list of user sessions including the user name, terminal used, host name, start and stop times, and duration. It also indicates if a session is still active or was terminated unexpectedly.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/last/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--29b189d0-a853-4d2d-90df-5fe50904f339",
+            "created": "2023-04-11T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.408026Z",
+            "name": "pbpaste",
+            "description": "Retrieves the contents of the clipboard (a.k.a. pasteboard) and writes them to the standard output (stdout). The utility is often used for creating new files with the clipboard content or for piping clipboard contents to other commands. It can also be used in shell scripts that may require clipboard content as input.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/pbpaste/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--3a23c681-a5e3-457b-b932-fbf47d7aec34",
+            "created": "2023-07-12T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.40817Z",
+            "name": "system_profiler",
+            "description": "system_profiler reports on the hardware and software configuration of the system. It can generate plain text reports or XML reports which can be opened with System Information.app",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/system_profiler/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--1efca342-abe1-43e5-a4da-45df1c6e7ed7",
+            "created": "2023-09-12T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.40831Z",
+            "name": "sfltool",
+            "description": "sfltool allows interactions with the Shared File List framework, which can be used to modify application recent documents, favorites, and more.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/sfltool/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--1b6a018f-d179-41dc-afc5-bcf1c17d529c",
+            "created": "2023-08-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.40845Z",
+            "name": "dscacheutil",
+            "description": "dscacheutil does various operations against the Directory Service cache including gathering statistics, initiating lookups, inspection, cache flush, etc.\nThis tool replaces most of the functionality of the lookupd tool previously available in the OS.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/dscacheutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--db85cf16-990c-4f89-ab68-cdafa3cd87da",
+            "created": "2023-05-22T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.408589Z",
+            "name": "nscurl",
+            "description": "macOS version of curl that is used to download files to a target without applying the quarantine extended attribute",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/nscurl/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--4668d3bb-1e93-48f5-963c-98bc0cb88ac2",
+            "created": "2023-09-11T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.408729Z",
+            "name": "sw_vers",
+            "description": "sw_vers prints macOS version information, including the exact macOS version number.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/sw_vers/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--d8098435-7024-4c1c-b924-7c4c57007d90",
+            "created": "2023-04-25T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.408875Z",
+            "name": "softwareupdate",
+            "description": "A command-line utility for running software updates.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/softwareupdate/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--93fd6450-05e7-4fac-a98c-992bc894998c",
+            "created": "2023-05-20T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.409015Z",
+            "name": "safaridriver",
+            "description": "safaridriver is a tool that is used to enable Selenium testing via the macOS WebDriver protocol. Once enabled, the WebDriver API could be abused by attackers to communicate with external servers for command and control or exfiltration purposes.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/safaridriver/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--beef52ae-321b-4593-bbbe-7dd312a7d952",
+            "created": "2023-04-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.409158Z",
+            "name": "SetFile",
+            "description": "Uses the CommandLine/Terminal to set file and or directory attributes. It can set attributes, creator, creation date, modification date, and file type for multiple files at a time.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/SetFile/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--89abac91-6d03-490a-80a2-fc1340fc928a",
+            "created": "2023-04-22T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.409301Z",
+            "name": "mdfind",
+            "description": "mdfind to locate files on MacOS by searching a pre-built database. It is a command-line alternative to Spotlight in MacOS",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/mdfind/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--2805f20f-b010-4199-9ab1-f029d77364c0",
+            "created": "2023-05-01T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.409448Z",
+            "name": "tmutil",
+            "description": "A tool for managing Time Machine, the native macOS backup utility.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/tmutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--e6e71c94-49fd-4882-9a93-fee1c1870e71",
+            "created": "2023-04-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.40959Z",
+            "name": "GetFileInfo",
+            "description": "Uses the CommandLine/Terminal to return type, creator, attributes, created, and modified file information of a file or directory.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/GetFileInfo/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--335cdea9-c4e8-439e-83e9-79a434c74177",
+            "created": "2023-05-05T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.409733Z",
+            "name": "textutil",
+            "description": "The textutil binary is a command-line utility included in macOS that allows users to manipulate text files of various formats, using the mechanisms provided by the Cocoa text system. Formats include rtf, html, docx and others",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/textutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--4be2f6d3-ab3d-4ae8-b047-ccd5ff65f051",
+            "created": "2023-05-22T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.409873Z",
+            "name": "ssh-keygen",
+            "description": "ssh-keygen is a tool for creating new authentication key pairs for SSH (Secure Shell). ssh-keygen holds the \"com.apple.security.cs.disable-library-validation\" entitlement and is capable of loading arbitrary libraries without requiring signed code.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/ssh-keygen/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--3e0f862e-7fb7-4533-a16b-0c7c1168620e",
+            "created": "2024-07-29T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410012Z",
+            "name": "codesign",
+            "description": "The codesign command is used to create, check, and display code signatures, as well as inquire into the dynamic status of signed code in the system.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/codesign/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--61ce4b7a-5cd5-4929-bbd4-371a3b252186",
+            "created": "2023-04-25T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.41015Z",
+            "name": "dscl",
+            "description": "An extensive tool for communicating with the Directory Services, useful for Discovery.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/dscl/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--6c0a7e81-89a5-4931-acd0-2ad0d79edc1c",
+            "created": "2023-05-21T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410289Z",
+            "name": "hdiutil",
+            "description": "hdiutil manipulates disk images such as DMG and ISO files. You can mount, unmount, create, resize and verify disk images. Including encrypted images.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/hdiutil/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--28a3f1f3-0223-47de-9109-df209282ad4b",
+            "created": "2023-04-19T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410427Z",
+            "name": "osascript",
+            "description": "The osascript binary is a command-line utility included in macOS that allows users to run AppleScript and Open Scripting Architecture (OSA) scripts or commands. AppleScript is a scripting language that is designed for power users to automate various tasks, application actions, and to interact with the operating system.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/osascript/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--405b09d5-6036-4cab-b6ba-51a3b0e12701",
+            "created": "2023-05-15T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410567Z",
+            "name": "lsregister",
+            "description": "lsregister is used to build, dump, and check the validity of the Launch Services database. This database is often abused to create custom URL scheme handlers that point to malicious apps.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/lsregister/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--54b47b54-2380-42a6-8c64-341a29b1e04d",
+            "created": "2023-04-20T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410706Z",
+            "name": "sysctl",
+            "description": "Gets the macOS hardware information, which can be used to determine whether the target macOS host is running on a physical or virtual machine.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/sysctl/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--b415e495-d99c-4bbd-ac9e-f07f8c36172e",
+            "created": "2023-05-29T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410845Z",
+            "name": "mdls",
+            "description": "mdls list file metadata across standard metadata (creation date, size), extended attribute (quarantine), and Spotlight APIs (Finder flags).",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/mdls/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--60877959-ed19-4173-81b2-938a382cba95",
+            "created": "2023-05-04T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.410985Z",
+            "name": "ditto",
+            "description": "ditto is a command line utility that is commonly used to copy files and directories while preserving file attributes and permissions. The tool can be used by malicious actors to collect and exfiltrate sensitive data, move laterally, and/or perform DLL hijacking or binary replacement attacks.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/ditto/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--30ac4856-683f-4d86-a792-451bd50cabb1",
+            "created": "2023-05-23T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.411123Z",
+            "name": "spctl",
+            "description": "A full length description of the binary goes here.",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/spctl/"
+                }
+            ]
+        },
+        {
+            "type": "tool",
+            "spec_version": "2.1",
+            "id": "tool--5e5b8efa-9258-4cbd-80bf-605fab233d2d",
+            "created": "2023-05-14T00:00:00.000Z",
+            "modified": "2024-11-22T22:57:28.411262Z",
+            "name": "csrutil",
+            "description": "Used to enable/disable SIP, configure netboot and authenticated-root settings",
+            "labels": [
+                "living-off-the-land",
+                "loobins"
+            ],
+            "external_references": [
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": "https://www.loobins.io/binaries/csrutil/"
+                }
+            ]
+        }
+    ]
+}
