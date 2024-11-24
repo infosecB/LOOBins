@@ -88,11 +88,24 @@ def get(name: str, path: str = "") -> None:
     help="Enter the path where you would like to create the template YAML file.",
     default=".",
 )
-def export_stix(path: str = ".") -> None:
+@click.option(
+    "--file-name",
+    type=str,
+    required=False,
+    help="Enter the path where you would like to create the template YAML file.",
+    default="loobins_stix.json",
+)
+def export_stix(file_name: str, path: str) -> None:
     """Export the LOOBins STIX bundle file."""
     all_loobins = get_loobins()
     stix_bundle = LOOBinsGroup(all_loobins)
-    with open(f"{path}/loobins_stix.json", mode="w+", encoding="utf-8") as f:
+    path = path if path and os.path.exists(path) else "./"
+    if not os.path.exists(path):
+        click.echo(
+            f"The specified path did not exist. "
+            f"Creating the {file_name}.yml file in the current directory."
+        )
+    with open(f"{path}/{file_name}", mode="w+", encoding="utf-8") as f:
         f.write(stix_bundle.to_stix_bundle().serialize(pretty=True))
 
 
