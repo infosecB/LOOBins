@@ -19,12 +19,14 @@ Usage: pyloobins [OPTIONS] COMMAND [ARGS]...
   Create, validate, and view LOOBin objects.
 
 Options:
-  --help  Show this message and exit.
+  --version  Show the version and exit.
+  --help     Show this message and exit.
 
 Commands:
-  create    Create a YAML template file for a new LOOBin.
-  get       Get a LOOBin object.
-  validate  Validate a LOOBin YAML file.
+  create       Create a YAML template file for a new LOOBin.
+  export-stix  Export the LOOBins STIX bundle file.
+  get          Get a LOOBin object.
+  validate     Validate a LOOBin YAML file.
 ```
 
 You can run `pyloobins <command> --help` to see the available options for a specific command.
