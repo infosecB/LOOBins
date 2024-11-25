@@ -27,12 +27,26 @@ jobs:
       - name: Run Poetry bump (patch)
         run: poetry version patch
 
-      - name: Commit new version
+      - name: Add and commit changes
         run: |
-          git config --global user.name "infosecB"
-          git config --global user.email "infosecB@users.noreply.github.com"
-          git commit -a -m "bump version"
-          git push
+          git config --global user.name "actions-bot"
+          git config --global user.email "actions-bot@users.noreply.github.com"
+          git add .
+          git commit -m "bump version"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          reviewers: infosecb
+          delete-branch: true
+          commit-message: 'chore: bump version'
+          branch: 'create-pull-request/bump-version'
+          title: 'Bump PyLOOBins version'
+          body: |
+            ### Summary of the Pull Request
+
+            This PR bumps the version of LOOBins.      
+
   build:
     runs-on: ubuntu-latest
     steps:
