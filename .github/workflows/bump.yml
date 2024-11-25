@@ -1,6 +1,16 @@
 name: Bump version
 on:
   workflow_dispatch:
+    inputs:
+      type:
+        description: 'Bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 jobs:
   poetry_bump:
@@ -23,7 +33,7 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Run Poetry bump (patch)
-        run: poetry version patch
+        run: poetry version ${{ inputs.type }}
 
       - name: Add and commit changes
         run: |
