@@ -1,4 +1,5 @@
 """Utility functions that support the CLI and library"""
+
 import pathlib
 from datetime import date
 
@@ -8,15 +9,24 @@ import pyloobins
 from pyloobins.models import Detection, ExampleUseCase, LOOBin, Resource
 
 
-def get_loobins(path: str = "") -> list:
+def get_loobins(path: str = "") -> list[LOOBin]:
     """Returns a list of LOOBin objects"""
     loobins = []
+    yml_files_count = 0
+    parent_folder = 0
     if path:
         yml_files = pathlib.Path(path).glob("**/*.yml")
     else:
-        yml_files = (pathlib.Path(pyloobins.__file__).parents[1] / "LOOBins").glob(
-            "**/*.yml"
-        )
+        while yml_files_count == 0 and parent_folder < 5:
+            yml_files = [
+                yaml_file
+                for yaml_file in (
+                    pathlib.Path(pyloobins.__file__).parents[parent_folder] / "LOOBins"
+                ).glob("**/*.yml")
+            ]
+            yml_files_count = len(yml_files)
+            parent_folder += 1
+
     for yml_file in yml_files:
         with open(yml_file, "r", encoding="utf-8") as stream:
             try:

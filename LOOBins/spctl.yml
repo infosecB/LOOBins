@@ -1,7 +1,7 @@
 name: spctl
 author: Brendan Chamberlain (@infosecB)
 short_description: Manage the security assessment policy subsystem, Gatekeeper settings, and control which apps are allowed to run on the system.
-full_description: A full length description of the binary goes here.
+full_description: Manage the security assessment policy subsystem, Gatekeeper settings, and control which apps are allowed to run on the system.
 created: 2023-05-23
 example_use_cases:
 - name: Disable Gatekeeper
