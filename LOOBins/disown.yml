@@ -1,7 +1,7 @@
 name: disown
 author: Gabriel De Jesus (0xv1n)
 short_description: Prevents a process from being terminated when a shell session or terminal is closed.
-full_description: `disown` is a system utility that can be utilized to persist a shell process after a terminal has been closed or a shell session has been terminated. This is accomplished by preventing a SIGHUP from being sent to the running job, and removing the process from the shell jobs table. Unlike `nohup` which is used during process initialization, `disown` can be used to modify an existing process.
+full_description: disown is a system utility that can be utilized to persist a shell process after a terminal has been closed or a shell session has been terminated. This is accomplished by preventing a SIGHUP from being sent to the running job, and removing the process from the shell jobs table. Unlike nohup which is used during process initialization, disown can be used to modify an existing process.
 created: 2025-05-27
 example_use_cases:
   - name: Start a process and remove it from the jobs table.
