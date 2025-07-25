@@ -44,14 +44,16 @@ def create(name: str, path: str) -> None:
     """Create a YAML template file for a new LOOBin."""
     template = make_template(name=name).to_yaml()
     file_name = normalize_file_name(name) if name else "template"
-    file_path = path if path and os.path.exists(path) else "./"
+    file_path = path if path else "./"
     if not os.path.exists(file_path):
         click.echo(
             f"The specified path did not exist. "
             f"Creating the {file_name}.yml file in the current directory."
         )
+        file_path = "./"
+
     with open(
-        file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
+        file=os.path.join(file_path, f"{file_name}.yml"), mode="w", encoding="utf-8"
     ) as out_file:
         out_file.write(template)
         out_file.close()
