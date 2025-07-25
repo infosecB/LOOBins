@@ -1,4 +1,4 @@
-from test_data import LOOBinFactory
+from tests.test_data import LOOBinFactory
 
 
 def test_to_stix():
