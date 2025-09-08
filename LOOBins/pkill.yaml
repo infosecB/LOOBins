@@ -1,0 +1,25 @@
+name: pkill
+author: Jason Phang Vern - Onn 
+short_description: Kill processes by name or pattern.
+full_description: pkill sends signals to processes that match a given name or pattern. On macOS, it can be abused to terminate security tools, monitoring daemons, or user
+  applications. Attackers may use it for defense evasion or persistence, instead of bringing in custom binaries.
+created: 2025-09-08
+example_use_cases:
+- name: Kill security tools
+  description: Terminate defensive processes like firewalls, AV, or monitoring tools.
+  code: pkill -f "Little Snitch|ESET|osqueryd|Falcon"
+  tactics:
+  - Defense Evasion
+  tags:
+  - processes
+  - evasion
+paths:
+- /usr/bin/pkill 
+detections:
+- name: Detect pkill used with -9, -u, or targeting defensive processes (Little Snitch, osqueryd, Falcon).
+  url: N/A
+resources:
+- name: "Fake DeepSeek Site Infects Mac Users with Atomic (AMOS) Stealer"
+  url: https://www.esentire.com/blog/fake-deepseek-site-infects-mac-users-with-atomic-stealer 
+- name: "SS64 pkill man page"
+  url: https://ss64.com/mac/pkill.html   
