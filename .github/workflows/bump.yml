@@ -1,56 +1,56 @@
-name: Bump version
-on:
-  workflow_dispatch:
-    inputs:
-      type:
-        description: 'Bump type'
-        required: true
-        default: 'patch'
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
+# name: Bump version
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       type:
+#         description: 'Bump type'
+#         required: true
+#         default: 'patch'
+#         type: choice
+#         options:
+#           - patch
+#           - minor
+#           - major
 
-jobs:
-  poetry_bump:
-    name: bump version
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# jobs:
+#   poetry_bump:
+#     name: bump version
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+#       - name: Set up Python 3.10
+#         uses: actions/setup-python@v5
+#         with:
+#           python-version: "3.10"
 
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y
+#       - name: Install Poetry
+#         run: |
+#           curl -sSL https://install.python-poetry.org | python - -y
 
-      - name: Update PATH
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+#       - name: Update PATH
+#         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-      - name: Run Poetry bump (patch)
-        run: poetry version ${{ inputs.type }}
+#       - name: Run Poetry bump (patch)
+#         run: poetry version ${{ inputs.type }}
 
-      - name: Add and commit changes
-        run: |
-          git config --global user.name "actions-bot"
-          git config --global user.email "actions-bot@users.noreply.github.com"
-          git add .
-          git commit -m "bump version"
+#       - name: Add and commit changes
+#         run: |
+#           git config --global user.name "actions-bot"
+#           git config --global user.email "actions-bot@users.noreply.github.com"
+#           git add .
+#           git commit -m "bump version"
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          reviewers: infosecb
-          delete-branch: true
-          commit-message: 'chore: bump version'
-          branch: 'create-pull-request/bump-version'
-          title: 'Bump PyLOOBins version'
-          body: |
-            ### Summary of the Pull Request
+#       - name: Create Pull Request
+#         uses: peter-evans/create-pull-request@v5
+#         with:
+#           reviewers: infosecb
+#           delete-branch: true
+#           commit-message: 'chore: bump version'
+#           branch: 'create-pull-request/bump-version'
+#           title: 'Bump PyLOOBins version'
+#           body: |
+#             ### Summary of the Pull Request
 
-            This PR bumps the version of LOOBins.
+#             This PR bumps the version of LOOBins.
