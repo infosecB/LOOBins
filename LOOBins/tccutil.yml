@@ -1,0 +1,32 @@
+name: tccutil
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Command-line tool for managing the Transparency, Consent, and Control (TCC) permissions database
+full_description: tccutil is a command-line tool for managing the Transparency, Consent, and Control (TCC) permissions database. It allows users to revoke permissions for applications to access certain system resources, such as the camera, microphone, and location.
+created: 2025-08-03
+example_use_cases:
+    - name: Use the tccutil to reset specific permissions
+      description: Banshee Stealer resets the permissions that have already been allowed to applications on the system, which will cause the user to be prompted to give them again. This action may be intended to trick the user into unknowingly giving authorizations to the malware.
+      code: tccutil reset AppleEvents
+      tactics:
+          - Defense Evasion
+      tags:
+          - bash
+          - tccutil
+    - name: Use the tccutil to reset specific permissions for an application
+      description: Attackers use tccutil to reset permissions for services like Camera, Microphone, or AppleEvents.
+      code: tccutil reset AppleEvents com.apple.Terminal
+      tactics:
+          - Defense Evasion
+      tags:
+          - bash
+          - tccutil
+paths:
+    - /usr/bin/tccutil
+detections:
+    - name: No detections at time of publishing
+      url: N/A
+resources:
+    - name: tccutil
+      url: https://ss64.com/mac/tccutil.html
+    - name: 'Banshee: The Stealer That "Stole Code" From MacOS XProtect'
+      url: https://research.checkpoint.com/2025/banshee-macos-stealer-that-stole-code-from-macos-xprotect/
