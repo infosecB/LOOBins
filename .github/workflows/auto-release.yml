@@ -93,7 +93,9 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Commit and push version bump
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git add pyproject.toml
           git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]"
-          git push origin main
+          git push https://${PAT_TOKEN}@github.com/infosecB/LOOBins.git main
