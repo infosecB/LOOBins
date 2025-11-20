@@ -1,0 +1,65 @@
+name: pkgutil
+author: Claude (Anthropic AI)
+short_description: Query and manipulate macOS Installer packages and receipts.
+full_description: The pkgutil command is a macOS built-in utility used to query and manipulate Mac OS X Installer packages and receipts. It reads and manipulates flat packages and provides access to the receipt database used by the Installer. While designed for legitimate package management, pkgutil can be abused by threat actors for system discovery, extracting package contents, and analyzing installed software for reconnaissance purposes.
+created: 2025-11-20
+example_use_cases:
+  - name: List all installed packages for reconnaissance
+    description: Enumerate all installed packages on the system to discover what software is installed. This information can be used to identify potential targets for exploitation or to map the system's software inventory.
+    code: pkgutil --pkgs
+    tactics:
+      - Discovery
+    tags:
+      - reconnaissance
+      - enumeration
+      - pkgutil
+  - name: Get detailed information about a specific package
+    description: Retrieve detailed information about an installed package including version, install location, and install time. This can help identify software versions for targeted exploitation.
+    code: pkgutil --pkg-info com.apple.pkg.CLTools_Executables
+    tactics:
+      - Discovery
+    tags:
+      - reconnaissance
+      - pkgutil
+  - name: List all files installed by a package
+    description: Enumerate all files that were installed by a specific package. This can be used to identify configuration files, binaries, or other assets that may be of interest.
+    code: pkgutil --files com.apple.pkg.CLTools_Executables
+    tactics:
+      - Discovery
+    tags:
+      - enumeration
+      - pkgutil
+  - name: Expand a package to extract its contents
+    description: Extract the contents of a flat package into a directory structure without executing it. This allows threat actors to analyze malicious packages, extract payloads, or examine pre/post-install scripts for further exploitation opportunities.
+    code: pkgutil --expand suspicious.pkg /tmp/extracted_pkg
+    tactics:
+      - Collection
+      - Defense Evasion
+    tags:
+      - extraction
+      - analysis
+      - pkgutil
+  - name: Export package information in plist format
+    description: Export the list of all installed packages in macOS property list format for programmatic processing or exfiltration.
+    code: pkgutil --pkgs-plist > /tmp/installed_packages.plist
+    tactics:
+      - Collection
+      - Discovery
+    tags:
+      - exfiltration
+      - enumeration
+      - pkgutil
+paths:
+  - /usr/sbin/pkgutil
+detections:
+  - name: Command Line Argument Detection (args contain pkgutil AND --expand)
+    url: N/A
+  - name: Command Line Argument Detection (args contain pkgutil AND --pkgs)
+    url: N/A
+resources:
+  - name: "pkgutil Man Page - SS64.com"
+    url: https://ss64.com/mac/pkgutil.html
+  - name: "macOS Malware Analysis : PKG Files"
+    url: https://www.malwr4n6.com/post/macos-malware-analysis-pkg-files
+  - name: "How to reverse engineer a malicious macOS pkg installer"
+    url: https://tonygo.tech/blog/2025/how-to-reverse-engineer-malicious-macos-pkg-installer
