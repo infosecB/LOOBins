@@ -1,0 +1,59 @@
+name: pkill
+author: Jason Phang Vern - Onn 
+short_description: Kill processes by name or pattern.
+full_description: pkill is a Unix utility available on macOS that sends signals to processes matching a given name or pattern. While intended for legitimate process management, threat actors can abuse pkill to terminate security tools, monitoring daemons, or user applications for defense evasion. It's particularly valuable to attackers as a Living Off the Land technique that avoids bringing custom binaries onto the system.
+created: 2025-09-08
+example_use_cases:
+- name: Kill security tools
+  description: Terminate defensive processes like firewalls, AV, or monitoring tools.
+  code: pkill -f "Little Snitch|ESET|osqueryd|Falcon"
+  tactics:
+  - Defense Evasion
+  tags:
+  - processes
+  - evasion
+- name: Force kill processes with SIGKILL
+  description: Use the -9 signal to forcefully terminate processes that may not respond to normal termination signals. Useful for killing hung security tools.
+  code: pkill -9 osqueryd
+  tactics:
+  - Defense Evasion
+  tags:
+  - processes
+  - sigkill
+- name: Kill all processes for a user
+  description: Terminate all processes belonging to a specific user, potentially ending user sessions or disrupting monitoring.
+  code: pkill -u username
+  tactics:
+  - Defense Evasion
+  - Impact
+  tags:
+  - processes
+  - user
+- name: Kill logging and monitoring daemons
+  description: Terminate system logging and monitoring processes to evade detection.
+  code: pkill -f "syslog|auditd|osqueryd|esensor|nessusd"
+  tactics:
+  - Defense Evasion
+  tags:
+  - logging
+  - monitoring
+- name: Kill process by exact name match
+  description: Use exact matching with -x flag to kill specific process by exact name rather than pattern.
+  code: pkill -x com.apple.Safari
+  tactics:
+  - Defense Evasion
+  - Impact
+  tags:
+  - processes
+paths:
+- /usr/bin/pkill
+detections:
+- name: Process execution monitoring for pkill
+  url: N/A
+- name: Endpoint Detection - pkill targeting security tools
+  url: N/A
+resources:
+- name: "Fake DeepSeek Site Infects Mac Users with Atomic (AMOS) Stealer"
+  url: https://www.esentire.com/blog/fake-deepseek-site-infects-mac-users-with-atomic-stealer
+- name: "SS64 pkill man page"
+  url: https://ss64.com/mac/pkill.html
