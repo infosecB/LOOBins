@@ -1,0 +1,90 @@
+name: notifyutil
+author: Claude Code
+short_description: Access and control the macOS notification system for monitoring and triggering system events.
+full_description: |-
+  notifyutil is a macOS command-line utility that provides low-level access to the notification system (notify(3) API).
+  It allows users to post notifications, monitor notification events, query notification state, and inspect registered
+  notification keys. While designed for system administration and debugging, it can be abused for inter-process
+  communication, monitoring system state changes, detecting user activity, and triggering malicious actions based on
+  system events.
+created: 2025-11-25
+example_use_cases:
+  - name: Monitor system notifications for user activity
+    description: Monitor all notification events to detect user logins, application launches, screen lock/unlock events, and other system state changes for reconnaissance purposes.
+    code: notifyutil -1
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+      - monitoring
+      - reconnaissance
+  - name: Monitor specific notification keys
+    description: Watch for specific notification keys to track system events such as network changes, sleep/wake events, or application activity.
+    code: notifyutil -w com.apple.system.loginwindow.desktopDidLock
+    tactics:
+      - Discovery
+      - Collection
+    tags:
+      - bash
+      - zsh
+      - monitoring
+  - name: Post notifications to trigger actions
+    description: Post notifications to the notification system that other processes or malicious implants may be listening for, enabling covert inter-process communication or triggering payload execution.
+    code: notifyutil -p com.malicious.trigger.execute
+    tactics:
+      - Execution
+      - Command and Control
+    tags:
+      - bash
+      - zsh
+      - ipc
+      - trigger
+  - name: Query notification state
+    description: Check the state of specific notification keys to gather information about system configuration, running services, or user session status.
+    code: notifyutil -g com.apple.system.loginwindow.loggedIn
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+      - enumeration
+  - name: Enumerate registered notification keys
+    description: List all registered notification keys to discover potential monitoring points, understand system behavior, and identify opportunities for persistence or evasion.
+    code: notifyutil -l | grep -i security
+    tactics:
+      - Discovery
+    tags:
+      - bash
+      - zsh
+      - enumeration
+      - reconnaissance
+  - name: Monitor for screen lock to trigger credential harvesting
+    description: Monitor for screen lock notifications and trigger a fake authentication prompt when the user unlocks their screen.
+    code: |-
+      notifyutil -w com.apple.screenIsLocked & while true; do if notifyutil -g com.apple.screenIsLocked | grep -q "state: 0"; then osascript -e 'display dialog "Your session has expired. Please re-enter your password:" default answer "" with hidden answer'; fi; sleep 2; done
+    tactics:
+      - Credential Access
+      - Collection
+    tags:
+      - bash
+      - zsh
+      - monitoring
+      - phishing
+      - credential-harvesting
+paths:
+  - /usr/bin/notifyutil
+detections:
+  - name: Monitor notifyutil execution with monitoring flags
+    url: N/A
+  - name: Detect notifyutil posting suspicious or non-standard notification keys
+    url: N/A
+  - name: Alert on notifyutil monitoring system security-related notifications
+    url: N/A
+resources:
+  - name: "notifyutil man page"
+    url: https://ss64.com/osx/notifyutil.html
+  - name: "Apple notify(3) API documentation"
+    url: https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/notify.3.html
+  - name: "macOS Notifications and Darwin Notifications"
+    url: https://www.real-world-systems.com/docs/notify.1.html
