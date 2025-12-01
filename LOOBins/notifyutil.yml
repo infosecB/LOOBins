@@ -1,0 +1,92 @@
+name: notifyutil
+author: Brendan Chamberlain (@infosecB)
+short_description: Monitor and post Darwin notifications for inter-process communication and system event monitoring.
+full_description: The notifyutil binary is a command-line interface to the notify(3) API and notifyd(8) daemon, which manages Darwin notifications on macOS. This utility enables posting notifications, monitoring system-wide notification keys, and manipulating state values associated with notification keys. While designed for legitimate inter-process communication (IPC), notifyutil can be abused by threat actors to monitor system events (like screen lock, network changes, timezone updates), establish covert communication channels between processes, or gather intelligence about system state changes without triggering traditional security monitoring.
+created: 2025-01-24
+example_use_cases:
+  - name: Monitor system events for reconnaissance
+    description: An attacker can register for system notification keys to detect when the user locks their screen, changes network state, or other system events without using more easily detected APIs. The following example monitors for screen lock events.
+    code: notifyutil -w com.apple.screenIsLocked
+    tactics:
+      - Discovery
+      - Collection
+    tags:
+      - monitoring
+      - surveillance
+      - system-events
+  - name: Establish covert inter-process communication channel
+    description: Threat actors can use Darwin notifications as a covert IPC mechanism to coordinate between malicious processes. By posting and monitoring custom notification keys with associated state values, malware components can exchange commands and data without using traditional IPC methods that may be monitored.
+    code: |
+      # Sender process
+      notifyutil -p com.example.hidden.channel -s com.example.hidden.channel 1337
+
+      # Receiver process in another terminal/process
+      notifyutil -1 com.example.hidden.channel -g com.example.hidden.channel
+    tactics:
+      - Command and Control
+      - Defense Evasion
+    tags:
+      - ipc
+      - covert-channel
+      - c2
+  - name: Monitor network state changes for data exfiltration timing
+    description: An attacker can monitor for network configuration changes to determine optimal timing for data exfiltration. This allows malware to detect when the system connects to networks and adjust behavior accordingly.
+    code: notifyutil -w com.apple.system.config.network_change
+    tactics:
+      - Discovery
+      - Collection
+    tags:
+      - network
+      - monitoring
+      - exfiltration-timing
+  - name: Monitor timezone changes for geolocation tracking
+    description: Monitoring timezone change notifications can help an attacker track when a target device moves between geographic locations or when users travel, providing intelligence about the target's physical location and movement patterns.
+    code: notifyutil -w com.apple.system.timezone
+    tactics:
+      - Collection
+      - Discovery
+    tags:
+      - geolocation
+      - monitoring
+      - reconnaissance
+  - name: Monitor login/logout events for privilege escalation timing
+    description: By monitoring authentication-related notification keys, an attacker can detect login and logout events to time privilege escalation attempts or other malicious activities when defenses may be weakened during authentication transitions.
+    code: notifyutil -w com.apple.loginwindow.logout -w com.apple.springboard.attemptactivationend
+    tactics:
+      - Discovery
+      - Privilege Escalation
+    tags:
+      - authentication
+      - monitoring
+      - privilege-escalation
+  - name: Query system notification state values for reconnaissance
+    description: Threat actors can query state values of system notification keys to gather information about the current system configuration without executing more suspicious commands.
+    code: |
+      notifyutil -g com.apple.system.timezone
+      notifyutil -g com.apple.loginwindow.logout
+      notifyutil -g com.apple.screenIsLocked
+    tactics:
+      - Discovery
+    tags:
+      - reconnaissance
+      - enumeration
+paths:
+  - /usr/bin/notifyutil
+detections:
+  - name: Monitor notifyutil execution with suspicious notification keys
+    url: N/A
+  - name: Detect notifyutil monitoring non-standard or custom notification keys (keys not starting with com.apple)
+    url: N/A
+  - name: Monitor long-running notifyutil processes (using -w flag for sustained monitoring)
+    url: N/A
+  - name: Detect notifyutil usage in conjunction with known malware indicators or suspicious parent processes
+    url: N/A
+resources:
+  - name: "Quick Tip: system-wide notifications with notifyutil"
+    url: https://brettterpstra.com/2012/07/04/quick-tip-system-wide-notifications-with-notifyutil/
+  - name: "Darwin Notification Concepts - Apple Developer Documentation"
+    url: https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/MacOSXNotifcationOv/DarwinNotificationConcepts/DarwinNotificationConcepts.html
+  - name: "notify(3) manual page"
+    url: https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/notify.3.html
+acknowledgements:
+  - Research and testing conducted for LOOBins project
