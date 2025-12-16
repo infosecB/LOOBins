@@ -4,7 +4,7 @@ short_description: Create, manipulate and verify code signatures.
 full_description: The codesign command is used to create, check, and display code signatures, as well as inquire into the dynamic status of signed code in the system.
 created: 2024-07-29
 example_use_cases:
-  - name: Ad-hod codesigning an app bundle
+  - name: Ad-hoc codesigning an app bundle
     description: This command forcefully re-signs the MyApp.app application with an ad-hoc signature, applying the signature deeply to all nested code within the app
     code: codesign --force --deep -s - MyApp.app
     tactics:
@@ -14,8 +14,8 @@ example_use_cases:
 paths:
   - /usr/bin/codesign
 detections:
-  - name: "Jamf Protect: Detect ad-hod codesigning activity"
-    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/adhoc_codesigning
+  - name: "Jamf Protect: Detect ad-hoc codesigning activity"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/adhoc_codesigning.yaml
 resources:
   - name: "When Apple Admits macOS Malware Is A Problem – It’s Time To Take Notice"
     url: https://www.sentinelone.com/blog/when-apple-admits-macos-malware-is-a-problem-its-time-to-take-notice/
