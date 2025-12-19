@@ -92,7 +92,7 @@ example_use_cases:
     - network
     - groups
     - configuration
-  - name: Computer enumration
+  - name: Computer enumeration
     description: Enumerate all computers in an Active Directory.
     code: |
       dscl  "/Active Directory/TEST/All Domains" -list /Computers
@@ -103,7 +103,7 @@ example_use_cases:
     tags:
     - network
     - shares
-  - name: Share enumration
+  - name: Share enumeration
     description: Enumerate all shares.
     code: |
       dscl . -list /SharePoints

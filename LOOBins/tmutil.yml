@@ -1,5 +1,5 @@
 name: tmutil
-author: Brendan Chamberlain (@infosecb)
+author: Brendan Chamberlain (@infosecB)
 short_description: Manage Time Machine backups.
 full_description: A tool for managing Time Machine, the native macOS backup utility. 
 created: 2023-05-01
@@ -12,7 +12,7 @@ example_use_cases:
   tags:
   - backup
 - name: Delete a backup
-  description: The following command deletes the specified backup. An adversary may perform this action before launching a ransonware attack to prevent the victim from restoring their files.
+  description: The following command deletes the specified backup. An adversary may perform this action before launching a ransomware attack to prevent the victim from restoring their files.
   code: tmutil delete /path/to/backup
   tactics:
   - Impact

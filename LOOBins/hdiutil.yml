@@ -5,7 +5,7 @@ full_description: hdiutil manipulates disk images such as DMG and ISO files. You
 created: 2023-05-21
 example_use_cases:
 - name: Mount a malicious dmg file
-  description: Uses hdiutil to mount a malicious dmg file to 
+  description: Uses hdiutil to mount a malicious dmg file to the system.
   code: hdiutil mount malicious.dmg
   tactics:
   - Execution
@@ -14,7 +14,7 @@ example_use_cases:
   - zsh
   - disk
 - name: Mount a malicious dmg file
-  description: Uses hdiutil to mount a malicious dmg file to 
+  description: Uses hdiutil to mount a malicious dmg file to the system.
   code: hdiutil attach malicious.dmg
   tactics:
   - Execution
@@ -23,7 +23,7 @@ example_use_cases:
   - zsh
   - disk
 - name: Mount a malicious iso file
-  description: Uses hdiutil to mount a malicious iso file to 
+  description: Uses hdiutil to mount a malicious iso file to the system.
   code: hdiutil mount malicious.iso
   tactics:
   - Execution
@@ -32,7 +32,7 @@ example_use_cases:
   - zsh
   - disk
 - name: Mount a malicious iso file
-  description: Uses hdiutil to mount a malicious iso file to 
+  description: Uses hdiutil to mount a malicious iso file to the system.
   code: hdiutil attach malicious.iso
   tactics:
   - Execution

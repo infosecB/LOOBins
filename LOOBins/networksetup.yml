@@ -1,7 +1,7 @@
 name: networksetup
 author: Jason Trost (@jason_trost)
 short_description: Configure network settings in System Preferences.
-full_description: networksetup extensive tool for reading and setting various network configuration details useful for Discovery and Command and Control.
+full_description: networksetup is an extensive tool for reading and setting various network configuration details useful for Discovery and Command and Control.
 created: 2023-04-22
 example_use_cases:
   - name: network device enumeration
