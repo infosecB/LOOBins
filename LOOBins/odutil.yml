@@ -13,7 +13,7 @@ example_use_cases:
       - bash
       - zsh
   - name: Retrieves active session
-    description: Retrieves the all active sessions
+    description: Retrieves all active sessions
     code: odutil show sessions
     tactics:
       - Discovery

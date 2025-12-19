@@ -15,7 +15,7 @@ example_use_cases:
       - bash
       - zsh
   - name: Lookup all users
-    description: List the all users information
+    description: List all user information
     code: dscacheutil -q user
     tactics:
       - Discovery

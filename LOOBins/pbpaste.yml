@@ -5,7 +5,7 @@ full_description: Retrieves the contents of the clipboard (a.k.a. pasteboard) an
 created: 2023-04-11
 example_use_cases:
 - name: Use pbpaste to collect sensitive clipboard data
-  description: A pbpaste bash loop can continously collect clipboard contents every x minutes and write contents to a file (or another location). This may allow an attacker to gather user credentials or collect other sensitive information.
+  description: A pbpaste bash loop can continuously collect clipboard contents every x minutes and write contents to a file (or another location). This may allow an attacker to gather user credentials or collect other sensitive information.
   code: while true; do echo $(pbpaste) >> loot.txt; sleep 10; done
   tactics:
   - Credential Access

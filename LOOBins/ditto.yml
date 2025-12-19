@@ -36,7 +36,7 @@ example_use_cases:
   - Defense Evasion
   tags:
   - files
-- name: DLL hjiacking
+- name: DLL hijacking
   description: Replace a legitimate library with a malicious one while maintaining the original file permissions and attributes.
   code: ditto -V /path/to/malicious-library/malicious_library.dylib /path/to/target-library/original_library.dylib
   tactics:

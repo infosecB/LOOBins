@@ -1,5 +1,5 @@
 name: open
-author: Brendan Chamberlain (@infosecb)
+author: Brendan Chamberlain (@infosecB)
 short_description: Open files, folders, apps, URLs, and header files.
 full_description: The open command-line utility can be used to open files, folders, app, URLs or header files in their associate macOS app.
 created: 2023-05-10
