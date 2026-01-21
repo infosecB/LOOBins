@@ -1,0 +1,26 @@
+name: funzip
+author: Pratik Jeware
+short_description: The malicious binaries use funzip to extract the malicious binary with a password and using head or tail commands. 
+full_description: |- 
+      funzip is a macOS utility that extracts a ZIP or gzip file directly to output from archives or other piped input. The malicious binaries use funzip to extract the malicious binary with a password and using head or tail commands.
+created: 2026-01-21
+example_use_cases:
+  - name: extracts a ZIP or gzip file directly to output from archives or other piped input
+    description: funzip is a macOS utility used to extract ZIP or gzip files directly to output. Malicious binaries misuse funzip, along with head or tail, to extract and reconstruct password-protected malicious payloads.
+    code: tail -c <> $0 | funzip  -<password>
+    tactics:
+      - Execution
+      - Command and Scripting Interpreter 
+    tags:
+      - bash
+      - zsh
+paths:
+  - /usr/bin/funzip
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: "MacOS: Bashed Apples of Shlayer and Bundlore"
+    url: https://www.uptycs.com/blog/threat-research-report-team/macos-bashed-apples-of-shlayer-and-bundlore
+  - name: "funzip man page"
+    url: https://linux.die.net/man/1/funzip
