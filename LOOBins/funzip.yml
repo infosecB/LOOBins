@@ -10,7 +10,6 @@ example_use_cases:
     code: tail -c <> $0 | funzip  -<password>
     tactics:
       - Execution
-      - Command and Scripting Interpreter 
     tags:
       - bash
       - zsh
