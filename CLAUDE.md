@@ -8,10 +8,11 @@ LOOBins (Living Off the Orchard: macOS Binaries) is a cybersecurity resource tha
 
 1. **YAML Database**: Collection of LOOBin definitions in `/LOOBins/` directory
 2. **Python SDK**: PyLOOBins package in `/src/pyloobins/` for programmatic access
-3. **Static Site Generator**: Generates browsable HTML documentation from YAML files
-4. **Web Application**: Data consumed at https://loobins.io
+3. **Web Application**: Data consumed at https://loobins.io
 
 **Important**: This project does NOT include Unix binaries covered by GTFOBins unless they have macOS-specific use cases (e.g., sqlite3).
+
+**Python version**: `^3.8` (tested against 3.8, 3.9, 3.10, 3.11, 3.12 via tox)
 
 ## Development Commands
 
@@ -45,12 +46,11 @@ poetry run pyloobins create --name "BinaryName" --path LOOBins/
 # Get LOOBin data as JSON
 poetry run pyloobins get --name "osascript"
 
-# Export STIX bundle
+# Export STIX bundle (--path controls output directory, not input)
 poetry run pyloobins export-stix --file-name loobins_stix.json --path .
 
-# Generate static website
-poetry run pyloobins generate-site --output-dir docs
-poetry run pyloobins generate-site --output-dir site --loobins-path LOOBins/
+# Run multi-version tests with tox (Python 3.8–3.12)
+poetry run tox
 ```
 
 ## LOOBin YAML Schema
@@ -93,27 +93,29 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
    - `normalize_file_name(title)`: Converts binary name to lowercase with underscores
 
 3. **CLI** (`src/pyloobins/cli.py`):
-   - Click-based command interface with commands: `validate`, `create`, `get`, `export-stix`, `generate-site`
-
-4. **Static Site Generator** (`src/pyloobins/static_site.py`):
-   - `StaticSiteGenerator` class generates complete HTML site
-   - Generates: homepage (index.html), binaries.html, individual LOOBin pages, tactics.html, about.html
-   - Uses Jinja2 templates from `src/pyloobins/templates/`
-   - Calculates statistics: total LOOBins, tactics, tags, use cases, detections
+   - Click-based command interface with commands: `validate`, `create`, `get`, `export-stix`
 
 ### Data Flow
 
 1. **Loading**: `get_loobins()` searches for `/LOOBins/*.yml` files up to 5 parent directories
 2. **Parsing**: YAML files parsed and validated against Pydantic models
-3. **Processing**: LOOBin objects can be exported as JSON, YAML, Markdown, or STIX2
-4. **Generation**: Static site generator creates browsable HTML documentation
+3. **Output**: LOOBin objects can be exported as JSON, YAML, Markdown, or STIX2 bundles
 
 ### Validation Pipeline
 
-- **CI/CD**: `.github/workflows/validate_loobins.yml` validates changed YAML files on PRs
-- **Pre-commit hooks**: Enforce code quality with black, isort, pylint
+- **CI/CD**: `.github/workflows/validate_loobins.yml` validates changed YAML files on PRs (uses `pip install pyloobins` from PyPI, not local source)
+- **Auto-release**: `.github/workflows/auto-release.yml` on push to `main` — runs tox, bumps patch version, builds, publishes to PyPI, creates GitHub release, commits version bump with `[skip ci]`
+- **Pre-commit hooks**: `check-yaml`, `check-toml`, `end-of-file-fixer`, `mixed-line-ending`, `black`, `isort --profile black` (note: pylint is not a pre-commit hook, run it separately)
 - **Schema validation**: Pydantic models ensure YAML files match schema
 - **VS Code integration**: SchemaStore provides YAML validation in VS Code (requires YAML extension)
+
+## Gotchas
+
+- **`create --path` requires a trailing slash**: The CLI concatenates path and filename directly (`f"{file_path}{file_name}.yml"`), so use `LOOBins/` not `LOOBins`
+- **`export-stix --path` is output-only**: The `--path` flag controls where the STIX JSON file is written; input LOOBins are always loaded via auto-discovery (`get_loobins()` with no args)
+- **Detection URLs can be `"N/A"`**: The `loobin.md.j2` template handles `"N/A"` as a sentinel value, rendering detections without a link
+- **`polyfactory` is a production dependency**: Listed under `[tool.poetry.dependencies]` but only used in tests (`tests/test_data.py`)
+- **`poetry.lock` is not committed**: Gitignored per library convention — dependency resolution happens at install time
 
 ## Contributing Guidelines
 
