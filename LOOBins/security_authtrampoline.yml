@@ -1,0 +1,89 @@
+name: security_authtrampoline
+author: infosecB
+short_description: Execute privileged helper tools on behalf of authorized macOS applications.
+full_description: |
+  security_authtrampoline is a macOS system binary that is part of the Authorization Services
+  framework. It acts as a "trampoline" that executes privileged helper tools with root-level
+  permissions on behalf of applications that have received appropriate user authorization.
+  When an application uses the AuthorizationExecuteWithPrivileges API or installs a privileged
+  helper tool via SMJobBless, macOS invokes security_authtrampoline to fork and execute the helper
+  with elevated privileges. Threat actors have abused this mechanism—particularly via the
+  AuthorizationExecuteWithPrivileges API—to gain root-level code execution after prompting users
+  to approve an authorization dialog. This technique has been observed in macOS malware families
+  including OSX.Shlayer, Bundlore, and OceanLotus/APT32.
+created: 2026-02-25
+example_use_cases:
+  - name: Privilege Escalation via AuthorizationExecuteWithPrivileges
+    description: |
+      The deprecated (but still functional) AuthorizationExecuteWithPrivileges API causes macOS
+      to invoke security_authtrampoline to run an arbitrary binary with root privileges after the
+      user approves an authorization dialog. Threat actors embed this API call in malicious
+      applications disguised as legitimate software (e.g., fake software updaters) to escalate
+      from user-level access to root. This technique has been widely observed in macOS adware
+      and malware families, including OSX.Shlayer.
+    code: |
+      # C-level API invocation embedded in malicious application bundles:
+      # AuthorizationExecuteWithPrivileges(authRef, "/path/to/payload", 0, args, &pipe);
+      #
+      # macOS then internally invokes security_authtrampoline as:
+      # /usr/libexec/security_authtrampoline <fd> <uid> <gid> /path/to/payload [args]
+    tactics:
+      - Privilege Escalation
+      - Defense Evasion
+    tags:
+      - authorization
+      - privilege-escalation
+      - root
+      - authorizationexecutewithprivileges
+  - name: Persistence via Malicious Privileged Helper Tool (SMJobBless)
+    description: |
+      Adversaries can create macOS application bundles that use SMJobBless to install a malicious
+      privileged helper tool into /Library/PrivilegedHelperTools/ with root privileges. Once
+      installed, the helper is registered as a LaunchDaemon (in /Library/LaunchDaemons/) and
+      executed by security_authtrampoline with root privileges. This technique combines privilege
+      escalation with persistence, as the LaunchDaemon ensures the helper survives system reboots.
+      OceanLotus/APT32 has been observed using this approach.
+    code: |
+      # After a malicious application calls SMJobBless, investigate the installed helper:
+      ls -la /Library/PrivilegedHelperTools/
+      ls -la /Library/LaunchDaemons/
+    tactics:
+      - Privilege Escalation
+      - Persistence
+    tags:
+      - smjobless
+      - launchdaemon
+      - privileged-helper
+      - authorization
+      - persistence
+  - name: Defense Evasion via Legitimate Parent Process
+    description: |
+      Since security_authtrampoline is an Apple-signed system binary, security tools that rely
+      on parent process trust chains may allow execution of processes it spawns without suspicion.
+      Adversaries can exploit this by engineering their malicious payload to be invoked through
+      Authorization Services, making the malicious process appear as a legitimate child of
+      security_authtrampoline in process trees and potentially bypassing process-based allow-listing.
+    code: |
+      # Hunt for unexpected processes launched by security_authtrampoline:
+      log show --predicate 'process == "security_authtrampoline"' --last 1h
+    tactics:
+      - Defense Evasion
+    tags:
+      - defense-evasion
+      - process-tree
+      - parent-process
+      - allowlist-bypass
+paths:
+  - /usr/libexec/security_authtrampoline
+detections:
+  - name: Monitor for unexpected child processes of security_authtrampoline using EDR telemetry or the Endpoint Security framework
+    url: N/A
+  - name: Monitor for new or modified files in /Library/PrivilegedHelperTools/ and /Library/LaunchDaemons/
+    url: N/A
+resources:
+  - name: "MITRE ATT&CK: Abuse Elevation Control Mechanism: Elevated Execution with Prompt (T1548.004)"
+    url: https://attack.mitre.org/techniques/T1548/004/
+  - name: "Apple Developer Documentation: Authorization Services"
+    url: https://developer.apple.com/documentation/security/authorization-services
+acknowledgements:
+  - "@0x4D31 for contributing this LOOBin"
