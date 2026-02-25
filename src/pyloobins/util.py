@@ -32,12 +32,12 @@ def get_loobins(path: str = "") -> list[LOOBin]:
             try:
                 yml_content = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
-                print(exc)
+                print(f"Error parsing {yml_file}: {exc}")
+                continue
         try:
             loobins.append(LOOBin(**yml_content))  # type: ignore
         except Exception as exc:
-            # TODO add more specific Exception handling
-            print(exc)
+            print(f"Error loading {yml_file}: {exc}")
     return loobins
 
 
@@ -47,13 +47,13 @@ def validate_loobin(yml_path: str) -> bool:
         try:
             yml_content = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
-            print(exc)
+            print(f"Error parsing {yml_path}: {exc}")
+            return False
     try:
         LOOBin(**yml_content)  # type: ignore
         return True
     except Exception as exc:
-        # TODO add more specific Exception handling
-        print(exc)
+        print(f"Validation error in {yml_path}: {exc}")
         return False
 
 

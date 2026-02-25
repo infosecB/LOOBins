@@ -30,7 +30,7 @@ paths:
   - /usr/bin/textutil
 detections:
   - name: Command Line Argument Detection (args contain textutil AND (-convert OR -stdin OR pbpaste))
-    url: n/a
+    url: N/A
 resources:
   - name: textutil
     url: https://osxdaily.com/tag/textutil/

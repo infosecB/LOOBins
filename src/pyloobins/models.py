@@ -1,12 +1,12 @@
 """Model that represents a LOOBin and its various components"""
 
-from datetime import date, datetime, timezone, time
+from datetime import date, datetime, time, timezone
 from typing import List, Literal, Optional
 
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
 from pydantic import BaseModel, Field, RootModel
-from stix2 import Tool, Bundle
+from stix2 import Bundle, Tool
 
 AttackTactics = Literal[
     "Reconnaissance",
@@ -57,13 +57,13 @@ class LOOBin(BaseModel):
     author: str = Field(title="Author", description="Author of the LOOBin")
     short_description: str = Field(
         title="Short Description",
-        description="A short description of the LOOBin."
-        "This will display in the LOOBin card list and the"
+        description="A short description of the LOOBin. "
+        "This will display in the LOOBin card list and the "
         "LOOBins website search results.",
     )
     full_description: str = Field(
         title="Full Description",
-        description="A full description of the LOOBin."
+        description="A full description of the LOOBin. "
         "This will display on the LOOBin's single page.",
     )
     created: date = Field(title="Created", description="Date the LOOBin was created")
@@ -147,11 +147,17 @@ class LOOBin(BaseModel):
         return Tool(
             name=self.name,
             description=self.full_description,
-            created=datetime.combine(self.created, time(0,0,0),timezone.utc)
+            created=datetime.combine(self.created, time(0, 0, 0), timezone.utc)
             .isoformat(timespec="milliseconds")
             .replace("+00:00", "Z"),
-            labels=['living-off-the-land','loobins'],
-            external_references=[{"source_name":"LOOBins","description":"Living off the Orchard: macOS binaries.","url":f"https://www.loobins.io/binaries/{self.name}/"}]
+            labels=["living-off-the-land", "loobins"],
+            external_references=[
+                {
+                    "source_name": "LOOBins",
+                    "description": "Living off the Orchard: macOS binaries.",
+                    "url": f"https://www.loobins.io/binaries/{self.name}/",
+                }
+            ],
         )
 
     def __str__(self) -> str:

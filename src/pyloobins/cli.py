@@ -5,8 +5,8 @@ import sys
 
 import click
 
-from .util import get_loobins, make_template, normalize_file_name, validate_loobin
 from .models import LOOBinsGroup
+from .util import get_loobins, make_template, normalize_file_name, validate_loobin
 
 
 @click.group()
@@ -44,17 +44,16 @@ def create(name: str, path: str) -> None:
     """Create a YAML template file for a new LOOBin."""
     template = make_template(name=name).to_yaml()
     file_name = normalize_file_name(name) if name else "template"
-    file_path = path if path and os.path.exists(path) else "./"
-    if not os.path.exists(file_path):
+    if path and not os.path.exists(path):
         click.echo(
             f"The specified path did not exist. "
             f"Creating the {file_name}.yml file in the current directory."
         )
+    file_path = path if path and os.path.exists(path) else "./"
     with open(
         file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
     ) as out_file:
         out_file.write(template)
-        out_file.close()
 
 
 @cli.command()
@@ -99,13 +98,13 @@ def export_stix(file_name: str, path: str) -> None:
     """Export the LOOBins STIX bundle file."""
     all_loobins = get_loobins()
     stix_bundle = LOOBinsGroup(all_loobins)
-    path = path if path and os.path.exists(path) else "./"
-    if not os.path.exists(path):
+    if path and not os.path.exists(path):
         click.echo(
             f"The specified path did not exist. "
-            f"Creating the {file_name}.yml file in the current directory."
+            f"Creating the {file_name} file in the current directory."
         )
-    with open(f"{path}/{file_name}", mode="w+", encoding="utf-8") as f:
+    file_path = path if path and os.path.exists(path) else "./"
+    with open(f"{file_path}/{file_name}", mode="w+", encoding="utf-8") as f:
         f.write(stix_bundle.to_stix_bundle().serialize(pretty=True))
 
 

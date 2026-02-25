@@ -17,7 +17,7 @@ paths:
 - /usr/sbin/kextstat
 detections:
 - name: No detections at time of publishing
-  url: n/a
+  url: N/A
 resources:
 - name: 'kextstat man page'
   url: https://ss64.com/osx/kextstat.html

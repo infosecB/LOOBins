@@ -33,15 +33,17 @@ tags: {{ tags }}
 #### {{ example.name }}
 {{ example.description }}
 
+{% if example.code %}
 ```
 {{ example.code }}
 ```
+{% endif %}
 
 {% endfor %}
 
 ## Detections
 {% for detection in loobin.detections %}
-{% if detection.url in "N/A" %}
+{% if detection.url | lower == "n/a" %}
 - {{ detection.name }}
 {% else %}
 - [{{ detection.name }}]({{ detection.url }})
