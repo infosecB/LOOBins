@@ -1,0 +1,45 @@
+name: tftp
+author: Ryan Conry
+short_description: Trivial File Transfer Protocol client and server utilities.
+full_description: macOS ships with both a TFTP client (/usr/bin/tftp) and server daemon (/usr/libexec/tftpd). TFTP is a lightweight, unauthenticated file transfer protocol that operates over UDP. The server is inactive by default but can be activated through launchd using the system-provided plist. In a lateral movement context, an attacker with root access can activate the built-in TFTP server to receive file transfers. Without root, tftpd can be started on a non-standard port using a user-created launchd plist, removing the root requirement entirely.
+created: 2026-03-24
+example_use_cases:
+  - name: Activate the built-in TFTP server via launchctl
+    description: macOS ships with a launchd plist for tftpd at /System/Library/LaunchDaemons/tftp.plist. Loading it with launchctl starts the TFTP server on UDP port 69, serving /private/tftpboot. Requires root. A placeholder file must be created for each file to be transferred, as the default configuration does not allow tftpd to create new files.
+    code: "sudo launchctl load -w /System/Library/LaunchDaemons/tftp.plist\n\n# Create placeholder for each file to be received\nsudo touch /private/tftpboot/payload.sh && sudo chmod 666 /private/tftpboot/payload.sh"
+    tactics:
+      - Lateral Movement
+    tags:
+      - tftp
+      - launchctl
+      - file-transfer
+  - name: Transfer a file to a target using the tftp client
+    description: The built-in tftp client can push files to a remote TFTP server. The binary mode flag ensures files are not corrupted during transfer.
+    code: "tftp <TARGET_IP> << EOF\nbinary\nput /tmp/payload.sh payload.sh\nquit\nEOF"
+    tactics:
+      - Lateral Movement
+    tags:
+      - tftp
+      - file-transfer
+      - oneliner
+  - name: Run unprivileged TFTP server on a non-standard port
+    description: Without root access, tftpd can be loaded from a user-created launchd plist stored anywhere on disk (e.g., /tmp). Passing the -w flag allows tftpd to create new files on write, removing the placeholder requirement. The server can be bound to any unprivileged port.
+    code: "mkdir -p /tmp/tftp_server && chmod 777 /tmp/tftp_server\ntee /tmp/com.user.tftp.plist > /dev/null << 'EOF'\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n    <key>Label</key>\n    <string>com.user.tftp</string>\n    <key>WorkingDirectory</key>\n    <string>/tmp/tftp_server</string>\n    <key>ProgramArguments</key>\n    <array>\n        <string>/usr/libexec/tftpd</string>\n        <string>-w</string>\n        <string>-l</string>\n        <string>-u</string>\n        <string>$(whoami)</string>\n    </array>\n    <key>inetdCompatibility</key>\n    <dict>\n        <key>Wait</key>\n        <true/>\n    </dict>\n    <key>Sockets</key>\n    <dict>\n        <key>Listeners</key>\n        <dict>\n            <key>SockServiceName</key>\n            <string>6969</string>\n            <key>SockType</key>\n            <string>dgram</string>\n            <key>SockFamily</key>\n            <string>IPv4</string>\n        </dict>\n    </dict>\n</dict>\n</plist>\nEOF\nlaunchctl load -w /tmp/com.user.tftp.plist"
+    tactics:
+      - Lateral Movement
+      - Defense Evasion
+    tags:
+      - tftp
+      - tftpd
+      - launchctl
+      - file-transfer
+      - unprivileged
+paths:
+  - /usr/bin/tftp
+  - /usr/libexec/tftpd
+detections:
+  - name: No detections at time of publishing
+    url: N/A
+resources:
+  - name: 'tftp man page'
+    url: https://ss64.com/mac/tftp.html
