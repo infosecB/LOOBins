@@ -42,19 +42,19 @@ example_use_cases:
     tags:
       - jxa
       - osascript
-  - name: Remote host discovery over SSH using osascript system info
-    description: osascript can be invoked over SSH to run the AppleScript 'system info' command on a remote host. This returns a structured dictionary of host details including macOS version, active username, CPU architecture, memory, and network configuration without dropping any files or tooling on the target. This shifts the transport from Apple's eppc:// protocol to SSH while retaining the full capabilities of the AppleScript runtime.
-    code: "ssh -i key.pem user@<TARGET_IP> 'osascript -e \"system info\"'"
+  - name: Execute shell commands via osascript do shell script
+    description: osascript's 'do shell script' handler executes arbitrary shell commands through the AppleScript runtime. Commands spawned this way are children of osascript rather than the calling shell, which can bypass detection logic tied to specific parent-child process relationships. The 'with administrator privileges' flag triggers a native macOS authentication prompt and runs the command as root if the user authenticates, without requiring sudo.
+    code: "osascript -e 'do shell script \"id\"'"
     tactics:
-      - Discovery
-      - Lateral Movement
+      - Execution
+      - Defense Evasion
+      - Privilege Escalation
     tags:
       - osascript
-      - ssh
-      - discovery
+      - do-shell-script
       - oneliner
   - name: Remote command execution over SSH using osascript do shell script
-    description: osascript's 'do shell script' handler can be invoked over SSH to execute arbitrary shell commands on a remote host. This provides access to the broader AppleScript ecosystem including GUI automation and application scripting while using SSH as the transport, bypassing the dependency on Remote Apple Events being enabled on the target.
+    description: osascript's 'do shell script' handler can be invoked over an SSH session to execute arbitrary shell commands on a remote macOS host. This technique requires only SSH access to the target. Unlike Remote Apple Events (eppc://), it does not require port 3031 to be accessible, Remote Apple Events to be enabled, or the target application to be running. This makes it viable against hosts where eppc:// is blocked by the firewall or disabled in System Settings, and against headless or server Macs that have no active GUI session.
     code: "ssh -i key.pem user@<TARGET_IP> 'bash -s' <<'EOF'\nosascript -e 'do shell script \"id\"'\nEOF"
     tactics:
       - Lateral Movement
