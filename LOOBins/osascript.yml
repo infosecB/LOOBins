@@ -54,7 +54,7 @@ example_use_cases:
       - do-shell-script
       - oneliner
   - name: Remote command execution over SSH using osascript do shell script
-    description: osascript's 'do shell script' handler can be invoked over an SSH session to execute arbitrary shell commands on a remote macOS host. This technique requires only SSH access to the target. Unlike Remote Apple Events (eppc://), it does not require port 3031 to be accessible, Remote Apple Events to be enabled, or the target application to be running. This makes it viable against hosts where eppc:// is blocked by the firewall or disabled in System Settings, and against headless or server Macs that have no active GUI session.
+    description: osascript's 'do shell script' handler can be invoked over an SSH session to execute arbitrary shell commands on a remote macOS host. This technique requires only SSH access to the target. Unlike when using Remote Apple Events (eppc://) with osascript, it does not require port 3031 to be accessible, Remote Apple Events to be enabled, or the target application to be running. This makes it viable against hosts where eppc:// is blocked by the firewall or disabled in System Settings, and against headless or server Macs that have no active GUI session.
     code: "ssh -i key.pem user@<TARGET_IP> 'bash -s' <<'EOF'\nosascript -e 'do shell script \"id\"'\nEOF"
     tactics:
       - Lateral Movement
