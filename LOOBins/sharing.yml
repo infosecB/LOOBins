@@ -1,5 +1,5 @@
 name: sharing
-author: Ryan Conry
+author: Ryan Conry (Cisco Talos)
 short_description: Create and manage macOS file sharing points for SMB, AFP, and FTP.
 full_description: sharing (/usr/sbin/sharing) is a macOS command-line utility for creating and managing network file sharing points. It can add, remove, and list shared directories for SMB, AFP, and FTP protocols. In a lateral movement context, an attacker with SSH access to a target can use sharing to create an SMB share on the target, then mount that share from an attacker-controlled machine to transfer files directly to the target's filesystem without additional tooling.
 created: 2026-03-24

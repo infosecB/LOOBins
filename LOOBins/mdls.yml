@@ -24,6 +24,7 @@ example_use_cases:
     code: "mdls -name kMDItemFinderComment -raw ~/Desktop/payload_carrier.txt | base64 -D | bash"
     tactics:
       - Execution
+      - Collection
       - Defense Evasion
     tags:
       - mdls
@@ -37,4 +38,4 @@ detections:
   - name: No detections at time of publishing
     url: N/A
 acknowledgements:
-  - Ryan Conry (Finder comment payload extraction use case)
+  - Ryan Conry (Cisco Talos, Finder comment payload extraction use case)

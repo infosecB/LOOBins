@@ -9,6 +9,7 @@ example_use_cases:
     code: "sudo launchctl load -w /System/Library/LaunchDaemons/tftp.plist\n\n# Create placeholder for each file to be received\nsudo touch /private/tftpboot/payload.sh && sudo chmod 666 /private/tftpboot/payload.sh"
     tactics:
       - Lateral Movement
+      - Persistence
     tags:
       - tftp
       - launchctl
@@ -28,6 +29,7 @@ example_use_cases:
     tactics:
       - Lateral Movement
       - Defense Evasion
+      - Persistence
     tags:
       - tftp
       - tftpd
@@ -43,3 +45,9 @@ detections:
 resources:
   - name: 'tftp man page'
     url: https://ss64.com/mac/tftp.html
+  - name: 'TFTP (Trivial File Transfer Protocol)'
+    url: https://en.wikipedia.org/https://hackviser.com/tactics/pentesting/services/tftp
+  - name: 'Uncovered: Uncovering Risk Exposure from Publicly Accessible Unauthenticated TFTP'
+    url: https://www.stamus-networks.com/blog/uncovered-uncovering-risk-exposure-from-publicly-accessible-unauthenticated-tftp
+  - name: 'MITRE ATT&CK T1105 - Ingress Tool Transfer'
+    url: https://attack.mitre.org/techniques/T1105/

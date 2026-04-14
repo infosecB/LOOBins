@@ -112,5 +112,5 @@ resources:
   - name: 'Using macOS Internals for Post Exploitation'
     url: https://medium.com/red-teaming-with-a-blue-team-mentality/using-macos-internals-for-post-exploitation-b5faaa11e121
 acknowledgements:
-  - Billy Gibson (Remote Apple Events use cases)
-  - Ryan Conry (SSH execution, SMB mount, and Finder comment use cases)
+  - Billy Gibson (Cisco Talos, Remote Apple Events use cases)
+  - Ryan Conry (Cisco Talos, SSH execution, SMB mount, and Finder comment use cases)
