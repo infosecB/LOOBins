@@ -1,5 +1,5 @@
 name: tftp
-author: Ryan Conry
+author: Ryan Conry (Cisco Talos)
 short_description: Trivial File Transfer Protocol client and server utilities.
 full_description: macOS ships with both a TFTP client (/usr/bin/tftp) and server daemon (/usr/libexec/tftpd). TFTP is a lightweight, unauthenticated file transfer protocol that operates over UDP. The server is inactive by default but can be activated through launchd using the system-provided plist. In a lateral movement context, an attacker with root access can activate the built-in TFTP server to receive file transfers. Without root, tftpd can be started on a non-standard port using a user-created launchd plist, removing the root requirement entirely.
 created: 2026-03-24

@@ -1,5 +1,5 @@
 name: snmptrap
-author: Ryan Conry
+author: Ryan Conry (Cisco Talos)
 short_description: Send SNMP trap notifications; receive them with snmptrapd.
 full_description: macOS ships with the net-snmp toolkit, which includes snmptrap (/usr/bin/snmptrap) for sending SNMP trap notifications and snmptrapd (/usr/sbin/snmptrapd) for receiving them. SNMP traps are unsolicited UDP notifications sent from an agent to a management station on port 162. The trap payload can carry arbitrary string data under custom OIDs in the private enterprise namespace. This mechanism can be repurposed as a covert file transfer channel by base64-encoding file contents, splitting them into fixed-size chunks, and transmitting each chunk as a trap payload. A trap handler on the receiving end reassembles and decodes the file. The transfer blends into SNMP management traffic and uses a protocol that many detection pipelines do not inspect.
 created: 2026-03-24
