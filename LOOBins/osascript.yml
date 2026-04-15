@@ -4,15 +4,15 @@ short_description: Execute AppleScripts and other OSA language scripts and comma
 full_description: The osascript binary is a command-line utility included in macOS that allows users to run AppleScript and Open Scripting Architecture (OSA) scripts or commands. AppleScript is a scripting language that is designed for power users to automate various tasks, application actions, and to interact with the operating system.
 created: 2023-04-19
 example_use_cases:
-  - name: Use the osascript binary to gather sensitive clipboard data  
-    description: A bash loop can gather clipboard contents over a defined time period. The following command calls /usr/bin/osascript -e 'return (the clipboard)' indefinitely every 10 seconds and writes clipboard content to a text file.  
-    code: while true; do echo $(osascript -e 'return (the clipboard)') >> clipdata.txt; sleep 10; done  
-    tactics:    
-      - Collection    
-      - Credential Access  
-    tags:  
-      - clipboard  
-      - bash  
+  - name: Use the osascript binary to gather sensitive clipboard data
+    description: A bash loop can gather clipboard contents over a defined time period. The following command calls /usr/bin/osascript -e 'return (the clipboard)' indefinitely every 10 seconds and writes clipboard content to a text file.
+    code: while true; do echo $(osascript -e 'return (the clipboard)') >> clipdata.txt; sleep 10; done
+    tactics:
+      - Collection
+      - Credential Access
+    tags:
+      - clipboard
+      - bash
       - oneliner
       - osascript
   - name: Use the osascript binary to gather system information
@@ -42,17 +42,42 @@ example_use_cases:
     tags:
       - jxa
       - osascript
+  - name: Use osascript with Remote Application Scripting (RAS) as a Software Deployment Tool for remote payload execution
+    description: Remote Application Scripting (RAS), formerly known as Remote Apple Events (RAE), leverages the eppc:// protocol and the AppleEventsD daemon to send Apple Events to remote macOS systems. While RAS is traditionally viewed as a lateral movement vector, it can also be weaponized as a Software Deployment Tool for Execution (T1072). Direct use of System Events over RAS for shell execution is blocked by Apple's -10016 Handler Error. To bypass this, Terminal.app is used as an execution proxy since it accepts remote "do script" commands. Payloads are Base64 encoded to avoid AppleScript parsing errors such as the -2741 syntax error and are executed in a two-stage process. Stage 1 (Deployment) instructs the remote Terminal.app to decode the Base64 string into a temporary file path and applies chmod +x. Stage 2 (Invocation) explicitly invokes the script via bash to ensure a proper shell context. This technique operates via Apple Events IPC rather than standard shell processes, creating a telemetry gap in security tooling focused on process execution trees.
+    code: |
+      # Stage 1 - Deployment: Encode payload and write to target via Terminal.app over RAS
+      osascript -e 'tell app "Terminal" of machine "eppc://user:pass@<target_ip>" to do script "echo <BASE64_PAYLOAD> | base64 -D > /tmp/payload.sh && chmod +x /tmp/payload.sh"'
+      # Stage 2 - Invocation: Execute the decoded payload via bash on the target
+      osascript -e 'tell app "Terminal" of machine "eppc://user:pass@<target_ip>" to do script "bash /tmp/payload.sh"'
+    tactics:
+      - Execution
+      - Lateral Movement
+    tags:
+      - ras
+      - remote-apple-events
+      - eppc
+      - base64
+      - lateral-movement
+      - software-deployment
+      - osascript
+      - T1072
 paths:
   - /usr/bin/osascript
 detections:
-  - name: Command Line Argument Detection (args contain osascript AND -e AND clipboard)  
+  - name: Command Line Argument Detection (args contain osascript AND -e AND clipboard)
     url: N/A
   - name: "Jamf Protect: Detect activity that is related to osascript gathering clipboard content"
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_clipboard
-  - name: "Jamf Protect: Detect activity that is related to osascript pulling system information"  
+  - name: "Jamf Protect: Detect activity that is related to osascript pulling system information"
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_system_information
   - name: "Jamf Protect: Detect activity that is related to generating dialogs using osascript and asking for specific user input"
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_dialog_activity
+  - name: "Process Lineage Detection: Monitor for suspicious process trees indicative of RAS-based execution (launchd -> AppleEventsD -> Terminal -> sh/bash)"
+    url: N/A
+  - name: "Command Line Argument Detection: osascript executions containing eppc:// arguments or base64 --decode commands originating from GUI applications"
+    url: N/A
 resources:
-  - name: 'Using macOS Internals for Post Exploitation'  
+  - name: 'Using macOS Internals for Post Exploitation'
     url: https://medium.com/red-teaming-with-a-blue-team-mentality/using-macos-internals-for-post-exploitation-b5faaa11e121
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: N/A
