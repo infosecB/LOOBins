@@ -108,9 +108,15 @@ detections:
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_system_information
   - name: "Jamf Protect: Detect activity that is related to generating dialogs using osascript and asking for specific user input"
     url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_dialog_activity
+  - name: "Process Lineage Detection: Monitor for suspicious process trees indicative of RAS-based execution (launchd -> AppleEventsD -> Terminal -> sh/bash)"
+    url: N/A
+  - name: "Command Line Argument Detection: osascript executions containing eppc:// arguments or base64 --decode commands originating from GUI applications"
+    url: N/A
 resources:
   - name: 'Using macOS Internals for Post Exploitation'
     url: https://medium.com/red-teaming-with-a-blue-team-mentality/using-macos-internals-for-post-exploitation-b5faaa11e121
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: N/A
 acknowledgements:
   - Billy Gibson (Cisco Talos, Remote Apple Events use cases)
   - Ryan Conry (Cisco Talos, SSH execution, SMB mount, and Finder comment use cases)
