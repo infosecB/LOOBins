@@ -122,5 +122,5 @@ resources:
   - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
     url: N/A
 acknowledgements:
-  - Billy Gibson (Cisco Talos, Remote Apple Events use cases)
+  - William Gibson (Cisco Talos, Remote Apple Events use cases)
   - Ryan Conry (Cisco Talos, SSH execution, SMB mount, and Finder comment use cases)
