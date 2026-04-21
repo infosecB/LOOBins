@@ -51,3 +51,5 @@ resources:
     url: https://www.stamus-networks.com/blog/uncovered-uncovering-risk-exposure-from-publicly-accessible-unauthenticated-tftp
   - name: 'MITRE ATT&CK T1105 - Ingress Tool Transfer'
     url: https://attack.mitre.org/techniques/T1105/
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: https://blog.talosintelligence.com/bad-apples-weaponizing-native-macos-primitives-for-movement-and-execution/

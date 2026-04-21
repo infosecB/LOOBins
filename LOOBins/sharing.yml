@@ -22,3 +22,5 @@ detections:
 resources:
   - name: 'sharing man page'
     url: https://ss64.com/mac/sharing.html
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: https://blog.talosintelligence.com/bad-apples-weaponizing-native-macos-primitives-for-movement-and-execution/

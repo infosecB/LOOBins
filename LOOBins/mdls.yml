@@ -37,5 +37,8 @@ paths:
 detections:
   - name: No detections at time of publishing
     url: N/A
+resources:
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: https://blog.talosintelligence.com/bad-apples-weaponizing-native-macos-primitives-for-movement-and-execution/
 acknowledgements:
   - Ryan Conry (Cisco Talos, Finder comment payload extraction use case)

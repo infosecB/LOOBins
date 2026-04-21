@@ -26,3 +26,5 @@ detections:
 resources:
   - name: 'net-snmp project'
     url: https://net-snmp.sourceforge.io/
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: https://blog.talosintelligence.com/bad-apples-weaponizing-native-macos-primitives-for-movement-and-execution/
