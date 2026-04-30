@@ -21,7 +21,7 @@ const allTactics = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.ta
 const allTags = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.tags))];
 ---
 
-<BaseLayout title={data.name} description={data.short_description}>
+<BaseLayout title={data.name} description={data.short_description} type="article">
   <div class="mb-6">
     <a href={url('/binaries/')} class="text-text-secondary hover:text-text-primary text-sm">&larr; All Binaries</a>
   </div>
