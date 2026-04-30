@@ -1,5 +1,5 @@
 ---
-import { slugify } from '../utils/helpers';
+import { slugify, url } from '../utils/helpers';
 
 interface Props {
   tag: string;
@@ -11,7 +11,7 @@ const slug = slugify(tag);
 ---
 
 {linked ? (
-  <a href={`/tags/${slug}/`} class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
+  <a href={url(`/tags/${slug}/`)} class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
     {tag}
   </a>
 ) : (

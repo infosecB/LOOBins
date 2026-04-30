@@ -1,20 +1,21 @@
 ---
 import SearchWidget from './SearchWidget.astro';
+import { url } from '../utils/helpers';
 ---
 
 <nav class="bg-surface-light border-b border-border sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <a href="/" class="flex items-center gap-2 text-xl font-bold text-apple-green hover:opacity-80">
-        <img src="/loobins.png" alt="LOOBins" class="h-8 w-8" />
+      <a href={url('/')} class="flex items-center gap-2 text-xl font-bold text-apple-green hover:opacity-80">
+        <img src={url('/loobins.png')} alt="LOOBins" class="h-8 w-8" />
         <span>LOOBins</span>
       </a>
 
       <div class="hidden md:flex items-center gap-6">
-        <a href="/binaries/" class="text-text-secondary hover:text-text-primary transition-colors">Binaries</a>
-        <a href="/tactics/" class="text-text-secondary hover:text-text-primary transition-colors">Tactics</a>
-        <a href="/tags/" class="text-text-secondary hover:text-text-primary transition-colors">Tags</a>
-        <a href="/about/" class="text-text-secondary hover:text-text-primary transition-colors">About</a>
+        <a href={url('/binaries/')} class="text-text-secondary hover:text-text-primary transition-colors">Binaries</a>
+        <a href={url('/tactics/')} class="text-text-secondary hover:text-text-primary transition-colors">Tactics</a>
+        <a href={url('/tags/')} class="text-text-secondary hover:text-text-primary transition-colors">Tags</a>
+        <a href={url('/about/')} class="text-text-secondary hover:text-text-primary transition-colors">About</a>
         <SearchWidget />
       </div>
 
@@ -28,10 +29,10 @@ import SearchWidget from './SearchWidget.astro';
 
   <div id="mobile-menu" class="hidden md:hidden border-t border-border">
     <div class="px-4 py-3 space-y-2">
-      <a href="/binaries/" class="block text-text-secondary hover:text-text-primary py-1">Binaries</a>
-      <a href="/tactics/" class="block text-text-secondary hover:text-text-primary py-1">Tactics</a>
-      <a href="/tags/" class="block text-text-secondary hover:text-text-primary py-1">Tags</a>
-      <a href="/about/" class="block text-text-secondary hover:text-text-primary py-1">About</a>
+      <a href={url('/binaries/')} class="block text-text-secondary hover:text-text-primary py-1">Binaries</a>
+      <a href={url('/tactics/')} class="block text-text-secondary hover:text-text-primary py-1">Tactics</a>
+      <a href={url('/tags/')} class="block text-text-secondary hover:text-text-primary py-1">Tags</a>
+      <a href={url('/about/')} class="block text-text-secondary hover:text-text-primary py-1">About</a>
     </div>
   </div>
 </nav>

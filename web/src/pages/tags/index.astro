@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { getAllTags, slugify } from '../../utils/helpers';
+import { getAllTags, slugify, url } from '../../utils/helpers';
 
 const loobins = await getCollection('loobins');
 const tags = getAllTags(loobins);
@@ -13,7 +13,7 @@ const tags = getAllTags(loobins);
 
   <div class="flex flex-wrap gap-3">
     {[...tags.entries()].map(([tag, count]) => (
-      <a href={`/tags/${slugify(tag)}/`} class="bg-surface-light border border-border rounded-lg px-4 py-2 hover:border-apple-green transition-colors text-sm">
+      <a href={url(`/tags/${slugify(tag)}/`)} class="bg-surface-light border border-border rounded-lg px-4 py-2 hover:border-apple-green transition-colors text-sm">
         <span class="text-text-primary">{tag}</span>
         <span class="text-text-secondary ml-1">({count})</span>
       </a>
