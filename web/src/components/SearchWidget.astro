@@ -35,7 +35,7 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     position: absolute;
     right: 0;
     top: 100%;
-    width: 400px;
+    width: 500px;
     max-height: 70vh;
     overflow-y: auto;
     background: #1e293b;
@@ -43,16 +43,22 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     z-index: 100;
+    padding: 16px;
+  }
+
+  .pagefind-ui .pagefind-ui__results-area {
+    margin-top: 0;
   }
 
   .pagefind-ui .pagefind-ui__result {
     background: #1e293b;
     border-bottom: 1px solid #334155;
-    padding: 12px;
+    padding: 16px 12px;
   }
 
   .pagefind-ui .pagefind-ui__result:hover {
     background: #334155;
+    border-radius: 6px;
   }
 
   .pagefind-ui .pagefind-ui__result-link {
