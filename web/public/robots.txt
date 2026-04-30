@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://infosecb.github.io/LOOBins/sitemap-index.xml
