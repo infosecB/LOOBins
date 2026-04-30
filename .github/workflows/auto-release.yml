@@ -18,18 +18,14 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y
-
-      - name: Update PATH
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Install dependencies
-        run: poetry install
+        run: uv sync --group dev
 
       - name: Run Tox
-        run: poetry run tox
+        run: uv run tox
 
   release:
     name: Release to PyPI
@@ -50,23 +46,21 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install Poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y
-
-      - name: Update PATH
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
       - name: Bump patch version
         id: version
         run: |
-          poetry version patch
-          NEW_VERSION=$(poetry version --short)
+          CURRENT_VERSION=$(uv run python -c "import importlib.metadata; print(importlib.metadata.version('PyLOOBins'))" 2>/dev/null || grep '^version' pyproject.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+          NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          sed -i "s/^version = \".*\"/version = \"$NEW_VERSION\"/" pyproject.toml
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Build project for distribution
-        run: poetry build
+        run: uv build
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
@@ -84,8 +78,8 @@ jobs:
 
       - name: Publish to PyPI
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
-        run: poetry publish
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: uv publish
 
       - name: Configure Git
         run: |
