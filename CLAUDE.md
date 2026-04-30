@@ -18,39 +18,39 @@ LOOBins (Living Off the Orchard: macOS Binaries) is a cybersecurity resource tha
 
 ### Python Development (PyLOOBins SDK)
 ```bash
-# Install dependencies with Poetry
-poetry install
+# Install dependencies with uv
+uv sync --group dev
 
 # Run all tests
-poetry run pytest
+uv run pytest
 
 # Run specific test file
-poetry run pytest tests/test_data.py
-poetry run pytest tests/test_models.py -v
+uv run pytest tests/test_data.py
+uv run pytest tests/test_models.py -v
 
 # Lint and format code
-poetry run black src/
-poetry run isort src/ --profile black
-poetry run pylint src/pyloobins/
+uv run black src/
+uv run isort src/ --profile black
+uv run pylint src/pyloobins/
 
 # Run pre-commit hooks
 pre-commit run --all-files
 
 # Validate LOOBin YAML files
-poetry run pyloobins validate --path LOOBins/example.yml
+uv run pyloobins validate --path LOOBins/example.yml
 
 # Create new LOOBin template
-poetry run pyloobins create --name "BinaryName"
-poetry run pyloobins create --name "BinaryName" --path LOOBins/
+uv run pyloobins create --name "BinaryName"
+uv run pyloobins create --name "BinaryName" --path LOOBins/
 
 # Get LOOBin data as JSON
-poetry run pyloobins get --name "osascript"
+uv run pyloobins get --name "osascript"
 
 # Export STIX bundle (--path controls output directory, not input)
-poetry run pyloobins export-stix --file-name loobins_stix.json --path .
+uv run pyloobins export-stix --file-name loobins_stix.json --path .
 
 # Run multi-version tests with tox (Python 3.8–3.12)
-poetry run tox
+uv run tox
 ```
 
 ## LOOBin YAML Schema
@@ -104,7 +104,7 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 ### Validation Pipeline
 
 - **CI/CD**: `.github/workflows/validate_loobins.yml` validates changed YAML files on PRs (uses `pip install pyloobins` from PyPI, not local source)
-- **Auto-release**: `.github/workflows/auto-release.yml` on push to `main` — runs tox, bumps patch version, builds, publishes to PyPI, creates GitHub release, commits version bump with `[skip ci]`
+- **Auto-release**: `.github/workflows/auto-release.yml` on push to `main` — runs tox via uv, bumps patch version, builds with `uv build`, publishes to PyPI with `uv publish`, creates GitHub release, commits version bump with `[skip ci]`
 - **Pre-commit hooks**: `check-yaml`, `check-toml`, `end-of-file-fixer`, `mixed-line-ending`, `black`, `isort --profile black` (note: pylint is not a pre-commit hook, run it separately)
 - **Schema validation**: Pydantic models ensure YAML files match schema
 - **VS Code integration**: SchemaStore provides YAML validation in VS Code (requires YAML extension)
@@ -114,8 +114,8 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 - **`create --path` requires a trailing slash**: The CLI concatenates path and filename directly (`f"{file_path}{file_name}.yml"`), so use `LOOBins/` not `LOOBins`
 - **`export-stix --path` is output-only**: The `--path` flag controls where the STIX JSON file is written; input LOOBins are always loaded via auto-discovery (`get_loobins()` with no args)
 - **Detection URLs can be `"N/A"`**: The `loobin.md.j2` template handles `"N/A"` as a sentinel value, rendering detections without a link
-- **`polyfactory` is a production dependency**: Listed under `[tool.poetry.dependencies]` but only used in tests (`tests/test_data.py`)
-- **`poetry.lock` is not committed**: Gitignored per library convention — dependency resolution happens at install time
+- **`polyfactory` is a production dependency**: Listed under `[project.dependencies]` but only used in tests (`tests/test_data.py`)
+- **`uv.lock` is not committed**: Gitignored per library convention — dependency resolution happens at install time
 
 ## Contributing Guidelines
 
