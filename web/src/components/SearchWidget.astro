@@ -1,5 +1,7 @@
 ---
 import { url } from '../utils/helpers';
+const cssUrl = url('/pagefind/pagefind-ui.css');
+const jsUrl = url('/pagefind/pagefind-ui.js');
 ---
 
 <div id="search-container" class="relative" data-pagefind-ignore>
@@ -33,19 +35,16 @@ import { url } from '../utils/helpers';
   }
 </style>
 
-<script is:inline>
-  window.addEventListener('DOMContentLoaded', () => {
+<link href={cssUrl} rel="stylesheet" />
+<script is:inline define:vars={{ jsUrl }}>
+  const s = document.createElement('script');
+  s.src = jsUrl;
+  s.onload = () => {
     new PagefindUI({
       element: '#pagefind-search',
       showSubResults: false,
       showImages: false,
     });
-  });
-</script>
-
-<link href={url('/pagefind/pagefind-ui.css')} rel="stylesheet" />
-<script is:inline define:vars={{ pagefindUrl: url('/pagefind/pagefind-ui.js') }}>
-  const s = document.createElement('script');
-  s.src = pagefindUrl;
+  };
   document.head.appendChild(s);
 </script>
