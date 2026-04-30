@@ -12,7 +12,6 @@ example_use_cases:
   tags:
   - bash
   - oneliner
-  - sysctl
 paths:
 - /usr/sbin/sysctl
 detections:

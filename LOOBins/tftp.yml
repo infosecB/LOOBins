@@ -32,7 +32,6 @@ example_use_cases:
       - Persistence
     tags:
       - tftp
-      - tftpd
       - launchctl
       - file-transfer
       - unprivileged

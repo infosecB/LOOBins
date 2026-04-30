@@ -13,8 +13,6 @@ example_use_cases:
       - Command and Control
     tags:
       - snmp
-      - snmptrap
-      - snmptrapd
       - file-transfer
       - covert-channel
 paths:

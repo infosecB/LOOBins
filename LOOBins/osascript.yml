@@ -11,8 +11,8 @@ example_use_cases:
       - Collection    
       - Credential Access  
     tags:  
-      - clipboard  
-      - bash  
+      - clipboard
+      - bash
       - oneliner
       - osascript
   - name: Use the osascript binary to gather system information
@@ -81,13 +81,11 @@ example_use_cases:
       - Lateral Movement
     tags:
       - osascript
-      - rae
-      - ras
-      - eppc
       - remote-apple-events
+      - remote-apple-services
+      - eppc
       - base64
       - software-deployment
-      - T1072
   - name: Remote volume enumeration via Finder over Remote Apple Events
     description: The Finder application is scriptable over Remote Apple Events (RAE) via the eppc:// URI scheme. osascript can address a remote Finder instance to query mounted volumes on the target machine, providing an adversary with immediate insight into available network shares and external storage. These actions are performed via Apple Events IPC rather than shell commands, bypassing security telemetry focused on process execution.
     code: "osascript -e 'tell application \"Finder\" of machine \"eppc://user:password@<TARGET_IP>\" to get name of every disk'"
@@ -96,9 +94,8 @@ example_use_cases:
       - Lateral Movement
     tags:
       - osascript
-      - rae
-      - eppc
       - remote-apple-events
+      - eppc
       - finder
       - oneliner
 paths:

@@ -13,7 +13,6 @@ example_use_cases:
     tags:
       - bash
       - oneliner
-      - textutil
   - name: Capture clipboard content
     description: By leveraging another command line tool, pbpaste, it is possible to write a one-liner which captures the content of the clipboard. If an attacker already has access to the system, the attacker could run this command to obtain sensitive information such as a password and then elevate their privileges or exfiltrate the information.
     code: pbpaste | textutil -stdin -info > Clipboard.txt
@@ -23,7 +22,6 @@ example_use_cases:
     tags:
       - bash
       - oneliner
-      - textutil
       - pbpaste
       - clipboard
 paths:

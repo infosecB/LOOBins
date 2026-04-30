@@ -637,15 +637,15 @@ example_use_cases:
   tactics:
   - Discovery
   tags:
-  - example_tag
-  - another_tag
+  - example-tag
+  - another-tag
 - name: Another Example Use Case
   description: A description of the use case goes here.
   code: A code snippet goes here.
   tactics:
   - Collection
   tags:
-  - another_tag
+  - another-tag
 paths:
 - /enter/binary/path/here
 detections:
