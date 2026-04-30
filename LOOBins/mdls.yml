@@ -19,8 +19,26 @@ example_use_cases:
       - Discovery
     tags:
       - CleanMaster
+  - name: Extract and execute payload stored in Finder comment metadata
+    description: Every file on macOS has a Finder comment field stored as Spotlight metadata under the kMDItemFinderComment attribute. mdls can read this field and pipe its contents to a decoder and executor. Because the payload lives entirely in Spotlight metadata rather than file contents, it is not visible to file-based inspection or integrity monitoring tools. Finder comments can be written remotely via osascript over Remote Apple Events or SSH, making this a covert staging mechanism for lateral movement payloads.
+    code: "mdls -name kMDItemFinderComment -raw ~/Desktop/payload_carrier.txt | base64 -D | bash"
+    tactics:
+      - Execution
+      - Collection
+      - Defense Evasion
+    tags:
+      - mdls
+      - finder-comment
+      - spotlight
+      - payload-execution
+      - covert-storage
 paths:
   - /usr/bin/mdls
 detections:
   - name: No detections at time of publishing
     url: N/A
+resources:
+  - name: 'Bad Apples: Weaponizing Native macOS Primitives for Movement and Execution'
+    url: https://blog.talosintelligence.com/bad-apples-weaponizing-native-macos-primitives-for-movement-and-execution/
+acknowledgements:
+  - Ryan Conry (Cisco Talos, Finder comment payload extraction use case)
