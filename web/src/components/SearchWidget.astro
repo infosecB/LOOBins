@@ -21,17 +21,63 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     --pagefind-ui-font: inherit;
   }
 
-  .pagefind-ui .pagefind-ui__search-input {
+  #search-container {
+    position: relative;
+  }
+
+  #search-container .pagefind-ui__search-input {
     background: #0f172a;
     color: #f1f5f9;
+    width: 200px;
+  }
+
+  #search-container .pagefind-ui__drawer {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+  }
+
+  .pagefind-ui .pagefind-ui__result {
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    padding: 12px;
+  }
+
+  .pagefind-ui .pagefind-ui__result:hover {
+    background: #334155;
   }
 
   .pagefind-ui .pagefind-ui__result-link {
     color: #22c55e;
   }
 
+  .pagefind-ui .pagefind-ui__result-title {
+    color: #f1f5f9;
+  }
+
   .pagefind-ui .pagefind-ui__result-excerpt {
     color: #94a3b8;
+  }
+
+  .pagefind-ui .pagefind-ui__message {
+    color: #94a3b8;
+  }
+
+  .pagefind-ui .pagefind-ui__button {
+    background: #334155;
+    color: #f1f5f9;
+  }
+
+  .pagefind-ui .pagefind-ui__button:hover {
+    background: #475569;
   }
 </style>
 
