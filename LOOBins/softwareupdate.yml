@@ -10,14 +10,14 @@ example_use_cases:
     tactics:
       - Discovery
     tags:
-      - os
+      - system-info
   - name: Get OS update policy
     description: Use the --schedule flag to return the OS update policy.
     code: softwareupdate --schedule
     tactics:
       - Discovery
     tags:
-      - os
+      - system-info
 paths:
   - /usr/sbin/softwareupdate
 detections:

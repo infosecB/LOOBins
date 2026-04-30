@@ -28,7 +28,7 @@ example_use_cases:
   - Impact
   tags:
   - processes
-  - user
+  - users
 - name: Kill logging and monitoring daemons
   description: Terminate system logging and monitoring processes to evade detection.
   code: pkill -f "syslog|auditd|osqueryd|esensor|nessusd"

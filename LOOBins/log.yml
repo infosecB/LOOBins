@@ -10,7 +10,7 @@ example_use_cases:
   tactics:
   - Defense Evasion
   tags:
-  - requires_root
+  - requires-root
 - name: Search log messages for tokens
   description: An attacker can potentially search log messages and review if they do contain sensitive information like jwt tokens.
   code: log show --info --debug --predicate 'eventMessage CONTAINS[d] "eyJ"'
