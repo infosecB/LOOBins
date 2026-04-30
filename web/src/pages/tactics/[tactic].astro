@@ -2,7 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LOOBinCard from '../../components/LOOBinCard.astro';
 import { getCollection } from 'astro:content';
-import { getAllTactics, slugify, loobinHasTactic } from '../../utils/helpers';
+import { getAllTactics, slugify, loobinHasTactic, url } from '../../utils/helpers';
 
 export async function getStaticPaths() {
   const loobins = await getCollection('loobins');
@@ -23,7 +23,7 @@ const sorted = loobins.sort((a: any, b: any) => a.data.name.localeCompare(b.data
 
 <BaseLayout title={tactic} description={`LOOBins using the ${tactic} tactic`}>
   <div class="mb-6">
-    <a href="/tactics/" class="text-text-secondary hover:text-text-primary text-sm">&larr; All Tactics</a>
+    <a href={url('/tactics/')} class="text-text-secondary hover:text-text-primary text-sm">&larr; All Tactics</a>
   </div>
 
   <h1 class="text-3xl font-bold mb-2">{tactic}</h1>

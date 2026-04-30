@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { getAllTactics } from '../utils/helpers';
+import { getAllTactics, url } from '../utils/helpers';
 
 const loobins = await getCollection('loobins');
 const tactics = getAllTactics(loobins);
@@ -9,7 +9,7 @@ const tactics = getAllTactics(loobins);
 
 <BaseLayout title="Home">
   <div class="text-center py-16 sm:py-24">
-    <img src="/loobins.png" alt="LOOBins" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-6" />
+    <img src={url('/loobins.png')} alt="LOOBins" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-6" />
     <h1 class="text-4xl sm:text-6xl font-bold mb-4">
       <span class="text-apple-green">LOOBins</span>
     </h1>
@@ -19,7 +19,7 @@ const tactics = getAllTactics(loobins);
     </p>
 
     <div class="flex flex-wrap justify-center gap-4 mb-12">
-      <a href="/binaries/" class="bg-apple-green text-surface font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+      <a href={url('/binaries/')} class="bg-apple-green text-surface font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
         Browse Binaries
       </a>
       <a href="https://github.com/infosecB/LOOBins" class="border border-border text-text-primary px-6 py-3 rounded-lg hover:border-apple-green transition-colors" target="_blank" rel="noopener">
@@ -52,7 +52,7 @@ const tactics = getAllTactics(loobins);
         .sort((a, b) => b.data.created.getTime() - a.data.created.getTime())
         .slice(0, 6)
         .map((loobin) => (
-          <a href={`/binaries/${loobin.id}/`} class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors">
+          <a href={url(`/binaries/${loobin.id}/`)} class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors">
             <h3 class="text-lg font-mono font-semibold text-apple-green mb-1">{loobin.data.name}</h3>
             <p class="text-text-secondary text-sm line-clamp-2">{loobin.data.short_description}</p>
           </a>

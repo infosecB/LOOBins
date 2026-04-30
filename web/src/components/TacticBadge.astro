@@ -1,5 +1,5 @@
 ---
-import { slugify, tacticColor } from '../utils/helpers';
+import { slugify, tacticColor, url } from '../utils/helpers';
 
 interface Props {
   tactic: string;
@@ -12,7 +12,7 @@ const slug = slugify(tactic);
 ---
 
 {linked ? (
-  <a href={`/tactics/${slug}/`} class={`inline-block text-xs px-2 py-0.5 rounded text-white ${color} hover:opacity-80 transition-opacity`}>
+  <a href={url(`/tactics/${slug}/`)} class={`inline-block text-xs px-2 py-0.5 rounded text-white ${color} hover:opacity-80 transition-opacity`}>
     {tactic}
   </a>
 ) : (
