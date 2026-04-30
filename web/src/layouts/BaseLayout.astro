@@ -1,0 +1,36 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'LOOBins - Living Off the Orchard: macOS Binaries' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} | LOOBins</title>
+    <link rel="icon" type="image/png" href="/loobins.png" />
+  </head>
+  <body class="bg-surface text-text-primary min-h-screen flex flex-col">
+    <Navbar />
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8" data-pagefind-body>
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>
+      // Dark mode is default; toggle stored in localStorage
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+  </body>
+</html>

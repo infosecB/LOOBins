@@ -1,0 +1,22 @@
+---
+import { slugify, tacticColor } from '../utils/helpers';
+
+interface Props {
+  tactic: string;
+  linked?: boolean;
+}
+
+const { tactic, linked = true } = Astro.props;
+const color = tacticColor(tactic);
+const slug = slugify(tactic);
+---
+
+{linked ? (
+  <a href={`/tactics/${slug}/`} class={`inline-block text-xs px-2 py-0.5 rounded text-white ${color} hover:opacity-80 transition-opacity`}>
+    {tactic}
+  </a>
+) : (
+  <span class={`inline-block text-xs px-2 py-0.5 rounded text-white ${color}`}>
+    {tactic}
+  </span>
+)}

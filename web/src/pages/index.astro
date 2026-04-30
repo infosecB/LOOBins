@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { getAllTactics } from '../utils/helpers';
+
+const loobins = await getCollection('loobins');
+const tactics = getAllTactics(loobins);
+---
+
+<BaseLayout title="Home">
+  <div class="text-center py-16 sm:py-24">
+    <img src="/loobins.png" alt="LOOBins" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-6" />
+    <h1 class="text-4xl sm:text-6xl font-bold mb-4">
+      <span class="text-apple-green">LOOBins</span>
+    </h1>
+    <p class="text-xl sm:text-2xl text-text-secondary mb-2">Living Off the Orchard: macOS Binaries</p>
+    <p class="text-text-secondary max-w-2xl mx-auto mb-8">
+      A curated list of macOS built-in binaries that can be used by threat actors for post-exploitation activities.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+      <a href="/binaries/" class="bg-apple-green text-surface font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+        Browse Binaries
+      </a>
+      <a href="https://github.com/infosecB/LOOBins" class="border border-border text-text-primary px-6 py-3 rounded-lg hover:border-apple-green transition-colors" target="_blank" rel="noopener">
+        View on GitHub
+      </a>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-md mx-auto">
+      <div class="bg-surface-light border border-border rounded-lg p-4">
+        <div class="text-2xl font-bold text-apple-green">{loobins.length}</div>
+        <div class="text-text-secondary text-sm">Binaries</div>
+      </div>
+      <div class="bg-surface-light border border-border rounded-lg p-4">
+        <div class="text-2xl font-bold text-apple-green">{tactics.size}</div>
+        <div class="text-text-secondary text-sm">Tactics</div>
+      </div>
+      <div class="bg-surface-light border border-border rounded-lg p-4">
+        <div class="text-2xl font-bold text-apple-green">
+          {loobins.reduce((sum, l) => sum + l.data.example_use_cases.length, 0)}
+        </div>
+        <div class="text-text-secondary text-sm">Use Cases</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="pb-16">
+    <h2 class="text-2xl font-bold mb-6 text-center">Recently Added</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {loobins
+        .sort((a, b) => b.data.created.getTime() - a.data.created.getTime())
+        .slice(0, 6)
+        .map((loobin) => (
+          <a href={`/binaries/${loobin.id}/`} class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors">
+            <h3 class="text-lg font-mono font-semibold text-apple-green mb-1">{loobin.data.name}</h3>
+            <p class="text-text-secondary text-sm line-clamp-2">{loobin.data.short_description}</p>
+          </a>
+        ))}
+    </div>
+  </section>
+</BaseLayout>

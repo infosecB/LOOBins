@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import UseCaseBlock from '../../components/UseCaseBlock.astro';
+import TacticBadge from '../../components/TacticBadge.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../../utils/helpers';
+
+export async function getStaticPaths() {
+  const loobins = await getCollection('loobins');
+  return loobins.map((loobin) => ({
+    params: { slug: loobin.id },
+    props: { loobin },
+  }));
+}
+
+const { loobin } = Astro.props;
+const { data } = loobin;
+
+const allTactics = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.tactics))];
+const allTags = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.tags))];
+---
+
+<BaseLayout title={data.name} description={data.short_description}>
+  <div class="mb-6">
+    <a href="/binaries/" class="text-text-secondary hover:text-text-primary text-sm">&larr; All Binaries</a>
+  </div>
+
+  <article>
+    <header class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-mono font-bold text-apple-green mb-2" data-pagefind-meta="title">{data.name}</h1>
+      <p class="text-text-secondary text-lg mb-4">{data.full_description}</p>
+
+      <div class="flex flex-wrap gap-4 text-sm text-text-secondary mb-4">
+        <span>Author: <strong class="text-text-primary">{data.author}</strong></span>
+        <span>Created: <strong class="text-text-primary">{formatDate(data.created)}</strong></span>
+      </div>
+
+      <div class="flex flex-wrap gap-1.5 mb-4">
+        {allTactics.map((t: string) => <TacticBadge tactic={t} />)}
+        {allTags.map((t: string) => <TagBadge tag={t} />)}
+      </div>
+    </header>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-3">Paths</h2>
+      <div class="flex flex-wrap gap-2">
+        {data.paths.map((p: string) => (
+          <code class="bg-surface-light border border-border rounded px-3 py-1 text-sm font-mono text-text-primary">{p}</code>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-4">Example Use Cases</h2>
+      <div class="space-y-4">
+        {data.example_use_cases.map((uc: any) => (
+          <UseCaseBlock
+            name={uc.name}
+            description={uc.description}
+            code={uc.code}
+            tactics={uc.tactics}
+            tags={uc.tags}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold mb-3">Detections</h2>
+      <ul class="space-y-2">
+        {data.detections.map((d: any) => (
+          <li class="text-text-secondary">
+            {d.url.toLowerCase() === 'n/a' ? (
+              <span>{d.name}</span>
+            ) : (
+              <a href={d.url} class="text-apple-green hover:underline" target="_blank" rel="noopener">{d.name}</a>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {data.resources.length > 0 && (
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-3">Resources</h2>
+        <ul class="space-y-2">
+          {data.resources.map((r: any) => (
+            <li>
+              <a href={r.url} class="text-apple-green hover:underline" target="_blank" rel="noopener">{r.name}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {data.acknowledgements.length > 0 && (
+      <section class="mb-8">
+        <h2 class="text-xl font-semibold mb-3">Acknowledgements</h2>
+        <ul class="list-disc list-inside text-text-secondary space-y-1">
+          {data.acknowledgements.map((a: string) => <li>{a}</li>)}
+        </ul>
+      </section>
+    )}
+  </article>
+</BaseLayout>

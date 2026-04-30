@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LOOBinCard from '../../components/LOOBinCard.astro';
+import { getCollection } from 'astro:content';
+
+const loobins = await getCollection('loobins');
+const sorted = loobins.sort((a, b) => a.data.name.localeCompare(b.data.name));
+---
+
+<BaseLayout title="All Binaries" description="Browse all documented macOS LOOBins">
+  <h1 class="text-3xl font-bold mb-2">Binaries</h1>
+  <p class="text-text-secondary mb-6">{sorted.length} macOS binaries documented</p>
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {sorted.map((loobin) => {
+      const tactics = [...new Set(loobin.data.example_use_cases.flatMap((uc) => uc.tactics))];
+      const tags = [...new Set(loobin.data.example_use_cases.flatMap((uc) => uc.tags))];
+      return (
+        <LOOBinCard
+          name={loobin.data.name}
+          slug={loobin.id}
+          shortDescription={loobin.data.short_description}
+          tactics={tactics}
+          tags={tags}
+        />
+      );
+    })}
+  </div>
+</BaseLayout>

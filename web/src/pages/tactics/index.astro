@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { getAllTactics, slugify, tacticColor } from '../../utils/helpers';
+
+const loobins = await getCollection('loobins');
+const tactics = getAllTactics(loobins);
+---
+
+<BaseLayout title="MITRE ATT&CK Tactics" description="Browse LOOBins by MITRE ATT&CK tactic">
+  <h1 class="text-3xl font-bold mb-2">MITRE ATT&CK Tactics</h1>
+  <p class="text-text-secondary mb-6">Browse LOOBins by tactic</p>
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {[...tactics.entries()].map(([tactic, count]) => (
+      <a href={`/tactics/${slugify(tactic)}/`} class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors">
+        <div class="flex items-center justify-between">
+          <span class={`inline-block text-sm px-3 py-1 rounded text-white ${tacticColor(tactic)}`}>{tactic}</span>
+          <span class="text-text-secondary text-sm">{count} use cases</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
