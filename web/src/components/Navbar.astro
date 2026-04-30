@@ -1,0 +1,43 @@
+---
+import SearchWidget from './SearchWidget.astro';
+---
+
+<nav class="bg-surface-light border-b border-border sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="/" class="flex items-center gap-2 text-xl font-bold text-apple-green hover:opacity-80">
+        <img src="/loobins.png" alt="LOOBins" class="h-8 w-8" />
+        <span>LOOBins</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6">
+        <a href="/binaries/" class="text-text-secondary hover:text-text-primary transition-colors">Binaries</a>
+        <a href="/tactics/" class="text-text-secondary hover:text-text-primary transition-colors">Tactics</a>
+        <a href="/tags/" class="text-text-secondary hover:text-text-primary transition-colors">Tags</a>
+        <a href="/about/" class="text-text-secondary hover:text-text-primary transition-colors">About</a>
+        <SearchWidget />
+      </div>
+
+      <button id="mobile-menu-btn" class="md:hidden text-text-secondary hover:text-text-primary" aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border">
+    <div class="px-4 py-3 space-y-2">
+      <a href="/binaries/" class="block text-text-secondary hover:text-text-primary py-1">Binaries</a>
+      <a href="/tactics/" class="block text-text-secondary hover:text-text-primary py-1">Tactics</a>
+      <a href="/tags/" class="block text-text-secondary hover:text-text-primary py-1">Tags</a>
+      <a href="/about/" class="block text-text-secondary hover:text-text-primary py-1">About</a>
+    </div>
+  </div>
+</nav>
+
+<script is:inline>
+  document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  });
+</script>

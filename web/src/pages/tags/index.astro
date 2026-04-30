@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { getAllTags, slugify } from '../../utils/helpers';
+
+const loobins = await getCollection('loobins');
+const tags = getAllTags(loobins);
+---
+
+<BaseLayout title="Tags" description="Browse LOOBins by tag">
+  <h1 class="text-3xl font-bold mb-2">Tags</h1>
+  <p class="text-text-secondary mb-6">Browse LOOBins by tag</p>
+
+  <div class="flex flex-wrap gap-3">
+    {[...tags.entries()].map(([tag, count]) => (
+      <a href={`/tags/${slugify(tag)}/`} class="bg-surface-light border border-border rounded-lg px-4 py-2 hover:border-apple-green transition-colors text-sm">
+        <span class="text-text-primary">{tag}</span>
+        <span class="text-text-secondary ml-1">({count})</span>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

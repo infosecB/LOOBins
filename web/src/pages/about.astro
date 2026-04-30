@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About the LOOBins project">
+  <article class="prose prose-invert max-w-3xl">
+    <h1>About LOOBins</h1>
+    <p>
+      <strong>LOOBins</strong> (Living Off the Orchard: macOS Binaries) is a community-driven project documenting macOS built-in binaries that can be used by threat actors for post-exploitation activities.
+    </p>
+    <p>
+      Inspired by projects like <a href="https://gtfobins.github.io/" target="_blank" rel="noopener">GTFOBins</a> and <a href="https://lolbas-project.github.io/" target="_blank" rel="noopener">LOLBAS</a>, LOOBins focuses specifically on macOS and the unique binaries available in Apple's ecosystem.
+    </p>
+
+    <h2>What Makes LOOBins Different?</h2>
+    <ul>
+      <li>Focuses exclusively on <strong>macOS-specific</strong> binaries</li>
+      <li>Maps use cases to <strong>MITRE ATT&CK</strong> tactics</li>
+      <li>Includes <strong>detection</strong> guidance for each technique</li>
+      <li>Provides a <strong>Python SDK</strong> (<a href="https://pypi.org/project/pyloobins/" target="_blank" rel="noopener">PyLOOBins</a>) for programmatic access</li>
+      <li>Exports data in <strong>STIX 2.0</strong> format for threat intelligence platforms</li>
+    </ul>
+
+    <h2>Contributing</h2>
+    <p>
+      LOOBins is open source and welcomes contributions. If you know of a macOS binary that can be abused by threat actors, please consider submitting a LOOBin entry.
+    </p>
+    <p>
+      See the <a href="https://github.com/infosecB/LOOBins/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing Guide</a> for details on how to submit new entries.
+    </p>
+  </article>
+</BaseLayout>

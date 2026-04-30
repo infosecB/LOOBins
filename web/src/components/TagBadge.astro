@@ -1,0 +1,21 @@
+---
+import { slugify } from '../utils/helpers';
+
+interface Props {
+  tag: string;
+  linked?: boolean;
+}
+
+const { tag, linked = true } = Astro.props;
+const slug = slugify(tag);
+---
+
+{linked ? (
+  <a href={`/tags/${slug}/`} class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
+    {tag}
+  </a>
+) : (
+  <span class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary">
+    {tag}
+  </span>
+)}

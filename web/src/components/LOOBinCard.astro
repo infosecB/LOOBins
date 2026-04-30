@@ -1,0 +1,25 @@
+---
+import TacticBadge from './TacticBadge.astro';
+import TagBadge from './TagBadge.astro';
+
+interface Props {
+  name: string;
+  slug: string;
+  shortDescription: string;
+  tactics: string[];
+  tags: string[];
+}
+
+const { name, slug, shortDescription, tactics, tags } = Astro.props;
+---
+
+<a href={`/binaries/${slug}/`} class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors group">
+  <h3 class="text-lg font-mono font-semibold text-apple-green group-hover:underline mb-2">{name}</h3>
+  <p class="text-text-secondary text-sm mb-3 line-clamp-2">{shortDescription}</p>
+  <div class="flex flex-wrap gap-1.5">
+    {tactics.slice(0, 3).map((t) => <TacticBadge tactic={t} linked={false} />)}
+    {tactics.length > 3 && <span class="text-xs text-text-secondary">+{tactics.length - 3}</span>}
+    {tags.slice(0, 3).map((t) => <TagBadge tag={t} linked={false} />)}
+    {tags.length > 3 && <span class="text-xs text-text-secondary">+{tags.length - 3}</span>}
+  </div>
+</a>
