@@ -155,8 +155,8 @@ cython_debug/
 # Visual Studio Code
 .vscode/
 
-# Poetry
-poetry.lock
+# uv
+uv.lock
 
 # macOS
 .DS_Store
