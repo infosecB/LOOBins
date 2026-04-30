@@ -1,6 +1,6 @@
 [project]
 name = "PyLOOBins"
-version = "2.0.10"
+version = "2.0.11"
 description = "Python package for managing the LOOBins model and schema."
 authors = [
     { name = "infosecB", email = "brendan@infosecb.com" },
