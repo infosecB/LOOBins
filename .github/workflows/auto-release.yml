@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'LOOBins/**'
+      - 'src/**'
+      - 'pyproject.toml'
 
 jobs:
   test:
