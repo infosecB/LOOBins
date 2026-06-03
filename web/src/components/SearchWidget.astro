@@ -31,6 +31,19 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     width: 200px;
   }
 
+  #search-container .pagefind-ui__search-clear {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    background: #334155;
+    color: #f1f5f9;
+    border-radius: 6px;
+    line-height: 1;
+  }
+
+  #search-container .pagefind-ui__search-clear:hover {
+    background: #475569;
+  }
+
   #search-container .pagefind-ui__drawer {
     position: absolute;
     right: 0;
@@ -54,6 +67,7 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     background: #1e293b;
     border-bottom: 1px solid #334155;
     padding: 16px 12px;
+    position: relative;
   }
 
   .pagefind-ui .pagefind-ui__result:hover {
@@ -63,6 +77,20 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
 
   .pagefind-ui .pagefind-ui__result-link {
     color: #22c55e;
+  }
+
+  .pagefind-ui .pagefind-ui__result-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .pagefind-ui .pagefind-ui__result mark {
+    background: transparent;
+    color: inherit;
+    font-weight: inherit;
+    padding: 0;
   }
 
   .pagefind-ui .pagefind-ui__result-title {
