@@ -1,11 +1,17 @@
 ---
 import { url } from '../utils/helpers';
+
+interface Props {
+  id?: string;
+}
+
+const { id = 'pagefind-search' } = Astro.props;
 const cssUrl = url('/pagefind/pagefind-ui.css');
 const jsUrl = url('/pagefind/pagefind-ui.js');
 ---
 
-<div id="search-container" class="relative" data-pagefind-ignore>
-  <div id="pagefind-search"></div>
+<div class="search-container relative" data-pagefind-ignore>
+  <div id={id}></div>
 </div>
 
 <style is:global>
@@ -21,17 +27,17 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     --pagefind-ui-font: inherit;
   }
 
-  #search-container {
+  .search-container {
     position: relative;
   }
 
-  #search-container .pagefind-ui__search-input {
+  .search-container .pagefind-ui__search-input {
     background: #0f172a;
     color: #f1f5f9;
     width: 200px;
   }
 
-  #search-container .pagefind-ui__search-clear {
+  .search-container .pagefind-ui__search-clear {
     font-size: 0.9rem;
     padding: 6px 12px;
     background: #334155;
@@ -40,11 +46,11 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     line-height: 1;
   }
 
-  #search-container .pagefind-ui__search-clear:hover {
+  .search-container .pagefind-ui__search-clear:hover {
     background: #475569;
   }
 
-  #search-container .pagefind-ui__drawer {
+  .search-container .pagefind-ui__drawer {
     position: absolute;
     right: 0;
     top: 100%;
@@ -57,6 +63,21 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     z-index: 100;
     padding: 16px;
+  }
+
+  /* On mobile the widget sits in the full-width menu, so let the input and
+     results drawer stretch to fit the viewport instead of overflowing. */
+  @media (max-width: 767px) {
+    .search-container .pagefind-ui__search-input {
+      width: 100%;
+    }
+
+    .search-container .pagefind-ui__drawer {
+      position: absolute;
+      left: 0;
+      right: 0;
+      width: auto;
+    }
   }
 
   .pagefind-ui .pagefind-ui__results-area {
@@ -116,15 +137,27 @@ const jsUrl = url('/pagefind/pagefind-ui.js');
 </style>
 
 <link href={cssUrl} rel="stylesheet" />
-<script is:inline define:vars={{ jsUrl }}>
-  const s = document.createElement('script');
-  s.src = jsUrl;
-  s.onload = () => {
+<script is:inline define:vars={{ jsUrl, id }}>
+  // Each SearchWidget instance binds its own PagefindUI, but the pagefind-ui.js
+  // script is shared and must only be fetched once across all instances.
+  function initInstance() {
     new PagefindUI({
-      element: '#pagefind-search',
+      element: '#' + id,
       showSubResults: false,
       showImages: false,
     });
-  };
-  document.head.appendChild(s);
+  }
+
+  if (window.PagefindUI) {
+    initInstance();
+  } else {
+    window.addEventListener('pagefind-ui-loaded', initInstance);
+    if (!window.__pagefindUiLoading) {
+      window.__pagefindUiLoading = true;
+      const s = document.createElement('script');
+      s.src = jsUrl;
+      s.onload = () => window.dispatchEvent(new Event('pagefind-ui-loaded'));
+      document.head.appendChild(s);
+    }
+  }
 </script>

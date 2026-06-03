@@ -16,7 +16,7 @@ import { url } from '../utils/helpers';
         <a href={url('/tactics/')} class="text-text-secondary hover:text-text-primary transition-colors">Tactics</a>
         <a href={url('/tags/')} class="text-text-secondary hover:text-text-primary transition-colors">Tags</a>
         <a href={url('/about/')} class="text-text-secondary hover:text-text-primary transition-colors">About</a>
-        <SearchWidget />
+        <SearchWidget id="pagefind-search-desktop" />
       </div>
 
       <button id="mobile-menu-btn" class="md:hidden text-text-secondary hover:text-text-primary" aria-label="Toggle menu">
@@ -33,6 +33,9 @@ import { url } from '../utils/helpers';
       <a href={url('/tactics/')} class="block text-text-secondary hover:text-text-primary py-1">Tactics</a>
       <a href={url('/tags/')} class="block text-text-secondary hover:text-text-primary py-1">Tags</a>
       <a href={url('/about/')} class="block text-text-secondary hover:text-text-primary py-1">About</a>
+      <div class="pt-1">
+        <SearchWidget id="pagefind-search-mobile" />
+      </div>
     </div>
   </div>
 </nav>
