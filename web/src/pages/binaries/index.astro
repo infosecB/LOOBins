@@ -2,14 +2,29 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LOOBinCard from '../../components/LOOBinCard.astro';
 import { getCollection } from 'astro:content';
+import { url } from '../../utils/helpers';
 
 const loobins = await getCollection('loobins');
 const sorted = loobins.sort((a, b) => a.data.name.localeCompare(b.data.name));
 ---
 
 <BaseLayout title="All Binaries" description="Browse all documented macOS LOOBins">
-  <h1 class="text-3xl font-bold mb-2">Binaries</h1>
-  <p class="text-text-secondary mb-6">{sorted.length} macOS binaries documented</p>
+  <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+    <div>
+      <h1 class="text-3xl font-bold mb-2">Binaries</h1>
+      <p class="text-text-secondary">{sorted.length} macOS binaries documented</p>
+    </div>
+    <a
+      href={url('/loobins.json')}
+      download="loobins.json"
+      class="inline-flex items-center gap-2 border border-border text-text-primary px-4 py-2 rounded-lg hover:border-apple-green transition-colors"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+      </svg>
+      Download JSON
+    </a>
+  </div>
 
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {sorted.map((loobin) => {
