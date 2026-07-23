@@ -72,6 +72,9 @@ legacy_tox_ini = """
   env_list =
       py38,py39,py310,py311,py312
   minversion = 4.5.1
+  # Don't fail the whole run when a Python version in env_list isn't installed
+  # locally; CI still provides the full 3.8-3.12 matrix.
+  skip_missing_interpreters = true
 
   [testenv]
   description = run the tests with pytest
