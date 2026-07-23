@@ -1,8 +1,11 @@
 """Tests for the pyloobins.util module."""
-import os
-from pathlib import Path
 
-from pyloobins.util import get_loobins, make_template, validate_loobin
+from pyloobins.util import (
+    get_loobins,
+    make_template,
+    normalize_file_name,
+    validate_loobin,
+)
 
 
 def test_get_loobins():
@@ -15,10 +18,13 @@ def test_make_template():
     assert make_template()
 
 
-def test_validate_loobin():
+def test_validate_loobin(tmp_path):
     """Test the validate_loobin function."""
-    test_file = Path("./tests/test.yml")
-    with open(test_file, "w", encoding="utf-8") as f:
-        f.write(make_template().to_yaml())
+    test_file = tmp_path / "test.yml"
+    test_file.write_text(make_template().to_yaml(), encoding="utf-8")
     assert validate_loobin(yml_path=str(test_file))
-    os.remove(test_file)
+
+
+def test_normalize_file_name():
+    """Names are lowercased and spaces become underscores."""
+    assert normalize_file_name("My Bin") == "my_bin"

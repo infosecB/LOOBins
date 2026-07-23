@@ -1,5 +1,7 @@
 """Utility functions that support the CLI and library"""
 
+from __future__ import annotations
+
 import pathlib
 from datetime import date
 

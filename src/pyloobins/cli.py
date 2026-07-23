@@ -51,7 +51,9 @@ def create(name: str, path: str) -> None:
         )
     file_path = path if path and os.path.exists(path) else "./"
     with open(
-        file=f"{file_path}{file_name}.yml", mode="w", encoding="utf-8"
+        file=os.path.join(file_path, f"{file_name}.yml"),
+        mode="w",
+        encoding="utf-8",
     ) as out_file:
         out_file.write(template)
 
@@ -84,14 +86,14 @@ def get(name: str, path: str = "") -> None:
     "--path",
     type=str,
     required=False,
-    help="Enter the path where you would like to create the template YAML file.",
+    help="Enter the directory where you would like to write the STIX bundle file.",
     default=".",
 )
 @click.option(
     "--file-name",
     type=str,
     required=False,
-    help="Enter the path where you would like to create the template YAML file.",
+    help="Enter the file name for the exported STIX bundle.",
     default="loobins_stix.json",
 )
 def export_stix(file_name: str, path: str) -> None:
@@ -104,7 +106,7 @@ def export_stix(file_name: str, path: str) -> None:
             f"Creating the {file_name} file in the current directory."
         )
     file_path = path if path and os.path.exists(path) else "./"
-    with open(f"{file_path}/{file_name}", mode="w+", encoding="utf-8") as f:
+    with open(os.path.join(file_path, file_name), mode="w+", encoding="utf-8") as f:
         f.write(stix_bundle.to_stix_bundle().serialize(pretty=True))
 
 

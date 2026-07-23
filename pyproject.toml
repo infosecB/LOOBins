@@ -16,7 +16,6 @@ dependencies = [
     "click>=8.1.3,<9",
     "jinja2>=3.1.2,<4",
     "stix2>=3.0.1,<4",
-    "polyfactory>=2.18.0,<3",
 ]
 
 [project.urls]
@@ -34,6 +33,7 @@ dev = [
     "pytest>=7.3.1",
     "tox>=4.5.1",
     "isort>=5.12.0",
+    "polyfactory>=2.18.0,<3",
 ]
 
 [build-system]
@@ -62,6 +62,7 @@ legacy_tox_ini = """
   wheel_build_env = .pkg
   deps =
       pytest>=6
+      polyfactory>=2.18.0,<3
   commands =
       pytest {tty:--color=yes} {posargs}
 """
