@@ -34,6 +34,8 @@ dev = [
     "tox>=4.5.1",
     "isort>=5.12.0",
     "polyfactory>=2.18.0,<3",
+    "mypy>=1.8.0",
+    "types-PyYAML>=6.0,<7",
 ]
 
 [build-system]
@@ -43,11 +45,26 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/pyloobins"]
 
+# The LOOBin YAML corpus lives at the repo root (outside the package) so the
+# website and CI can read it in place. Bundle a copy into the wheel under the
+# package so an installed pyloobins can discover the data without relying on a
+# walk up the filesystem.
+[tool.hatch.build.targets.wheel.force-include]
+"LOOBins" = "pyloobins/LOOBins"
+
 [tool.hatch.build.targets.sdist]
 include = ["src/pyloobins", "LOOBins/*.yml"]
 
 [tool.pylint.'MESSAGES CONTROL']
 disable = ['no-name-in-module', 'too-few-public-methods']
+
+[tool.mypy]
+files = ["src/pyloobins"]
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
 
 [tool.tox]
 legacy_tox_ini = """
