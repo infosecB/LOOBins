@@ -1,0 +1,54 @@
+name: installer
+author: Brendan Chamberlain (@integralsecurity)
+short_description: Install macOS packages (.pkg) from the command line.
+full_description: The installer binary is a command-line utility included in macOS that installs macOS flat packages (.pkg files) without launching the graphical Installer.app. Packages can contain pre-install and post-install scripts that execute arbitrary code, making installer a useful vector for execution and privilege escalation. The -allowUntrusted flag can be used to bypass package signature validation.
+created: 2026-02-25
+example_use_cases:
+  - name: Silently install a malicious package
+    description: Use the installer binary to silently install a .pkg file to the root volume. The package may contain pre-install or post-install scripts that execute arbitrary commands as root.
+    code: sudo installer -pkg /path/to/malicious.pkg -target /
+    tactics:
+      - Execution
+    tags:
+      - pkg
+      - installer
+  - name: Install an unsigned or untrusted package
+    description: Use the -allowUntrusted flag to install a package that is not signed or signed by an untrusted certificate, bypassing Gatekeeper signature checks on the package.
+    code: sudo installer -pkg /tmp/payload.pkg -target / -allowUntrusted
+    tactics:
+      - Execution
+      - Defense Evasion
+    tags:
+      - pkg
+      - installer
+      - gatekeeper
+  - name: Install a package to the current user home directory
+    description: Install a package to the current user's home directory using the CurrentUserHomeDirectory target. This may not require root privileges depending on the package.
+    code: installer -pkg /path/to/package.pkg -target CurrentUserHomeDirectory
+    tactics:
+      - Execution
+    tags:
+      - pkg
+      - installer
+  - name: Enumerate available volumes
+    description: Use the installer binary to list available volumes on the system for reconnaissance purposes.
+    code: installer -volinfo
+    tactics:
+      - Discovery
+    tags:
+      - installer
+      - reconnaissance
+paths:
+  - /usr/sbin/installer
+detections:
+  - name: Monitor for installer process execution with -allowUntrusted flag
+    url: N/A
+  - name: Monitor for installer invocations with packages in unusual locations (e.g. /tmp/, /var/folders/)
+    url: N/A
+resources:
+  - name: 'installer Man Page'
+    url: https://ss64.com/mac/installer.html
+  - name: 'MITRE ATT&CK T1569.001 - System Services: Launchctl'
+    url: https://attack.mitre.org/techniques/T1569/001/
+acknowledgements:
+  - Jonathan Bar Or (@yo_yo_yo_jbo) for submitting the issue
