@@ -104,11 +104,11 @@ detections:
   - name: Command Line Argument Detection (args contain osascript AND -e AND clipboard)  
     url: N/A
   - name: "Jamf Protect: Detect activity that is related to osascript gathering clipboard content"
-    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_clipboard
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/applescript_gather_system_information.yaml
   - name: "Jamf Protect: Detect activity that is related to osascript pulling system information"  
-    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_gather_system_information
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/applescript_gather_clipboard.yaml
   - name: "Jamf Protect: Detect activity that is related to generating dialogs using osascript and asking for specific user input"
-    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/osascript_dialog_activity
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/applescript_dialog_activity.yaml
   - name: "Process Lineage Detection: Monitor for suspicious process trees indicative of RAS-based execution (launchd -> AppleEventsD -> Terminal -> sh/bash)"
     url: N/A
   - name: "Command Line Argument Detection: osascript executions containing eppc:// arguments or base64 --decode commands originating from GUI applications"
