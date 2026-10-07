@@ -1,0 +1,59 @@
+name: killall
+author: Jason Phang Vern - Onn
+short_description: Kill processes by name.
+full_description: killall is a built-in macOS utility that sends signals to processes selected by name. Although intended for legitimate process management, macOS malware has abused killall to terminate Terminal sessions, conceal malicious command execution, and repeatedly stop user-interface processes such as Finder, Dock, SystemUIServer, and NotificationCenter. This can disrupt normal desktop operation, suppress visible notifications, and force victims to continue an attacker-controlled interaction flow.
+created: 2026-07-26
+example_use_cases:
+- name: Terminate Terminal to conceal malicious execution
+  description: Terminate running Terminal processes after malicious commands have been launched, reducing visible evidence of execution and interfering with manual analysis.
+  code: killall Terminal
+  tactics:
+  - Defense Evasion
+  tags:
+  - processes
+  - terminal
+  - evasion
+- name: Repeatedly disrupt macOS user-interface processes
+  description: Repeatedly terminate macOS user-interface processes at short intervals to disrupt normal desktop operation and force the victim to continue an attacker-controlled interaction flow.
+  code: while true; do killall Finder Dock SystemUIServer NotificationCenter 2>/dev/null; sleep 0.1; done
+  tactics:
+  - Impact
+  - Defense Evasion
+  tags:
+  - processes
+  - user-interface
+  - disruption
+- name: Suppress Notification Center
+  description: Repeatedly terminate NotificationCenter to interfere with the display of macOS notifications.
+  code: killall NotificationCenter
+  tactics:
+  - Defense Evasion
+  - Impact
+  tags:
+  - notifications
+  - processes
+- name: Forcefully terminate a named process
+  description: Send SIGKILL to immediately terminate processes that may ignore the default termination signal.
+  code: killall -9 Terminal
+  tactics:
+  - Defense Evasion
+  - Impact
+  tags:
+  - processes
+  - sigkill
+paths:
+- /usr/bin/killall
+detections:
+- name: Process execution monitoring for killall
+  url: N/A
+- name: Detect repeated killall execution targeting macOS user-interface processes
+  url: N/A
+resources:
+- name: "Banshee: The Stealer That Stole Code From macOS XProtect"
+  url: https://research.checkpoint.com/2025/banshee-macos-stealer-that-stole-code-from-macos-xprotect/
+- name: "ClickLock Stealer: Paste Once, Lose Everything"
+  url: https://www.group-ib.com/blog/clicklock-stealer-macos-malware/
+- name: "Say My Name: How MioLab is Building a macOS Stealer Empire"
+  url: https://www.levelblue.com/blogs/spiderlabs-blog/say-my-name-how-miolab-is-building-macos-stealer-empire
+- name: "Proton.B: What This Mac Malware Actually Does"
+  url: https://www.cybereason.com/blog/labs-proton-b-what-this-mac-malware-actually-does
