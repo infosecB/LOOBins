@@ -1,47 +1,13 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import LOOBinCard from '../../components/LOOBinCard.astro';
+// The per-tactic pages were folded into the /binaries/ filters; keep old links working.
 import { getCollection } from 'astro:content';
-import { getAllTactics, slugify, loobinHasTactic, url } from '../../utils/helpers';
+import { filterUrl, loobinTactics, slugify } from '../../utils/helpers';
 
 export async function getStaticPaths() {
   const loobins = await getCollection('loobins');
-  const tactics = getAllTactics(loobins);
-
-  return [...tactics.keys()].map((tactic) => ({
-    params: { tactic: slugify(tactic) },
-    props: {
-      tactic,
-      loobins: loobins.filter((l) => loobinHasTactic(l, tactic)),
-    },
-  }));
+  const tactics = new Set(loobins.flatMap(loobinTactics));
+  return [...tactics].map((tactic) => ({ params: { tactic: slugify(tactic) }, props: { tactic } }));
 }
 
-const { tactic, loobins } = Astro.props;
-const sorted = loobins.sort((a: any, b: any) => a.data.name.localeCompare(b.data.name));
+return Astro.redirect(filterUrl('tactic', Astro.props.tactic), 301);
 ---
-
-<BaseLayout title={tactic} description={`LOOBins using the ${tactic} tactic`}>
-  <div class="mb-6">
-    <a href={url('/tactics/')} class="text-text-secondary hover:text-text-primary text-sm">&larr; All Tactics</a>
-  </div>
-
-  <h1 class="text-3xl font-bold mb-2">{tactic}</h1>
-  <p class="text-text-secondary mb-6">{sorted.length} binaries with this tactic</p>
-
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {sorted.map((loobin: any) => {
-      const tactics = [...new Set(loobin.data.example_use_cases.flatMap((uc: any) => uc.tactics))];
-      const tags = [...new Set(loobin.data.example_use_cases.flatMap((uc: any) => uc.tags))];
-      return (
-        <LOOBinCard
-          name={loobin.data.name}
-          slug={loobin.id}
-          shortDescription={loobin.data.short_description}
-          tactics={tactics}
-          tags={tags}
-        />
-      );
-    })}
-  </div>
-</BaseLayout>

@@ -3,6 +3,7 @@ import TacticBadge from './TacticBadge.astro';
 import TagBadge from './TagBadge.astro';
 
 interface Props {
+  id: string;
   name: string;
   description: string;
   code?: string;
@@ -10,16 +11,34 @@ interface Props {
   tags: string[];
 }
 
-const { name, description, code, tactics, tags } = Astro.props;
+const { id, name, description, code, tactics, tags } = Astro.props;
 ---
 
-<div class="border border-border rounded-lg p-5 bg-surface-light">
-  <h3 class="text-lg font-semibold text-text-primary mb-2">{name}</h3>
+<div id={id} class="border border-border rounded-lg p-5 bg-surface-light scroll-mt-20 target:border-apple-green">
+  <h3 class="group text-lg font-semibold text-text-primary mb-2">
+    {name}
+    <a
+      href={`#${id}`}
+      class="ml-1 text-text-secondary opacity-0 group-hover:opacity-100 focus:opacity-100 hover:text-apple-green transition-opacity"
+      aria-label={`Link to ${name}`}
+      data-pagefind-ignore
+    >#</a>
+  </h3>
   <p class="text-text-secondary mb-3">{description}</p>
 
   {code && (
-    <div class="mb-3">
-      <pre class="bg-surface rounded-md p-4 overflow-x-auto border border-border"><code class="text-sm text-green-400 font-mono" set:text={code} /></pre>
+    <div class="relative mb-3">
+      <pre class="bg-surface rounded-md p-4 pr-20 overflow-x-auto border border-border"><code class="text-sm text-green-400 font-mono" set:text={code} /></pre>
+      <button
+        type="button"
+        data-pagefind-ignore
+        class="copy-code absolute top-2 right-2 inline-flex items-center gap-1 text-xs px-2 py-1 rounded border border-border bg-surface-light text-text-secondary hover:text-text-primary hover:border-text-secondary transition-colors"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8h11a1 1 0 011 1v11a1 1 0 01-1 1H9a1 1 0 01-1-1V8zM16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3" />
+        </svg>
+        <span data-label aria-live="polite">Copy</span>
+      </button>
     </div>
   )}
 
@@ -28,3 +47,21 @@ const { name, description, code, tactics, tags } = Astro.props;
     {tags.map((t) => <TagBadge tag={t} />)}
   </div>
 </div>
+
+<script>
+  for (const btn of document.querySelectorAll<HTMLButtonElement>('.copy-code')) {
+    const label = btn.querySelector<HTMLElement>('[data-label]')!;
+    let reset: number | undefined;
+    btn.addEventListener('click', async () => {
+      const code = btn.parentElement!.querySelector('code')!.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(code);
+        label.textContent = 'Copied';
+      } catch {
+        label.textContent = 'Copy failed';
+      }
+      clearTimeout(reset);
+      reset = window.setTimeout(() => (label.textContent = 'Copy'), 2000);
+    });
+  }
+</script>

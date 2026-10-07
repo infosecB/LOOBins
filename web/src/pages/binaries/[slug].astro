@@ -4,7 +4,7 @@ import UseCaseBlock from '../../components/UseCaseBlock.astro';
 import TacticBadge from '../../components/TacticBadge.astro';
 import TagBadge from '../../components/TagBadge.astro';
 import { getCollection } from 'astro:content';
-import { formatDate, url } from '../../utils/helpers';
+import { formatDate, loobinTactics, loobinTags, slugify, tacticOrder, url } from '../../utils/helpers';
 
 export async function getStaticPaths() {
   const loobins = await getCollection('loobins');
@@ -17,8 +17,21 @@ export async function getStaticPaths() {
 const { loobin } = Astro.props;
 const { data } = loobin;
 
-const allTactics = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.tactics))];
-const allTags = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.tags))];
+const allTactics = loobinTactics(loobin);
+const allTags = loobinTags(loobin);
+
+// Stable anchors so detection content can link straight to a technique; suffix repeats.
+const seenIds = new Map<string, number>();
+const useCases = data.example_use_cases.map((uc) => {
+  const base = slugify(uc.name) || 'use-case';
+  const n = (seenIds.get(base) ?? 0) + 1;
+  seenIds.set(base, n);
+  return {
+    ...uc,
+    id: n === 1 ? base : `${base}-${n}`,
+    tactics: tacticOrder.filter((t) => uc.tactics.includes(t)),
+  };
+});
 ---
 
 <BaseLayout title={data.name} description={data.short_description} type="article">
@@ -54,8 +67,9 @@ const allTags = [...new Set(data.example_use_cases.flatMap((uc: any) => uc.tags)
     <section class="mb-8">
       <h2 class="text-xl font-semibold mb-4">Example Use Cases</h2>
       <div class="space-y-4">
-        {data.example_use_cases.map((uc: any) => (
+        {useCases.map((uc) => (
           <UseCaseBlock
+            id={uc.id}
             name={uc.name}
             description={uc.description}
             code={uc.code}
