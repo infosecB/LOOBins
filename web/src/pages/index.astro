@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { getAllTactics, url } from '../utils/helpers';
+import { loobinTactics, url } from '../utils/helpers';
 
 const loobins = await getCollection('loobins');
-const tactics = getAllTactics(loobins);
+const tactics = new Set(loobins.flatMap(loobinTactics));
 ---
 
 <BaseLayout title="Home">

@@ -1,5 +1,5 @@
 ---
-import { slugify, url } from '../utils/helpers';
+import { filterUrl } from '../utils/helpers';
 
 interface Props {
   tag: string;
@@ -7,11 +7,10 @@ interface Props {
 }
 
 const { tag, linked = true } = Astro.props;
-const slug = slugify(tag);
 ---
 
 {linked ? (
-  <a href={url(`/tags/${slug}/`)} class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
+  <a href={filterUrl('tag', tag)} class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
     {tag}
   </a>
 ) : (

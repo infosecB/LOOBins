@@ -1,26 +1,39 @@
 ---
+import type { CollectionEntry } from 'astro:content';
+import type { HTMLAttributes } from 'astro/types';
 import TacticBadge from './TacticBadge.astro';
 import TagBadge from './TagBadge.astro';
-import { url } from '../utils/helpers';
+import NewBadge from './NewBadge.astro';
+import { isNew, loobinTactics, loobinTags, url } from '../utils/helpers';
 
-interface Props {
-  name: string;
-  slug: string;
-  shortDescription: string;
-  tactics: string[];
-  tags: string[];
+interface Props extends HTMLAttributes<'a'> {
+  loobin: CollectionEntry<'loobins'>;
 }
 
-const { name, slug, shortDescription, tactics, tags } = Astro.props;
+const { loobin, ...attrs } = Astro.props;
+const { name, short_description, paths, example_use_cases, created } = loobin.data;
+const tactics = loobinTactics(loobin);
+const tags = loobinTags(loobin);
+const useCaseCount = example_use_cases.length;
 ---
 
-<a href={url(`/binaries/${slug}/`)} class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors group">
-  <h3 class="text-lg font-mono font-semibold text-apple-green group-hover:underline mb-2">{name}</h3>
-  <p class="text-text-secondary text-sm mb-3 line-clamp-2">{shortDescription}</p>
-  <div class="flex flex-wrap gap-1.5">
-    {tactics.slice(0, 3).map((t) => <TacticBadge tactic={t} linked={false} />)}
-    {tactics.length > 3 && <span class="text-xs text-text-secondary">+{tactics.length - 3}</span>}
+<a href={url(`/binaries/${loobin.id}/`)} {...attrs} class="flex flex-col bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors group">
+  <div class="flex items-start justify-between gap-2 mb-2">
+    <h3 class="text-lg font-mono font-semibold text-apple-green group-hover:underline break-all">{name}</h3>
+    {isNew(created) && <NewBadge />}
+  </div>
+  <p class="text-text-secondary text-sm mb-3 line-clamp-2">{short_description}</p>
+  <div class="flex flex-wrap gap-1.5 mb-2">
+    {tactics.map((t) => <TacticBadge tactic={t} linked={false} />)}
+  </div>
+  <div class="flex flex-wrap gap-1.5 mb-4">
     {tags.slice(0, 3).map((t) => <TagBadge tag={t} linked={false} />)}
-    {tags.length > 3 && <span class="text-xs text-text-secondary">+{tags.length - 3}</span>}
+    {tags.length > 3 && <span class="text-xs text-text-secondary self-center">+{tags.length - 3}</span>}
+  </div>
+  <div class="mt-auto pt-3 border-t border-border flex items-center justify-between gap-3 text-xs text-text-secondary">
+    <span class="font-mono truncate" title={paths.join('\n')}>
+      {paths[0]}{paths.length > 1 && <span class="font-sans"> +{paths.length - 1}</span>}
+    </span>
+    <span class="shrink-0">{useCaseCount} use case{useCaseCount === 1 ? '' : 's'}</span>
   </div>
 </a>

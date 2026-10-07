@@ -4,6 +4,12 @@ export function url(path: string): string {
   return `${base}${path}`;
 }
 
+// Link into the /binaries/ filter UI. Tactics are matched by slug, tags by exact value.
+export function filterUrl(facet: 'tactic' | 'tag', value: string): string {
+  const param = facet === 'tactic' ? slugify(value) : value;
+  return url(`/binaries/?${new URLSearchParams({ [facet]: param })}`);
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()
@@ -11,62 +17,46 @@ export function slugify(text: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
-export function getAllTactics(loobins: any[]): Map<string, number> {
-  const counts = new Map<string, number>();
-  for (const loobin of loobins) {
-    for (const uc of loobin.data.example_use_cases) {
-      for (const tactic of uc.tactics ?? []) {
-        counts.set(tactic, (counts.get(tactic) ?? 0) + 1);
-      }
-    }
-  }
-  return new Map([...counts.entries()].sort((a, b) => a[0].localeCompare(b[0])));
+export function loobinTags(loobin: any): string[] {
+  return [...new Set<string>(loobin.data.example_use_cases.flatMap((uc: any) => uc.tags ?? []))];
 }
 
-export function getAllTags(loobins: any[]): Map<string, number> {
-  const counts = new Map<string, number>();
-  for (const loobin of loobins) {
-    for (const uc of loobin.data.example_use_cases) {
-      for (const tag of uc.tags ?? []) {
-        counts.set(tag, (counts.get(tag) ?? 0) + 1);
-      }
-    }
-  }
-  return new Map([...counts.entries()].sort((a, b) => a[0].localeCompare(b[0])));
-}
+// Relative to build time; the site redeploys whenever a LOOBin is added.
+const NEW_WINDOW_MS = 90 * 24 * 60 * 60 * 1000;
 
-export function loobinHasTactic(loobin: any, tactic: string): boolean {
-  return loobin.data.example_use_cases.some((uc: any) =>
-    (uc.tactics ?? []).includes(tactic)
-  );
-}
-
-export function loobinHasTag(loobin: any, tag: string): boolean {
-  return loobin.data.example_use_cases.some((uc: any) =>
-    (uc.tags ?? []).includes(tag)
-  );
+export function isNew(created: Date): boolean {
+  return Date.now() - created.getTime() < NEW_WINDOW_MS;
 }
 
 export function formatDate(date: Date): string {
   return date.toISOString().split('T')[0];
 }
 
+// Shades are chosen so white badge text meets WCAG AA (>= 4.5:1).
 const tacticColors: Record<string, string> = {
   'Reconnaissance': 'bg-blue-600',
   'Resource Development': 'bg-indigo-600',
   'Initial Access': 'bg-violet-600',
   'Execution': 'bg-red-600',
-  'Persistence': 'bg-orange-600',
-  'Privilege Escalation': 'bg-amber-600',
-  'Defense Evasion': 'bg-yellow-600',
-  'Credential Access': 'bg-lime-600',
-  'Discovery': 'bg-green-600',
-  'Lateral Movement': 'bg-emerald-600',
-  'Collection': 'bg-teal-600',
-  'Exfiltration': 'bg-cyan-600',
-  'Command and Control': 'bg-sky-600',
+  'Persistence': 'bg-orange-700',
+  'Privilege Escalation': 'bg-amber-700',
+  'Defense Evasion': 'bg-yellow-700',
+  'Credential Access': 'bg-lime-700',
+  'Discovery': 'bg-green-700',
+  'Lateral Movement': 'bg-emerald-700',
+  'Collection': 'bg-teal-700',
+  'Exfiltration': 'bg-cyan-700',
+  'Command and Control': 'bg-sky-700',
   'Impact': 'bg-rose-600',
 };
+
+// Tactics in ATT&CK kill-chain order.
+export const tacticOrder = Object.keys(tacticColors);
+
+export function loobinTactics(loobin: any): string[] {
+  const tactics = new Set<string>(loobin.data.example_use_cases.flatMap((uc: any) => uc.tactics ?? []));
+  return tacticOrder.filter((t) => tactics.has(t));
+}
 
 export function tacticColor(tactic: string): string {
   return tacticColors[tactic] ?? 'bg-slate-600';
