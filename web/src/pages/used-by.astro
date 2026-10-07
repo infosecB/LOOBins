@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const gh = (repo: string, path: string, branch = 'main') => `https://github.com/${repo}/blob/${branch}/${path}`;
+
+const vendors = [
+  {
+    name: 'Elastic',
+    project: 'Elastic Detection Rules',
+    usage: 'macOS detection rules cite LOOBins entries as references.',
+    link: gh('elastic/detection-rules', 'rules/macos/credential_access_high_volume_of_pbpaste.toml'),
+  },
+  {
+    name: 'Splunk',
+    project: 'Splunk Security Content',
+    usage: 'macOS detections and analytic stories reference LOOBins.',
+    link: gh('splunk/security_content', 'detections/endpoint/macos_loginhook_persistence.yml', 'develop'),
+  },
+  {
+    name: 'Sumo Logic',
+    project: 'Cloud SIEM Content Catalog',
+    usage: 'First-seen macOS binary rules are built on LOOBins data.',
+    link: gh('SumoLogic/cloud-siem-content-catalog', 'rules/FIRST-S00039.md', 'master'),
+  },
+  {
+    name: 'Red Canary',
+    project: 'Atomic Red Team',
+    usage: 'macOS atomic tests are sourced from LOOBins entries.',
+    link: gh('redcanaryco/atomic-red-team', 'atomics/T1555.001/T1555.001.yaml', 'master'),
+  },
+  {
+    name: 'North Pole Security',
+    project: 'Santa',
+    usage: 'The CEL policy cookbook references LOOBins.',
+    link: gh('northpolesec/santa', 'docs/docs/cookbook/cel.mdx'),
+  },
+  {
+    name: 'Magic Sword',
+    project: 'Magic Atomics',
+    usage: 'Ingests LOOBins as a data source.',
+    link: gh('magicsword-io/Magic-Atomics', 'backend/app/ingestion/loobins.py'),
+  },
+  {
+    name: 'Securonix',
+    project: 'Threat Research',
+    usage: 'Published detection guidance for LOOBins attack activity.',
+    link: 'https://www.securonix.com/blog/detecting-macos-loobins-attack-activity-using-security-analytics/',
+  },
+];
+
+const community = [
+  {
+    name: 'Sigma',
+    usage: 'macOS process creation rules reference LOOBins.',
+    link: 'https://github.com/SigmaHQ/sigma/tree/master/rules/macos/process_creation',
+  },
+  {
+    name: 'SchemaStore',
+    usage: 'Hosts the LOOBins YAML schema for editor validation.',
+    link: 'https://github.com/SchemaStore/schemastore',
+  },
+  {
+    name: 'ArgFuscator.net',
+    usage: 'Uses LOOBins for macOS command-line obfuscation entries.',
+    link: 'https://github.com/wietze/ArgFuscator.net',
+  },
+  {
+    name: 'MatterBot',
+    usage: 'Chat bot command for querying LOOBins.',
+    link: 'https://github.com/uforia/MatterBot',
+  },
+  {
+    name: 'Hunting Queries & Detection Rules',
+    usage: 'Defender for Endpoint KQL hunting queries for LOOBins.',
+    link: 'https://github.com/Bert-JanP/Hunting-Queries-Detection-Rules',
+  },
+  {
+    name: '#100DaysofYARA',
+    usage: 'YARA rule for identifying LOOBins Mach-O binaries.',
+    link: gh('100DaysofYARA/2024', 'glesnewich/INFO_Macho_LOOBins.yar'),
+  },
+];
+---
+
+<BaseLayout title="Used By" description="Security vendors and open source projects that use LOOBins">
+  <div class="max-w-5xl">
+    <h1 class="text-3xl font-bold text-text-primary mb-2">Used By</h1>
+    <p class="text-text-secondary mb-8 max-w-3xl">
+      LOOBins data is referenced in detection content, adversary emulation, and security research across the industry.
+      Each entry below links to a public example.
+    </p>
+
+    <h2 class="text-xl font-semibold text-text-primary mb-4">Security Vendors</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+      {vendors.map((v) => (
+        <a
+          href={v.link}
+          target="_blank"
+          rel="noopener"
+          class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors"
+        >
+          <div class="text-lg font-semibold text-text-primary">{v.name}</div>
+          <div class="text-sm text-apple-green mb-2">{v.project}</div>
+          <p class="text-sm text-text-secondary">{v.usage}</p>
+        </a>
+      ))}
+    </div>
+
+    <h2 class="text-xl font-semibold text-text-primary mb-4">Open Source &amp; Community</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-10">
+      {community.map((c) => (
+        <a
+          href={c.link}
+          target="_blank"
+          rel="noopener"
+          class="block bg-surface-light border border-border rounded-lg p-5 hover:border-apple-green transition-colors"
+        >
+          <div class="text-lg font-semibold text-text-primary mb-2">{c.name}</div>
+          <p class="text-sm text-text-secondary">{c.usage}</p>
+        </a>
+      ))}
+    </div>
+
+    <p class="text-text-secondary text-sm">
+      Using LOOBins in your product or project?
+      <a href="https://github.com/infosecB/LOOBins/issues/new" target="_blank" rel="noopener" class="text-apple-green hover:underline">Open an issue</a>
+      to be added to this page.
+    </p>
+  </div>
+</BaseLayout>
