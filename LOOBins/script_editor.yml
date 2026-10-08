@@ -30,6 +30,3 @@ resources:
   url: https://support.apple.com/guide/script-editor/run-a-script-scpedt1069/mac
 - name: Terminal and script protections
   url: https://support.apple.com/guide/security/terminal-and-script-protections-sece3b202c4b/web
-acknowledgements:
-- Jamf Threat Labs
-- SentinelOne
