@@ -1,0 +1,77 @@
+name: ldapsearch
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Query LDAP and Active Directory servers for directory objects and attributes.
+full_description: ldapsearch is the OpenLDAP command-line search client shipped in the base macOS image. It opens a connection to an LDAP server, binds either anonymously, with simple credentials, or over SASL, and returns matching directory entries as LDIF. On a Mac that is bound to Active Directory, or on any host that can reach a domain controller, it is a native way to enumerate the directory - users, groups, computers, service principal names, and account control flags - using either credentials supplied on the command line or the host's existing Kerberos ticket. Because it is already present and signed by Apple, an operator can perform the reconnaissance that would otherwise require dropping a dedicated collector to disk.
+created: 2026-09-20
+example_use_cases:
+  - name: Enumerate directory users with a simple bind
+    description: With a valid set of domain credentials (or against a server that permits anonymous binds), ldapsearch performs a subtree search from the domain naming context and returns account objects and their attributes. This maps usernames, descriptions, and group memberships without touching any Windows tooling. It requires network reach to the LDAP port (389) on a domain controller and, on most Active Directory deployments, valid credentials because anonymous binds are disabled by default.
+    code: ldapsearch -x -H ldap://<DC_IP> -D "<USER>@<DOMAIN>" -w '<PASSWORD>' -b "DC=<DOMAIN>,DC=<TLD>" -LLL "(objectClass=user)" sAMAccountName description memberOf
+    tactics:
+      - Discovery
+    tags:
+      - ldap
+      - active-directory
+      - domain-enumeration
+  - name: Enumerate the directory using the host Kerberos ticket
+    description: The -Y GSSAPI option authenticates the bind with the SASL GSSAPI mechanism, which uses the Kerberos credential cache of the current user instead of a password. On an Active-Directory-bound Mac, or on a host where the user already holds a valid ticket-granting ticket, this enumerates the directory with no password on the command line and no separate credential capture. -Q keeps SASL from prompting.
+    code: ldapsearch -Y GSSAPI -Q -H ldap://<DC_IP> -b "DC=<DOMAIN>,DC=<TLD>" -LLL "(objectClass=computer)" dNSHostName operatingSystem
+    tactics:
+      - Discovery
+    tags:
+      - ldap
+      - kerberos
+      - gssapi
+  - name: Identify Kerberoastable service accounts
+    description: An LDAP filter that matches user objects carrying a servicePrincipalName returns the accounts whose Kerberos service tickets can be requested and cracked offline (Kerberoasting). ldapsearch surfaces these targets directly from the directory. It needs a valid bind and the servicePrincipalName attribute is a standard Active Directory attribute.
+    code: ldapsearch -x -H ldap://<DC_IP> -D "<USER>@<DOMAIN>" -w '<PASSWORD>' -b "DC=<DOMAIN>,DC=<TLD>" -LLL "(&(objectClass=user)(servicePrincipalName=*))" sAMAccountName servicePrincipalName
+    tactics:
+      - Credential Access
+      - Discovery
+    tags:
+      - ldap
+      - kerberoasting
+      - active-directory
+  - name: Identify AS-REP roastable accounts
+    description: The userAccountControl bitwise filter (matching rule OID 1.2.840.113556.1.4.803) with the value 4194304 selects accounts that do not require Kerberos pre-authentication. For those accounts an AS-REP hash can be requested without knowing the password and cracked offline (AS-REP roasting). ldapsearch returns the candidate list from a single query with a valid bind.
+    code: ldapsearch -x -H ldap://<DC_IP> -D "<USER>@<DOMAIN>" -w '<PASSWORD>' -b "DC=<DOMAIN>,DC=<TLD>" -LLL "(&(objectClass=user)(userAccountControl:1.2.840.113556.1.4.803:=4194304))" sAMAccountName
+    tactics:
+      - Credential Access
+      - Discovery
+    tags:
+      - ldap
+      - asrep-roasting
+      - active-directory
+  - name: Bulk-dump the directory to a file with paged results
+    description: The -E pr search extension requests LDAP paged results, which lets a single query retrieve the entire directory past the server's default result cap. Writing the LDIF to a file stages a full offline copy of the directory for later analysis. It requires a valid bind and read access to the objects returned.
+    code: ldapsearch -x -H ldap://<DC_IP> -D "<USER>@<DOMAIN>" -w '<PASSWORD>' -b "DC=<DOMAIN>,DC=<TLD>" -LLL -E pr=1000/noprompt "(objectClass=*)" > /tmp/dirdump.ldif
+    tactics:
+      - Discovery
+      - Collection
+    tags:
+      - ldap
+      - active-directory
+      - paged-results
+  - name: Read LAPS local administrator passwords
+    description: Where Microsoft LAPS is deployed, the local administrator password is stored on the computer object in the ms-Mcs-AdmPwd attribute. ldapsearch reads it directly when the bound account has been delegated read access to that attribute - a common privilege-escalation path when a compromised account or group holds LAPS read rights it should not. The attribute returns empty for principals without the delegated permission.
+    code: ldapsearch -x -H ldap://<DC_IP> -D "<USER>@<DOMAIN>" -w '<PASSWORD>' -b "DC=<DOMAIN>,DC=<TLD>" -LLL "(objectClass=computer)" ms-Mcs-AdmPwd ms-Mcs-AdmPwdExpirationTime
+    tactics:
+      - Credential Access
+    tags:
+      - ldap
+      - laps
+      - active-directory
+paths:
+  - /usr/bin/ldapsearch
+detections:
+  - name: "Command-line detection: /usr/bin/ldapsearch invoked with directory-recon filters (servicePrincipalName=*, userAccountControl bitwise filters, objectClass=user/computer against a domain naming context)"
+    url: N/A
+resources:
+  - name: "ldapsearch(1) manual page"
+    url: https://keith.github.io/xcode-man-pages/ldapsearch.1.html
+  - name: "MITRE ATT&CK T1087.002 - Account Discovery: Domain Account"
+    url: https://attack.mitre.org/techniques/T1087/002/
+  - name: "MITRE ATT&CK T1558.003 - Steal or Forge Kerberos Tickets: Kerberoasting"
+    url: https://attack.mitre.org/techniques/T1558/003/
+  - name: "MITRE ATT&CK T1558.004 - Steal or Forge Kerberos Tickets: AS-REP Roasting"
+    url: https://attack.mitre.org/techniques/T1558/004/

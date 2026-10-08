@@ -1,11 +1,41 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LOOBinCard from '../../components/LOOBinCard.astro';
+import NewBadge from '../../components/NewBadge.astro';
+import TacticBadge from '../../components/TacticBadge.astro';
 import { getCollection } from 'astro:content';
-import { url } from '../../utils/helpers';
+import {
+  formatDate,
+  isNew,
+  loobinTactics,
+  loobinTags,
+  slugify,
+  tacticColor,
+  tacticOrder,
+  url,
+} from '../../utils/helpers';
 
 const loobins = await getCollection('loobins');
-const sorted = loobins.sort((a, b) => a.data.name.localeCompare(b.data.name));
+const sorted = loobins
+  .sort((a, b) => a.data.name.localeCompare(b.data.name))
+  .map((loobin) => ({ loobin, tactics: loobinTactics(loobin), tags: loobinTags(loobin) }));
+
+// Facet counts are per binary (not per use case) so they match what the filter shows.
+function countBy(values: string[][]): Map<string, number> {
+  const counts = new Map<string, number>();
+  for (const list of values) {
+    for (const v of list) counts.set(v, (counts.get(v) ?? 0) + 1);
+  }
+  return counts;
+}
+const tacticCounts = countBy(sorted.map((s) => s.tactics));
+const tactics = tacticOrder.filter((t) => tacticCounts.has(t));
+const tagCounts = countBy(sorted.map((s) => s.tags));
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+const chipBase = 'group inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border transition-colors';
+const chipOff = 'border-border text-text-secondary hover:text-text-primary hover:border-text-secondary';
+const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg-surface-lighter aria-pressed:text-text-primary transition-colors';
 ---
 
 <BaseLayout title="All Binaries" description="Browse all documented macOS LOOBins">
@@ -26,19 +56,336 @@ const sorted = loobins.sort((a, b) => a.data.name.localeCompare(b.data.name));
     </a>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {sorted.map((loobin) => {
-      const tactics = [...new Set(loobin.data.example_use_cases.flatMap((uc) => uc.tactics))];
-      const tags = [...new Set(loobin.data.example_use_cases.flatMap((uc) => uc.tags))];
-      return (
-        <LOOBinCard
-          name={loobin.data.name}
-          slug={loobin.id}
-          shortDescription={loobin.data.short_description}
-          tactics={tactics}
-          tags={tags}
+  <div id="binary-filters" class="bg-surface-light border border-border rounded-lg p-4 mb-6 space-y-4" data-pagefind-ignore>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <label class="relative flex-1">
+        <span class="sr-only">Filter binaries</span>
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+        </svg>
+        <input
+          id="filter-q"
+          type="search"
+          placeholder="Filter by name, description, path, or tag…"
+          autocomplete="off"
+          class="w-full bg-surface border border-border rounded-lg pl-9 pr-3 py-2 text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-apple-green"
         />
-      );
-    })}
+      </label>
+      <label class="flex items-center gap-2 text-sm text-text-secondary">
+        Sort
+        <select
+          id="filter-sort"
+          class="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-apple-green"
+        >
+          <option value="name">A–Z</option>
+          <option value="newest">Newest</option>
+          <option value="usecases">Most use cases</option>
+        </select>
+      </label>
+      <div class="flex self-start sm:self-auto border border-border rounded-lg overflow-hidden" role="group" aria-label="View">
+        <button type="button" class={viewBtn} data-view="grid" aria-pressed="true" title="Grid view">
+          <span class="sr-only">Grid view</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v6H4zM14 15h6v6h-6z" />
+          </svg>
+        </button>
+        <button type="button" class={`${viewBtn} border-l border-border`} data-view="table" aria-pressed="false" title="Table view">
+          <span class="sr-only">Table view</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <div class="text-xs uppercase tracking-wide text-text-secondary mb-2">Tactics</div>
+      <div class="flex flex-wrap gap-2">
+        {tactics.map((t) => (
+          <button
+            type="button"
+            class={`${chipBase} ${chipOff}`}
+            data-facet="tactic"
+            data-value={slugify(t)}
+            data-on-class={`${tacticColor(t)} border-transparent text-white`}
+            data-off-class={chipOff}
+            aria-pressed="false"
+          >
+            <span class={`w-2 h-2 rounded-full ${tacticColor(t)} group-aria-pressed:bg-white`} aria-hidden="true"></span>
+            {t}
+            <span class="opacity-70">{tacticCounts.get(t)}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <details id="tag-facets">
+      <summary class="cursor-pointer text-xs uppercase tracking-wide text-text-secondary hover:text-text-primary select-none">
+        Tags <span id="tag-selected-count" class="normal-case text-apple-green"></span>
+      </summary>
+      <div class="flex flex-wrap gap-2 mt-2 max-h-48 overflow-y-auto">
+        {tags.map(([t, n]) => (
+          <button
+            type="button"
+            class={`${chipBase} ${chipOff}`}
+            data-facet="tag"
+            data-value={t}
+            data-on-class="bg-surface-lighter border-apple-green text-text-primary"
+            data-off-class={chipOff}
+            aria-pressed="false"
+          >
+            {t}
+            <span class="opacity-70">{n}</span>
+          </button>
+        ))}
+      </div>
+    </details>
+
+    <div class="flex items-center justify-between gap-4 text-sm">
+      <p id="filter-status" class="text-text-secondary" aria-live="polite">
+        Showing {sorted.length} of {sorted.length} binaries
+      </p>
+      <button id="filter-clear" type="button" class="text-apple-green hover:underline" hidden>
+        Clear filters
+      </button>
+    </div>
+  </div>
+
+  <div id="binary-grid" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {sorted.map(({ loobin, tactics, tags }) => (
+      <LOOBinCard
+        loobin={loobin}
+        data-slug={loobin.id}
+        data-name={loobin.data.name.toLowerCase()}
+        data-created={loobin.data.created.toISOString()}
+        data-usecases={loobin.data.example_use_cases.length}
+        data-tactics={tactics.map(slugify).join(' ')}
+        data-tags={JSON.stringify(tags)}
+        data-search={[
+          loobin.data.name,
+          loobin.data.short_description,
+          ...loobin.data.paths,
+          ...tags,
+        ].join(' ').toLowerCase()}
+      />
+    ))}
+  </div>
+
+  <!-- Same entries as the grid; the script keeps both in sync, so the table is excluded from the search index. -->
+  <div id="binary-table" class="overflow-x-auto border border-border rounded-lg" data-pagefind-ignore hidden>
+    <table class="w-full min-w-[56rem] text-sm text-left">
+      <thead class="bg-surface-light text-xs uppercase tracking-wide text-text-secondary">
+        <tr>
+          <th scope="col" class="px-4 py-3 font-medium whitespace-nowrap sticky left-0 bg-surface-light">Name</th>
+          <th scope="col" class="px-4 py-3 font-medium whitespace-nowrap">Description</th>
+          <th scope="col" class="px-4 py-3 font-medium whitespace-nowrap">Tactics</th>
+          <th scope="col" class="px-4 py-3 font-medium whitespace-nowrap text-right">Use cases</th>
+          <th scope="col" class="px-4 py-3 font-medium whitespace-nowrap">Path</th>
+          <th scope="col" class="px-4 py-3 font-medium whitespace-nowrap">Added</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-border">
+        {sorted.map(({ loobin, tactics }) => (
+          <tr data-slug={loobin.id} class="group align-top hover:bg-surface-light transition-colors">
+            <td class="px-4 py-3 whitespace-nowrap sticky left-0 bg-surface group-hover:bg-surface-light transition-colors">
+              <a href={url(`/binaries/${loobin.id}/`)} class="font-mono font-semibold text-apple-green hover:underline">
+                {loobin.data.name}
+              </a>
+              {isNew(loobin.data.created) && <span class="ml-2"><NewBadge /></span>}
+            </td>
+            <td class="px-4 py-3 text-text-secondary">{loobin.data.short_description}</td>
+            <td class="px-4 py-3">
+              <div class="flex flex-wrap gap-1">
+                {tactics.map((t) => <TacticBadge tactic={t} linked={false} />)}
+              </div>
+            </td>
+            <td class="px-4 py-3 text-right tabular-nums">{loobin.data.example_use_cases.length}</td>
+            <td class="px-4 py-3 font-mono text-xs text-text-secondary whitespace-nowrap" title={loobin.data.paths.join('\n')}>
+              {loobin.data.paths[0]}
+              {loobin.data.paths.length > 1 && <span class="font-sans"> +{loobin.data.paths.length - 1}</span>}
+            </td>
+            <td class="px-4 py-3 text-text-secondary whitespace-nowrap tabular-nums">{formatDate(loobin.data.created)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <script is:inline>
+    // Apply the saved view before first paint so table users don't see the grid flash.
+    try {
+      if (localStorage.getItem('binaries-view') === 'table') {
+        document.getElementById('binary-grid').hidden = true;
+        document.getElementById('binary-table').hidden = false;
+      }
+    } catch {}
+  </script>
+
+  <div id="filter-empty" class="text-center py-16 text-text-secondary" hidden>
+    <p class="mb-2">No binaries match these filters.</p>
+    <button type="button" class="text-apple-green hover:underline" data-clear>Clear filters</button>
   </div>
 </BaseLayout>
+
+<script>
+  type SortKey = 'name' | 'newest' | 'usecases';
+  type View = 'grid' | 'table';
+  const VIEW_KEY = 'binaries-view';
+
+  const grid = document.getElementById('binary-grid')!;
+  const tableWrap = document.getElementById('binary-table')!;
+  const tbody = tableWrap.querySelector('tbody')!;
+  const cards = [...grid.children] as HTMLElement[];
+  const rows = new Map(
+    ([...tbody.children] as HTMLElement[]).map((row) => [row.dataset.slug!, row]),
+  );
+  const total = cards.length;
+  const qInput = document.getElementById('filter-q') as HTMLInputElement;
+  const sortSelect = document.getElementById('filter-sort') as HTMLSelectElement;
+  const status = document.getElementById('filter-status')!;
+  const clearBtn = document.getElementById('filter-clear')!;
+  const empty = document.getElementById('filter-empty')!;
+  const tagCount = document.getElementById('tag-selected-count')!;
+  const tagDetails = document.getElementById('tag-facets') as HTMLDetailsElement;
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-facet]')];
+  const viewButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-view]')];
+
+  // Tags can contain spaces, so they are stored as JSON rather than a token list.
+  const cardTags = new Map(cards.map((c) => [c, new Set<string>(JSON.parse(c.dataset.tags ?? '[]'))]));
+  const cardTactics = new Map(cards.map((c) => [c, new Set((c.dataset.tactics ?? '').split(' '))]));
+
+  function loadView(): View {
+    try {
+      return localStorage.getItem(VIEW_KEY) === 'table' ? 'table' : 'grid';
+    } catch {
+      return 'grid';
+    }
+  }
+
+  const state = {
+    q: '',
+    sort: 'name' as SortKey,
+    tactics: new Set<string>(),
+    tags: new Set<string>(),
+    view: loadView(),
+  };
+
+  const comparators: Record<SortKey, (a: HTMLElement, b: HTMLElement) => number> = {
+    name: (a, b) => a.dataset.name!.localeCompare(b.dataset.name!),
+    newest: (a, b) => b.dataset.created!.localeCompare(a.dataset.created!) || comparators.name(a, b),
+    usecases: (a, b) => Number(b.dataset.usecases) - Number(a.dataset.usecases) || comparators.name(a, b),
+  };
+
+  function readUrl() {
+    const params = new URLSearchParams(location.search);
+    state.q = params.get('q') ?? '';
+    const sort = params.get('sort');
+    state.sort = sort && sort in comparators ? (sort as SortKey) : 'name';
+    state.tactics = new Set(params.getAll('tactic'));
+    state.tags = new Set(params.getAll('tag'));
+  }
+
+  function writeUrl() {
+    const params = new URLSearchParams();
+    if (state.q) params.set('q', state.q);
+    if (state.sort !== 'name') params.set('sort', state.sort);
+    state.tactics.forEach((t) => params.append('tactic', t));
+    state.tags.forEach((t) => params.append('tag', t));
+    const qs = params.toString();
+    history.replaceState(null, '', qs ? `${location.pathname}?${qs}` : location.pathname);
+  }
+
+  // Within a facet any selected value matches; across facets and the text box, all must match.
+  function matches(card: HTMLElement, terms: string[]): boolean {
+    const haystack = card.dataset.search ?? '';
+    if (!terms.every((term) => haystack.includes(term))) return false;
+    if (state.tactics.size && ![...state.tactics].some((t) => cardTactics.get(card)!.has(t))) return false;
+    if (state.tags.size && ![...state.tags].some((t) => cardTags.get(card)!.has(t))) return false;
+    return true;
+  }
+
+  function render() {
+    const terms = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const card of [...cards].sort(comparators[state.sort])) {
+      const visible = matches(card, terms);
+      const row = rows.get(card.dataset.slug!)!;
+      card.hidden = row.hidden = !visible;
+      if (visible) shown++;
+      grid.appendChild(card);
+      tbody.appendChild(row);
+    }
+
+    for (const chip of chips) {
+      const set = chip.dataset.facet === 'tactic' ? state.tactics : state.tags;
+      const on = set.has(chip.dataset.value!);
+      chip.setAttribute('aria-pressed', String(on));
+      chip.classList.remove(...(on ? chip.dataset.offClass! : chip.dataset.onClass!).split(' '));
+      chip.classList.add(...(on ? chip.dataset.onClass! : chip.dataset.offClass!).split(' '));
+    }
+
+    for (const btn of viewButtons) {
+      btn.setAttribute('aria-pressed', String(btn.dataset.view === state.view));
+    }
+
+    const filtered = state.q || state.tactics.size || state.tags.size;
+    status.textContent = `Showing ${shown} of ${total} binaries`;
+    clearBtn.hidden = !filtered;
+    empty.hidden = shown > 0;
+    grid.hidden = shown === 0 || state.view !== 'grid';
+    tableWrap.hidden = shown === 0 || state.view !== 'table';
+    tagCount.textContent = state.tags.size ? `(${state.tags.size} selected)` : '';
+  }
+
+  function update() {
+    writeUrl();
+    render();
+  }
+
+  function clearFilters() {
+    state.q = '';
+    state.tactics.clear();
+    state.tags.clear();
+    qInput.value = '';
+    update();
+  }
+
+  qInput.addEventListener('input', () => {
+    state.q = qInput.value.trim();
+    update();
+  });
+
+  sortSelect.addEventListener('change', () => {
+    state.sort = sortSelect.value as SortKey;
+    update();
+  });
+
+  for (const chip of chips) {
+    chip.addEventListener('click', () => {
+      const set = chip.dataset.facet === 'tactic' ? state.tactics : state.tags;
+      const value = chip.dataset.value!;
+      if (set.has(value)) set.delete(value);
+      else set.add(value);
+      update();
+    });
+  }
+
+  for (const btn of viewButtons) {
+    btn.addEventListener('click', () => {
+      state.view = btn.dataset.view as View;
+      try {
+        localStorage.setItem(VIEW_KEY, state.view);
+      } catch {}
+      render();
+    });
+  }
+
+  clearBtn.addEventListener('click', clearFilters);
+  empty.querySelector('[data-clear]')!.addEventListener('click', clearFilters);
+
+  readUrl();
+  qInput.value = state.q;
+  sortSelect.value = state.sort;
+  if (state.tags.size) tagDetails.open = true;
+  render();
+</script>

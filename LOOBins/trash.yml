@@ -1,0 +1,50 @@
+name: trash
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Move files and directories into the user's Trash folder from the command line without invoking rm or unlink.
+full_description: |
+  trash is a built-in command-line utility that first appeared in macOS 15 (Sequoia). It takes one or more file or
+  directory paths and moves each item into the current user's Trash folder (~/.Trash), the same result a user gets by
+  choosing "Move to Trash" in the Finder. For an attacker it is an indicator-removal primitive: payloads, staging
+  directories, and dropped files leave their original paths through a move (a rename on the same volume) rather than an
+  unlink(2), so file-deletion telemetry and rules keyed on rm, unlink, or secure-erase tools such as srm or shred do not
+  observe the activity. It is macOS-specific, relying on the user Trash folder semantics, and has no GTFOBins entry. Its
+  evasion value is limited: trashed items stay fully recoverable in ~/.Trash until the Trash is emptied, and trash has no
+  flag to empty the Trash, so it conceals a removal from deletion-focused detection without destroying the data.
+created: 2026-09-20
+example_use_cases:
+  - name: Move files and directories to the Trash without rm or unlink
+    description: >
+      trash moves each named file or directory into ~/.Trash. On the same volume this is a rename rather than an
+      unlink(2) of the original path, so endpoint rules and log-based monitoring keyed on rm, unlink, or secure-delete
+      utilities do not fire when an artifact leaves its staging location. A directory is moved as a whole subtree in one
+      call, replacing an rm -rf walk. The running account needs an existing ~/.Trash (present for a normal login user).
+      Items land in the Trash and stay recoverable until it is emptied, so this hides the removal from deletion telemetry
+      rather than destroying the data.
+    code: trash /private/tmp/stage.bin /Users/<USER>/Library/LaunchAgents/com.attacker.helper.plist /Users/<USER>/Library/Caches/.workdir
+    tactics:
+      - Defense Evasion
+    tags:
+      - indicator-removal
+  - name: Verify a scripted cleanup with --stopOnError
+    description: >
+      The --stopOnError (-s) flag makes trash exit with an error if any item cannot be moved to the Trash, and --verbose
+      (-v) reports each move. A cleanup or self-destruct routine uses these to confirm that every artifact was removed
+      and to branch to a fallback if one could not be, without calling rm. The removed items still land in ~/.Trash and
+      are recoverable until the Trash is emptied.
+    code: trash --stopOnError --verbose /private/tmp/impl /private/tmp/creds.json
+    tactics:
+      - Defense Evasion
+    tags:
+      - cleanup
+paths:
+  - /usr/bin/trash
+detections:
+  - name: "Process execution: alert on /usr/bin/trash whose parent is a non-interactive or scripted process rather than an interactive user shell or the Finder, especially when its file arguments point at staging paths such as /tmp, /private/tmp, or /Users/*/Library/LaunchAgents"
+    url: N/A
+  - name: "Endpoint Security file telemetry: correlate rename events that move recently created files into a user's ~/.Trash by a process other than Finder; a create-then-trash sequence on the same path from a non-GUI process is anomalous"
+    url: N/A
+resources:
+  - name: "Michael Tsai: The trash Command (behaviour and macOS 15 availability)"
+    url: https://mjtsai.com/blog/2025/08/26/the-trash-command/
+  - name: "MITRE ATT&CK T1070.004: Indicator Removal: File Deletion"
+    url: https://attack.mitre.org/techniques/T1070/004/

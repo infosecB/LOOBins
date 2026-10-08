@@ -1,0 +1,81 @@
+name: pmset
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Read and modify macOS power management settings, including scheduled wake/power-on events.
+full_description: |-
+  pmset manipulates system power management settings such as idle sleep timers, wake-on-network behavior, hibernation, and scheduled sleep/wake/power-on events. Reading settings and event history is unprivileged; modifying any setting requires root. All changes are persisted per-system (not per-user) in property lists under /Library/Preferences/SystemConfiguration/ (com.apple.PowerManagement.plist for settings, com.apple.AutoWake.plist for scheduled events), so they survive reboots without a launchd job or login item.
+  It is attractive to an attacker for two reasons. First, its scheduled "wake" and "power on" events and its keep-awake settings let an operator guarantee that a laptop that would otherwise be asleep or shut down is running and reachable at a chosen time, giving a predictable window for command and control that lives outside the launchd/cron locations defenders normally inspect. Second, the read side (pmset -g log and -g assertions) exposes a detailed sleep/wake timeline and the processes currently holding the machine awake, which is a reliable proxy for whether a human is actively using the host.
+created: 2026-09-20
+example_use_cases:
+  - name: Schedule a recurring wake or power-on for a command-and-control window
+    description: Running as root, pmset can register a repeating "wakeorpoweron" event that wakes a sleeping Mac (or powers on a Mac that was shut down, on hardware that supports it) at a fixed time on chosen weekdays. This guarantees the host is running and network-reachable during the operator's chosen window without an implant having to keep the machine awake continuously. The schedule is stored in /Library/Preferences/SystemConfiguration/com.apple.AutoWake.plist rather than in a launchd job, so it does not appear alongside conventional persistence.
+    code: sudo pmset repeat wakeorpoweron MTWRFSU 03:00:00
+    tactics:
+      - Persistence
+      - Command and Control
+    tags:
+      - schedule
+      - wakeorpoweron
+      - power-management
+  - name: Disable idle sleep to keep an implanted host awake and reachable
+    description: As root, pmset can set the system, disk, and display idle-sleep timers to 0 (never) across all power sources. A value of 0 disables the timer entirely, so a laptop left on battery no longer sleeps and drops its network connection, keeping a long-running C2 channel or exfiltration session alive. Unlike caffeinate, which holds a transient assertion for the life of a process, this writes a persistent setting to com.apple.PowerManagement.plist that survives reboots and shows no owning process in the assertions list.
+    code: sudo pmset -a sleep 0 disksleep 0 displaysleep 0
+    tactics:
+      - Command and Control
+      - Defense Evasion
+    tags:
+      - sleep
+      - keep-awake
+      - power-management
+  - name: Enable wake on network access for remote wake from the LAN
+    description: As root, pmset can enable "womp" (wake on ethernet magic packet). Once set, an attacker positioned on the same broadcast domain can send a Wake-on-LAN magic packet to the target's MAC address to bring a sleeping Mac back online on demand, rather than waiting on a fixed schedule. The wake path brings the OS up behind the lock screen, so it is a network-reachability primitive, not an authentication bypass.
+    code: sudo pmset -a womp 1
+    tactics:
+      - Command and Control
+      - Persistence
+    tags:
+      - womp
+      - wake-on-lan
+      - power-management
+  - name: Review sleep/wake history to infer when the host is unattended
+    description: pmset -g log prints a timeline of sleeps, wakes, display-on/off transitions, and their causes, and requires no privileges. An operator can use it to infer when the host is actively used versus left unattended, informing the timing of hands-on-keyboard activity to avoid an active user noticing.
+    code: pmset -g log
+    tactics:
+      - Discovery
+    tags:
+      - user-activity
+  - name: List active power assertions to identify running applications
+    description: pmset -g assertions lists the processes currently preventing idle or display sleep, without requiring root. This exposes which applications are actively running and holding the machine awake, complementing the sleep/wake timeline as a signal of user presence and workload.
+    code: pmset -g assertions
+    tactics:
+      - Discovery
+    tags:
+      - assertions
+      - user-activity
+  - name: Retain the FileVault key across standby by disabling key destruction
+    description: On a FileVault-encrypted Mac, destroyfvkeyonstandby controls whether the volume key is purged from memory when the system enters standby. Setting it to 0 (retain) as root keeps the key resident so the machine wakes without a password prompt, which both preserves seamless access for the attacker and keeps the key available in memory for a later extraction attempt. This weakens the at-rest protection FileVault provides during sleep.
+    code: sudo pmset -a destroyfvkeyonstandby 0
+    tactics:
+      - Credential Access
+      - Defense Evasion
+    tags:
+      - filevault
+      - destroyfvkeyonstandby
+      - power-management
+paths:
+  - /usr/bin/pmset
+detections:
+  - name: "Command-line detection: pmset invoked with 'repeat' or 'schedule' and a wake/wakeorpoweron/poweron type, indicating a scheduled power event was created"
+    url: N/A
+  - name: "Command-line detection: pmset setting sleep/disksleep/displaysleep to 0, or setting womp 1 or destroyfvkeyonstandby 0"
+    url: N/A
+  - name: "File integrity monitoring: unexpected changes to /Library/Preferences/SystemConfiguration/com.apple.AutoWake.plist (scheduled events) or com.apple.PowerManagement.plist (power settings)"
+    url: N/A
+resources:
+  - name: "pmset(1) man page (Xcode man pages mirror)"
+    url: https://keith.github.io/xcode-man-pages/pmset.1.html
+  - name: "pmset reference and scheduled-event plist locations (DSSW)"
+    url: https://www.dssw.co.uk/reference/pmset/
+  - name: "Disable Mac Wake-on-LAN to Reduce Attack Surface (Automox)"
+    url: https://www.automox.com/worklets/disable-wake-network-access
+  - name: "destroyfvkeyonstandby and FileVault key retention (drduh macOS Security and Privacy Guide)"
+    url: https://github.com/drduh/macOS-Security-and-Privacy-Guide/issues/124

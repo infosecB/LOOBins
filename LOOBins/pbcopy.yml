@@ -1,0 +1,50 @@
+name: pbcopy
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Write standard input into the macOS pasteboard (clipboard).
+full_description: The pbcopy binary reads standard input and places it on a macOS pasteboard, defaulting to the general pasteboard when none is specified. Input is stored as plain text unless it begins with an Encapsulated PostScript or Rich Text Format header, in which case it is stored as that type. It is the write counterpart to pbpaste and is intended for scripting and piping clipboard content between commands. The same primitive lets an attacker who already has code execution alter what a victim later pastes. Because the pasteboard is the trusted hand-off point between what a user copies and what they submit, overwriting it turns a normal paste into an attacker-controlled action, and clearing it can remove sensitive data before it is captured.
+created: 2026-09-20
+example_use_cases:
+  - name: Stage a command on the clipboard for clipboard-based execution
+    description: pbcopy places a command string on the pasteboard, which a second stage retrieves with pbpaste and executes via command substitution. Using the clipboard as the carrier keeps the payload out of the process command line of the stager itself. It requires only user-level code execution.
+    code: echo '<COMMAND>' | pbcopy && eval "$(pbpaste)"
+    tactics:
+      - Execution
+    tags:
+      - clipboard
+      - pasteboard
+  - name: Park staged data on a non-general pasteboard to evade inspection
+    description: The -pboard flag selects which pasteboard pbcopy writes to. pbpaste and most tooling read the general pasteboard by default, so data written to the find, font, or ruler pasteboard is less likely to surface in a routine clipboard check while still being retrievable by an attacker who knows where to look. It requires only user-level code execution.
+    code: cat <STAGED_FILE> | pbcopy -pboard find
+    tactics:
+      - Collection
+      - Defense Evasion
+    tags:
+      - clipboard
+      - pasteboard
+      - staging
+  - name: Clear the clipboard to destroy sensitive copied data
+    description: Piping empty input to pbcopy overwrites the general pasteboard with nothing, discarding whatever the user had copied (for example a password copied from a manager). An attacker can use this to remove sensitive data after harvesting it, or to erase evidence that clipboard monitoring took place, before an investigator or DLP agent inspects the pasteboard. It requires only user-level code execution.
+    code: printf '' | pbcopy
+    tactics:
+      - Defense Evasion
+    tags:
+      - clipboard
+      - pasteboard
+paths:
+  - /usr/bin/pbcopy
+detections:
+  - name: "Process execution: /usr/bin/pbcopy executed repeatedly in a short window alongside pbpaste by the same process tree, which is the polling pattern of clipper malware watching for a copied value to overwrite."
+    url: N/A
+  - name: "Command line argument detection: pbcopy invoked with -pboard naming a non-general pasteboard (find, font, ruler), which is unusual outside specialized tooling and can indicate data staged where a routine clipboard check will not look."
+    url: N/A
+  - name: "Process lineage: pbpaste piped into eval, sh, bash or zsh (for example eval \"$(pbpaste)\"), indicating a command is being retrieved from the clipboard and executed."
+    url: N/A
+  - name: "Endpoint Security process telemetry (ES_EVENT_TYPE_NOTIFY_EXEC): /usr/bin/pbcopy launched by a non-interactive or persistence-launched parent (a LaunchAgent-spawned script) rather than an interactive shell."
+    url: N/A
+resources:
+  - name: "MITRE ATT&CK T1115: Clipboard Data"
+    url: https://attack.mitre.org/techniques/T1115/
+  - name: "Atomic Red Team T1115: Execute commands from clipboard"
+    url: https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1115/T1115.md
+  - name: "SentinelOne: 7 Kinds of Data Malware Steals from macOS Users (Pasteboard Contents)"
+    url: https://www.sentinelone.com/blog/session-cookies-keychains-ssh-keys-and-more-7-kinds-of-data-malware-steals-from-macos-users/

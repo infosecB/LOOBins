@@ -57,11 +57,5 @@ const ogImage = new URL(url('/loobins.png'), Astro.site);
       <slot />
     </main>
     <Footer />
-    <script is:inline>
-      // Dark mode is default; toggle stored in localStorage
-      if (localStorage.getItem('theme') === 'light') {
-        document.documentElement.classList.remove('dark');
-      }
-    </script>
   </body>
 </html>

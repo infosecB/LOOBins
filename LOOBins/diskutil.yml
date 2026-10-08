@@ -1,0 +1,219 @@
+name: diskutil
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Enumerate, mount, erase and manipulate local disks, APFS containers and volumes.
+full_description: >-
+  diskutil is the macOS command-line front end for local disk management. It lists physical and virtual disks,
+  reports partition maps and APFS container layouts, mounts and unmounts volumes, manages APFS cryptographic users
+  and FileVault state, lists and deletes APFS snapshots, and erases volumes, containers and whole disks. Its
+  read-only verbs run without privileges and describe the entire storage topology of a host, including attached
+  external and backup media and which volumes are encrypted. Its write verbs require ownership of the target disk,
+  which in practice means root, and are irreversible - the man page itself warns that most of them present no
+  confirmation prompt. That combination makes diskutil useful to an attacker at both ends of an intrusion - for
+  storage reconnaissance early on, and for anti-forensics, recovery inhibition and destruction at the end. The
+  utility also exposes mount options directly via -mountOptions, which diskarbitrationd passes verbatim to the
+  filesystem mount program; this was the basis of CVE-2023-42931. Existing detection coverage for noowners mounts,
+  such as Elastic's TCC-bypass rule and Jamf Protect's AUE_MOUNT telemetry correlation, matches on mount_apfs, the
+  helper diskarbitrationd invokes to perform the mount - not on diskutil itself, since diskutil only requests the
+  mount and exits. A rule written against mount_apfs will not fire on the diskutil invocation that triggered it, so
+  detecting this technique from diskutil activity requires new coverage keyed on diskutil's own command-line
+  arguments rather than the downstream mount_apfs process.
+created: 2026-09-20
+example_use_cases:
+  - name: List whole disks and partitions
+    description: >-
+      The list verb requires no privileges and returns every whole disk and partition, whether each disk is
+      internal or external and physical or virtual, with their mount points. The -plist option makes the output
+      machine-parsable, so it is usable directly from a dropper. This shows an attacker where storage lives and
+      which disks are removable and worth watching for.
+    code: diskutil list -plist external
+    tactics:
+      - Discovery
+    tags:
+      - disk
+      - enumeration
+  - name: Enumerate APFS containers and volumes
+    description: >-
+      The apfs list verb enumerates every APFS container and its volumes, including their roles (the S/System,
+      D/Data and T/Backup Time Machine roles) and mount points, without privileges. This maps the logical volume
+      layout of the host and identifies the Data and backup volumes that hold user content. -plist makes the output
+      machine-parsable.
+    code: diskutil apfs list -plist
+    tactics:
+      - Discovery
+    tags:
+      - apfs
+      - enumeration
+  - name: Read per-disk detail and FileVault encryption state
+    description: >-
+      The info verb reports the full detail of a disk or volume, and with -all covers every disk on the host,
+      including whether each volume is FileVault-encrypted. This tells an attacker which volumes are protected
+      before anything destructive or collection-oriented is attempted. It needs no privileges, and -plist makes the
+      output machine-parsable.
+    code: diskutil info -plist -all
+    tactics:
+      - Discovery
+    tags:
+      - disk
+      - filevault
+  - name: Enumerate APFS cryptographic users to map FileVault-enabled accounts
+    description: >-
+      apfs listCryptoUsers shows every cryptographic user associated with an APFS volume by UUID and type,
+      distinguishing the per-volume Disk user, personal and iCloud Recovery Keys, and Open Directory users - the
+      latter's UUIDs match the local account GUIDs visible through dscl, so this maps which local accounts are
+      FileVault-enabled. It is a read-only query that needs no privileges.
+    code: diskutil apfs listCryptoUsers -plist <VOLUME_DEVICE>
+    tactics:
+      - Discovery
+    tags:
+      - filevault
+      - enumeration
+  - name: Test a candidate FileVault passphrase without changing lock state
+    description: >-
+      apfs unlockVolume with -verify tests a candidate passphrase for a chosen cryptographic user without changing
+      the volume's locked or unlocked state, giving an on-host oracle for credentials harvested elsewhere. Passing
+      -passphrase places the secret in the process argument list where it is visible to any process listing and to
+      endpoint telemetry; -stdinpassphrase keeps it off argv. Ownership of the affected disk is required.
+    code: echo '<PASSPHRASE>' | diskutil apfs unlockVolume <VOLUME_DEVICE> -user <CRYPTO_USER_UUID> -stdinpassphrase -verify
+    tactics:
+      - Credential Access
+    tags:
+      - filevault
+      - passphrase
+  - name: Mount a volume with noowners to read or tamper with root-owned files (CVE-2023-42931)
+    description: >-
+      diskutil mount accepts arbitrary mount options through -mountOptions, which diskarbitrationd passes verbatim to
+      the filesystem's mount program. The noowners option makes every object on the volume appear owned by the
+      calling user, so root-owned files that are not protected by SIP become attacker-writable. Yann Gascuel of
+      Alter Solutions showed that a local user - including a guest - could mount internal storage this way, overwrite
+      a non-SIP-protected root-owned placeholder file with a setuid payload, then remount normally so that the file
+      regained its root ownership and ran as root. Apple tracks this as CVE-2023-42931 in DiskArbitration and fixed
+      it in macOS Monterey 12.7.2, Ventura 13.6.3 and Sonoma 14.2 by ignoring noowners when mounting internal
+      storage; the option still applies to external media. Adding nobrowse and -mountPoint keeps the mount out of
+      Finder and off /Volumes, which is why mounting a volume at a chosen path is also useful for reaching data
+      without the usual UI indication.
+    code: diskutil mount nobrowse -mountOptions noowners -mountPoint <MOUNT_PATH> <DEVICE>
+    tactics:
+      - Privilege Escalation
+      - Defense Evasion
+      - Collection
+    tags:
+      - noowners
+      - cve-2023-42931
+  - name: Overwrite free space to destroy deleted-file remnants
+    description: >-
+      secureErase freespace overwrites the unallocated space of a mounted volume, leaving existing files untouched
+      while destroying the remnants of deleted files that forensic recovery depends on. Level selects the pattern -
+      0 single-pass zero fill, 1 single-pass random fill, 2 a seven-pass fill, 3 the 35-pass Gutmann algorithm, and 4
+      a three-pass fill. Ownership of the affected disk is required. OSX/Filecoder.E, the 2017 "Patcher" ransomware
+      analysed by ESET, ran this after encrypting files to null the root partition's free space; the sample failed
+      only because it hardcoded /usr/bin/diskutil, which does not exist - diskutil lives in /usr/sbin. Two honest
+      constraints apply on current systems - the verb refuses APFS volumes, reporting that a byte-run erase "makes no
+      sense due to its possibly-unbounded size" (-69489), so it is limited to HFS+, ExFAT and other fixed-size
+      volumes rather than a modern boot volume, and on SSDs wear levelling and block sparing mean overwritten blocks
+      may survive regardless.
+    code: diskutil secureErase freespace 0 /Volumes/<VOLUME_NAME>
+    tactics:
+      - Defense Evasion
+      - Impact
+    tags:
+      - secureerase
+      - anti-forensics
+  - name: Zero a disk to destroy filesystem identification
+    description: >-
+      zeroDisk writes zeros over a disk or partition, and its short parameter writes only enough zeros to destroy
+      filesystem identification, which is fast enough to be practical against several disks in sequence. The force
+      parameter attempts non-error-terminating forced unmounts and shared-mode writes, though the man page notes
+      this is no guarantee against drivers holding a disk exclusively. Ownership of the affected disk is required.
+    code: diskutil zeroDisk force short /dev/<DISK>
+    tactics:
+      - Impact
+    tags:
+      - wiper
+      - disk
+  - name: Erase a whole disk or volume
+    description: >-
+      eraseDisk rewrites a whole disk's partition map and leaves a single empty volume, while eraseVolume and
+      reformat destroy an individual volume's contents. Ownership of the affected disk is required, and the man page
+      warns the operation presents no confirmation prompt. Locating Time Machine and external disks first with apfs
+      list makes backup media the obvious target.
+    code: diskutil eraseDisk JHFS+ Untitled <DISK>
+    tactics:
+      - Impact
+    tags:
+      - wiper
+      - disk
+  - name: Destroy an APFS container and all its volumes
+    description: >-
+      apfs deleteContainer destroys an entire APFS container and every volume in it, while apfs deleteVolume and
+      apfs deleteVolumeGroup remove individual APFS volumes and their Preboot and Recovery entries. Ownership of the
+      affected disk is required, and the deletion is irreversible.
+    code: diskutil apfs deleteContainer <CONTAINER_DEVICE>
+    tactics:
+      - Impact
+    tags:
+      - wiper
+      - apfs
+  - name: Enumerate APFS snapshots on a volume
+    description: >-
+      apfs listSnapshots enumerates every local APFS snapshot on a volume with its name, UUID and numeric XID. Time
+      Machine writes these snapshots to the volumes it protects, and they are the fastest way to roll a machine back
+      after file encryption or destructive tampering, so listing them is the reconnaissance step before removing
+      them. It is a read-only query.
+    code: diskutil apfs listSnapshots -plist <VOLUME_DEVICE>
+    tactics:
+      - Discovery
+    tags:
+      - snapshot
+      - enumeration
+  - name: Delete an APFS snapshot to inhibit system recovery
+    description: >-
+      apfs deleteSnapshot removes a chosen local APFS snapshot, permanently giving up the ability to restore the
+      volume to that point. Deletion runs in the background unless -wait is given. Ownership of the affected disk is
+      required. Removing snapshots leaves present-day file content untouched, so the volume looks normal until a
+      restore is attempted.
+    code: diskutil apfs deleteSnapshot <VOLUME_DEVICE> -name <SNAPSHOT_NAME> -wait
+    tactics:
+      - Impact
+    tags:
+      - snapshot
+      - inhibit-recovery
+paths:
+  - /usr/sbin/diskutil
+detections:
+  - name: "Command-line detection: destructive verb invocation (secureErase, zeroDisk, eraseDisk, eraseVolume, reformat, apfs deleteVolume/deleteVolumeGroup/deleteContainer)"
+    url: N/A
+  - name: "Command-line detection: mount with -mountOptions containing noowners or nosuid, or -mountPoint outside /Volumes"
+    url: N/A
+  - name: "Command-line detection: apfs deleteSnapshot, correlated with tmutil deletelocalsnapshots"
+    url: N/A
+  - name: "Command-line detection: apfs unlockVolume or changePassphrase with a passphrase value in argv"
+    url: N/A
+resources:
+  - name: "diskutil(8) manual page"
+    url: https://keith.github.io/xcode-man-pages/diskutil.8.html
+  - name: "ESET: New crypto-ransomware hits macOS (OSX/Filecoder.E)"
+    url: https://www.welivesecurity.com/2017/02/22/new-crypto-ransomware-hits-macos/
+  - name: "Objective-See: Mac Malware of 2017"
+    url: https://objective-see.org/blog/blog_0x25.html
+  - name: "Apple: About the security content of macOS Sonoma 14.2 (CVE-2023-42931, DiskArbitration)"
+    url: https://support.apple.com/en-us/120879
+  - name: "SOC Prime: CVE-2023-42931 Detection - macOS privilege escalation via diskutil mount options"
+    url: https://socprime.com/blog/cve-2023-42931-detection-critical-macos-vulnerability-enabling-easy-privilege-escalation-and-root-access/
+  - name: "HACKHUNTING: Easy Root Privilege Escalation in Apple macOS Ventura, Sonoma, Monterey - CVE-2023-42931"
+    url: https://hackhunting.wordpress.com/2024/04/05/easy-root-privilege-escalation-in-apple-macos-ventura-sonoma-monterey-cve-2023-42931/
+  - name: "The Eclectic Light Company: Disk Utility 18.0 (Mojave) - what the GUI secure erase options actually do"
+    url: https://eclecticlight.co/2018/12/17/disk-utility-18-0-mojave-not-exactly-the-truth/
+  - name: "Apple Support Communities: secureErase freespace rejected on an APFS volume (-69489)"
+    url: https://discussions.apple.com/thread/250795166
+  - name: "MITRE ATT&CK T1485 Data Destruction"
+    url: https://attack.mitre.org/techniques/T1485/
+  - name: "MITRE ATT&CK T1490 Inhibit System Recovery"
+    url: https://attack.mitre.org/techniques/T1490/
+  - name: "MITRE ATT&CK T1561.001 Disk Wipe: Disk Content Wipe"
+    url: https://attack.mitre.org/techniques/T1561/001/
+  - name: "MITRE ATT&CK T1006 Direct Volume Access"
+    url: https://attack.mitre.org/techniques/T1006/
+acknowledgements:
+  - Yann Gascuel (Alter Solutions) - discovery of CVE-2023-42931, privilege escalation via diskutil mount options
+  - ESET Research - analysis of OSX/Filecoder.E and its use of diskutil secureErase freespace
+  - Patrick Wardle (Objective-See) - published the embedded diskutil secureErase freespace strings from the Filecoder.E sample
