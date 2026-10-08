@@ -1,27 +1,26 @@
----
 name: Script Editor
 author: Liran Ravich (Cribl)
 short_description: Create, edit, compile and run AppleScript and JavaScript for Automation scripts.
-full_description: Script Editor is Apple's built-in application for writing, compiling and running AppleScript and JavaScript for Automation (JXA) scripts. It registers the applescript URL scheme, so a link in a web page can open Script Editor with script text already filled in. Attackers have used this in ClickFix-style campaigns to move the user-run step out of Terminal, and away from its paste warning in macOS Tahoe 26.4. The user still has to allow the browser to open Script Editor and then click Run.
+full_description: Script Editor is Apple's built-in application for writing, compiling and running AppleScript and JavaScript for Automation (JXA) scripts. It registers the applescript URL scheme, so a link in a web page can open Script Editor with script text already filled in. Attackers have used this in ClickFix-style campaigns to move the user-run step out of Terminal, which sidesteps the paste warning that macOS Tahoe 26.4 applies to terminal emulators but not the rest of the 26.4 protections. macOS scans AppleScript and JXA execution through the OpenScripting framework, recent Tahoe builds prompt the user to allow the script to be saved before it runs, and the user still has to let the browser open Script Editor and then click Run.
 created: 2026-10-08
 example_use_cases:
 - name: Open a pre-filled script from a web page via the applescript URL scheme
-  description: A malicious web page opens an applescript URL, which launches Script Editor with attacker-supplied script text in a new document. The user is told to click Run. Jamf Threat Labs (Atomic Stealer) and SentinelOne (SHub Reaper) observed this. The script content is left as a placeholder here.
+  description: A malicious web page opens an applescript URL, which launches Script Editor with attacker-supplied script text in a new document. The user is told to click Run. Jamf Threat Labs (Atomic Stealer) and SentinelOne (SHub Reaper) observed this. Neither report publishes the campaign URL. The code shown comes from the application's URL handler and is not a published indicator.
   code: applescript://com.apple.scripteditor?action=new&script=<URL-ENCODED_APPLESCRIPT>
   tactics:
-  - Initial Access
   - Execution
   - Defense Evasion
   tags:
-  - applescript
-  - url-scheme
-  - clickfix
-  - script-editor
+  - application
+  - payload-execution
+  - prompt
 paths:
 - /System/Applications/Utilities/Script Editor.app/Contents/MacOS/Script Editor
 detections:
-- name: 'Jamf Threat Labs: ClickFix Malware Uses macOS Script Editor to Deliver Atomic Stealer'
-  url: https://www.jamf.com/blog/clickfix-macos-script-editor-atomic-stealer/
+- name: Script Editor launched from a browser-handled applescript URL, followed by shell or network activity
+  url: N/A
+- name: Unexpected AppleScript or osascript activity after Script Editor execution
+  url: https://www.sentinelone.com/blog/shub-reaper-macos-stealer-spoofs-apple-google-and-microsoft-in-a-single-attack-chain/
 resources:
 - name: ClickFix Malware Uses macOS Script Editor to Deliver Atomic Stealer
   url: https://www.jamf.com/blog/clickfix-macos-script-editor-atomic-stealer/
@@ -32,5 +31,5 @@ resources:
 - name: Terminal and script protections
   url: https://support.apple.com/guide/security/terminal-and-script-protections-sece3b202c4b/web
 acknowledgements:
-- Jamf Threat Labs - documented the applescript URL scheme delivery of Atomic Stealer
-- SentinelOne - documented the same technique in SHub Reaper
+- Jamf Threat Labs
+- SentinelOne
