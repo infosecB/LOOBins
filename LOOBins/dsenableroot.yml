@@ -1,0 +1,60 @@
+name: dsenableroot
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Enable or disable the macOS root account and set its password from the command line.
+full_description: |
+  dsenableroot is the command-line equivalent of Directory Utility's "Enable Root User" action. It writes a password
+  onto the local root account and activates it, and -d disables it again. Administrator credentials can be passed with
+  -u and -p, so the whole operation runs from a script with no interactive prompt. For an attacker who already holds
+  admin credentials, it creates a second UID 0 account that is independent of the compromised user, so it survives that
+  user's password reset or deletion. The Calisto trojan used it to enable the hidden root account with a hard-coded
+  password alongside Remote Login and Screen Sharing.
+created: 2026-09-20
+example_use_cases:
+  - name: Enable the root account non-interactively for persistent privileged access
+    description: |
+      -u and -p supply administrator credentials and -r supplies the new root password, so the command runs
+      unattended with no prompt. It needs valid admin credentials, and the resulting root account is independent of
+      the admin account used to create it, so it survives that account's password reset or deletion.
+    code: dsenableroot -u <ADMIN_USER> -p <ADMIN_PASSWORD> -r <NEW_ROOT_PASSWORD>
+    tactics:
+      - Persistence
+      - Privilege Escalation
+    tags: []
+  - name: Enable the root account interactively to keep credentials out of the command line
+    description: |
+      With no arguments, dsenableroot prompts for the caller's password and the new root password. Neither secret
+      reaches argv, so they stay out of shell history and the process argument list, though the process name is still
+      recorded. Requires an interactive TTY and an admin session.
+    code: dsenableroot
+    tactics:
+      - Persistence
+      - Defense Evasion
+    tags: []
+  - name: Disable the root account to clean up after use
+    description: |
+      -d removes the root account's password and disables it, restoring the default macOS state. An operator can
+      enable root, use it, and disable it again, leaving the account state as it was before.
+    code: dsenableroot -d -u <ADMIN_USER> -p <ADMIN_PASSWORD>
+    tactics:
+      - Defense Evasion
+    tags: []
+paths:
+  - /usr/sbin/dsenableroot
+detections:
+  - name: "Elastic: Attempt to Enable the Root Account (process.name == dsenableroot and not process.args == \"-d\")"
+    url: https://www.elastic.co/guide/en/security/current/attempt-to-enable-the-root-account.html
+  - name: "Sigma: Root Account Enable Via Dsenableroot"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_dsenableroot_enable_root_account.yml
+resources:
+  - name: "Apple Support: How to enable the root user or change the root password on Mac"
+    url: https://support.apple.com/en-us/102367
+  - name: "dsenableroot man page"
+    url: https://ss64.com/mac/dsenableroot.html
+  - name: "MITRE ATT&CK T1078.003 Valid Accounts: Local Accounts"
+    url: https://attack.mitre.org/techniques/T1078/003/
+  - name: "Atomic Red Team T1078.003 - Enable root account using dsenableroot utility"
+    url: https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1078.003/T1078.003.md
+  - name: "Kaspersky Securelist: Calisto Trojan for macOS"
+    url: https://securelist.com/calisto-trojan-for-macos/86543/
+  - name: "CIS Apple macOS Benchmark 5.5 - Ensure the 'root' Account Is Disabled"
+    url: https://www.tenable.com/audits/items/CIS_Apple_macOS_11.0_Big_Sur_v3.0.0_L1.audit:b944419d53d4f5e40727a4a0e5e952da
