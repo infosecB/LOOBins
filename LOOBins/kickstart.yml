@@ -1,0 +1,116 @@
+name: kickstart
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Activate and configure the built-in Remote Management (Apple Remote Desktop) service from the command line.
+full_description: |
+  kickstart is a Perl script inside the Apple Remote Desktop agent bundle
+  (/System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart), Apple's supported way to
+  install, activate, configure and restart the Remote Management service without a reboot, documented in Apple article
+  101439. Running as root, it loads the com.apple.screensharing LaunchDaemon, enables the service, sets per-user ARD
+  privileges through dscl, and writes client settings to the RemoteManagement and RemoteDesktop plists. For an attacker
+  with root, this Apple-signed script turns a host into a controllable screen-sharing and remote-command endpoint (TCP
+  5900 and 3283) with nothing dropped on disk, and can grant access to a chosen account, set a legacy VNC password, hide
+  the menu bar indicator and later strip the configuration. Mandiant observed attackers connecting over SSH, running
+  kickstart to enable Remote Desktop, then moving laterally over the screen-sharing channel. On macOS 10.14 and later it
+  checks TCC state and warns that screen recording or control may still be blocked, so activation alone does not
+  guarantee a usable screen unless the ARDAgent already holds the relevant TCC grants.
+created: 2026-09-20
+example_use_cases:
+  - name: Activate Remote Management and grant every local user full control
+    description: |
+      The -activate option loads the com.apple.screensharing LaunchDaemon and enables the service, and -configure
+      -allowAccessFor -allUsers -privs -all sets ARD_AllLocalUsers and the all-user privilege mask so any local account
+      can log in with full control. Mandiant observed this command after attackers connected over SSH. Requires root; on
+      macOS 10.14 and later the ARDAgent additionally needs Screen Recording and Accessibility TCC grants for screen
+      control to work.
+    code: |
+      sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -allowAccessFor -allUsers -privs -all -quiet
+    tactics:
+      - Lateral Movement
+      - Persistence
+      - Command and Control
+    tags: []
+  - name: Grant ARD access to a single attacker-controlled account
+    description: |
+      Instead of flipping the all-users switch, -configure -access -on -privs -all -users <USERNAME> sets the "naprivs"
+      bitmask on just the named local user record via dscl. System Settings then shows access limited to specified users,
+      which resembles a normal administrative configuration and leaves fewer accounts changed. Requires root and an
+      existing local account with a UID above 500.
+    code: |
+      sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -access -on -privs -all -users <USERNAME>
+    tactics:
+      - Persistence
+      - Lateral Movement
+    tags: []
+  - name: Enable legacy VNC authentication with an attacker-chosen password
+    description: |
+      -configure -clientopts -setvnclegacy -vnclegacy yes -setvncpw -vncpw <PASSWORD> turns on legacy VNC password mode
+      and stores the password in /Library/Preferences/com.apple.VNCSettings.txt. This authentication path does not depend
+      on any macOS account password, so it survives a password reset and is reachable from any standard VNC client.
+      kickstart obfuscates the stored password with a fixed XOR key, so the file is trivially reversible by anyone who can
+      read it, and the service truncates the password to 8 characters with no rate limiting, making brute force practical.
+      Requires root.
+    code: |
+      sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -clientopts -setvnclegacy -vnclegacy yes -setvncpw -vncpw <PASSWORD>
+    tactics:
+      - Persistence
+      - Defense Evasion
+    tags: []
+  - name: Hide the Remote Management menu bar indicator
+    description: |
+      -configure -clientopts -setmenuextra -menuextra no sets LoadRemoteManagementMenuExtra to false in
+      com.apple.RemoteManagement.plist, stopping the Remote Management menu extra from loading in the menu bar. Paired
+      with -restart -menu to reload the SystemUIServer-hosted item, this removes the most visible on-screen cue that the
+      service is on, so a user at the console sees no indicator for the newly enabled remote access. Requires root.
+    code: |
+      sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -clientopts -setmenuextra -menuextra no -restart -menu
+    tactics:
+      - Defense Evasion
+    tags: []
+  - name: Escalate a headless SSH foothold to an interactive desktop session
+    description: |
+      A shell obtained over SSH cannot answer GUI-only prompts such as TCC consent dialogs, keychain unlock requests or
+      authorization sheets. Activating Remote Management over the SSH session and restarting the agent gives a
+      screen-sharing channel into the console user's live session, where those dialogs can be clicked through as the
+      logged-in user and the desktop and typed content observed. Requires root over SSH, an interactive console session,
+      and on macOS 10.14 and later the Screen Recording and Accessibility TCC grants for the ARDAgent.
+    code: |
+      ssh <USER>@<TARGET_IP> "sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -privs -all -users <USERNAME> -restart -agent -console"
+    tactics:
+      - Collection
+      - Defense Evasion
+      - Lateral Movement
+    tags:
+      - ssh
+  - name: Deactivate the service and strip the access privileges after use
+    description: |
+      -deactivate unloads the com.apple.screensharing LaunchDaemon, kills the screen sharing daemon and agent, and
+      deletes the RemoteManagement.launchd marker file. -uninstall -settings additionally deletes
+      com.apple.RemoteDesktop.plist, com.apple.ARDAgent.plist and com.apple.RemoteManagement.plist, and destroys the
+      "naprivs" attribute on every local user record. An attacker uses this to remove the configuration once the
+      objective is met. Requires root.
+    code: |
+      sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -uninstall -settings -deactivate -stop -quiet
+    tactics:
+      - Defense Evasion
+    tags: []
+paths:
+  - /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart
+detections: []
+resources:
+  - name: "Use the kickstart command-line utility in Apple Remote Desktop - Apple Support"
+    url: https://support.apple.com/en-us/101439
+  - name: "Living off the Orchard: Leveraging Apple Remote Desktop for Good and Evil - Mandiant"
+    url: https://cloud.google.com/blog/topics/threat-intelligence/leveraging-apple-remote-desktop-for-good-and-evil
+  - name: "MacOS Red Teaming 206: ARD (Apple Remote Desktop Protocol) - LockBoxx"
+    url: https://blog.lockboxx.org/2019/07/macos-red-teaming-206-ard-apple-remote.html
+  - name: "MITRE ATT&CK T1021.005 - Remote Services: VNC"
+    url: https://attack.mitre.org/techniques/T1021/005/
+  - name: "Atomic Red Team T1021.005 - Apple Remote Desktop activation via kickstart, usable as a detection test case"
+    url: https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1021.005/T1021.005.md
+  - name: "ARDvark - Mandiant parser for Apple Remote Desktop forensic artifacts"
+    url: https://github.com/mandiant/ARDvark
+  - name: "kickstart command reference - ss64"
+    url: https://ss64.com/mac/kickstart.html
+acknowledgements:
+  - Jake Nicastro and Willi Ballenthin (Mandiant) for documenting kickstart-enabled Apple Remote Desktop lateral movement and the associated forensic artifacts
+  - Dan Borges (LockBoxx) for the ARD red teaming research covering legacy VNC password weaknesses and screen sharing tradecraft
