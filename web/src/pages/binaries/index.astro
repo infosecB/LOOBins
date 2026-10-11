@@ -35,19 +35,19 @@ const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeC
 
 const chipBase = 'group inline-flex items-center gap-1.5 text-xs px-2.5 py-1 border transition-colors';
 const chipOff = 'border-border text-text-secondary hover:text-text-primary hover:border-text-secondary';
-const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg-surface-lighter aria-pressed:text-neon transition-colors';
+const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg-surface-lighter aria-pressed:text-leaf transition-colors';
 ---
 
 <BaseLayout title="All Binaries" description="Browse all documented macOS LOOBins">
   <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
     <div>
-      <h1 class="text-3xl font-bold tracking-wide text-neon neon-text mb-2">Binaries</h1>
+      <h1 class="text-3xl font-bold tracking-wide text-leaf glow-text mb-2">Binaries</h1>
       <p class="text-text-secondary">{sorted.length} macOS binaries documented</p>
     </div>
     <a
       href={url('/loobins.json')}
       download="loobins.json"
-      class="inline-flex items-center gap-2 border border-border text-text-primary px-4 py-2 rounded-lg hover:border-neon hover:text-neon transition-colors"
+      class="inline-flex items-center gap-2 border border-border text-text-primary px-4 py-2 rounded-lg hover:border-leaf hover:text-leaf transition-colors"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
@@ -68,14 +68,14 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
           type="search"
           placeholder="Filter by name, description, path, or tag…"
           autocomplete="off"
-          class="w-full bg-surface border border-border rounded-lg pl-9 pr-3 py-2 text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-neon"
+          class="w-full bg-surface border border-border rounded-lg pl-9 pr-3 py-2 text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-leaf"
         />
       </label>
       <label class="flex items-center gap-2 text-sm text-text-secondary">
         Sort
         <select
           id="filter-sort"
-          class="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-neon"
+          class="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-leaf"
         >
           <option value="name">A–Z</option>
           <option value="newest">Newest</option>
@@ -121,7 +121,7 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
 
     <details id="tag-facets">
       <summary class="cursor-pointer text-xs uppercase tracking-wide text-text-secondary hover:text-text-primary select-none">
-        Tags <span id="tag-selected-count" class="normal-case text-neon"></span>
+        Tags <span id="tag-selected-count" class="normal-case text-leaf"></span>
       </summary>
       <div class="flex flex-wrap gap-2 mt-2 max-h-48 overflow-y-auto">
         {tags.map(([t, n]) => (
@@ -130,7 +130,7 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
             class={`${chipBase} ${chipOff}`}
             data-facet="tag"
             data-value={t}
-            data-on-class="bg-surface-lighter border-neon-pink text-text-primary"
+            data-on-class="bg-surface-lighter border-apple text-text-primary"
             data-off-class={chipOff}
             aria-pressed="false"
           >
@@ -145,7 +145,7 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
       <p id="filter-status" class="text-text-secondary" aria-live="polite">
         Showing {sorted.length} of {sorted.length} binaries
       </p>
-      <button id="filter-clear" type="button" class="text-neon hover:underline" hidden>
+      <button id="filter-clear" type="button" class="text-leaf hover:underline" hidden>
         Clear filters
       </button>
     </div>
@@ -188,7 +188,7 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
         {sorted.map(({ loobin, tactics }) => (
           <tr data-slug={loobin.id} class="group align-top hover:bg-surface-light transition-colors">
             <td class="px-4 py-3 whitespace-nowrap sticky left-0 bg-surface group-hover:bg-surface-light transition-colors">
-              <a href={url(`/binaries/${loobin.id}/`)} class="font-mono font-semibold text-neon hover:underline">
+              <a href={url(`/binaries/${loobin.id}/`)} class="font-mono font-semibold text-leaf hover:underline">
                 {loobin.data.name}
               </a>
               {isNew(loobin.data.created) && <span class="ml-2"><NewBadge /></span>}
@@ -223,7 +223,7 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
 
   <div id="filter-empty" class="text-center py-16 text-text-secondary" hidden>
     <p class="mb-2">No binaries match these filters.</p>
-    <button type="button" class="text-neon hover:underline" data-clear>Clear filters</button>
+    <button type="button" class="text-leaf hover:underline" data-clear>Clear filters</button>
   </div>
 </BaseLayout>
 

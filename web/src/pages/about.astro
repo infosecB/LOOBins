@@ -50,7 +50,7 @@ const vendors = [
 ---
 
 <BaseLayout title="About" description="About the LOOBins project">
-  <article class="prose prose-invert max-w-3xl prose-headings:tracking-wide prose-h1:text-neon prose-a:text-neon hover:prose-a:text-neon-pink prose-strong:text-text-primary">
+  <article class="prose prose-invert max-w-3xl prose-headings:tracking-wide prose-h1:text-leaf prose-a:text-leaf hover:prose-a:text-apple prose-strong:text-text-primary">
     <h1>About LOOBins</h1>
     <p>
       <strong>LOOBins</strong> (Living Off the Orchard: macOS Binaries) is a community-driven project documenting macOS built-in binaries that can be used by threat actors for post-exploitation activities.
@@ -79,10 +79,10 @@ const vendors = [
           href={v.link}
           target="_blank"
           rel="noopener"
-          class="hud block bg-surface-light/80 border border-border p-5 hover:border-neon-pink/60 transition-colors"
+          class="hud block bg-surface-light/80 border border-border p-5 hover:border-apple/60 transition-colors"
         >
           <div class="text-lg font-semibold text-text-primary">{v.name}</div>
-          <div class="text-sm text-neon mb-2">{v.project}</div>
+          <div class="text-sm text-leaf mb-2">{v.project}</div>
           <p class="text-sm text-text-secondary">{v.usage}</p>
         </a>
       ))}
