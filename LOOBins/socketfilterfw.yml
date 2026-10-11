@@ -1,0 +1,78 @@
+name: socketfilterfw
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Query and modify the macOS Application Firewall from the command line.
+full_description: >-
+  socketfilterfw is the command-line control for the macOS Application Layer Firewall (ALF),
+  the built-in firewall that filters inbound network connections on a per-application basis.
+  It lives in its own libexec subdirectory rather than a standard bin path and is normally
+  used by administrators and MDM tooling to turn the firewall on or off, toggle stealth and
+  block-all modes, and allow or block individual applications. Every one of these operations
+  is a single root command with no GUI interaction. An attacker who already has root can use
+  it to weaken the host's inbound network defenses by disabling the firewall, or by
+  pre-authorizing a planted listener so an inbound bind shell or command-and-control implant
+  accepts connections without ever raising the "allow incoming connections?" prompt.
+  The ALF only governs inbound traffic, so socketfilterfw does not help hide outbound beacons.
+created: 2026-09-20
+example_use_cases:
+  - name: Disable the Application Firewall entirely
+    description: >-
+      Turning the firewall off with --setglobalstate off removes all per-application inbound
+      filtering and the associated "allow incoming connections?" prompts, so any listening
+      service an attacker plants on the host becomes reachable from the network. Requires root.
+    code: /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate off
+    tactics:
+      - Defense Evasion
+    tags:
+      - firewall
+  - name: Register and allow a planted listener to receive inbound connections
+    description: >-
+      --add registers an application with the firewall and --unblockapp marks it as allowed to
+      receive inbound connections. Applied to a bind shell or C2 implant, this creates a persistent
+      firewall allow-list entry so the implant accepts connections while the firewall stays enabled.
+      Requires root, and the binary must exist at the referenced path.
+    code: /usr/libexec/ApplicationFirewall/socketfilterfw --add <IMPLANT_PATH> && /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp <IMPLANT_PATH>
+    tactics:
+      - Defense Evasion
+      - Persistence
+      - Command and Control
+    tags:
+      - firewall
+  - name: Disable block-all mode to re-open inbound access
+    description: >-
+      Block-all mode blocks incoming connections to all non-essential applications, including
+      signed ones, and is sometimes enabled as a hardening measure. Turning it off with
+      --setblockall off reverses that hardening so a listening implant is once again reachable
+      while the firewall itself remains on. Requires root.
+    code: /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall off
+    tactics:
+      - Defense Evasion
+    tags:
+      - firewall
+  - name: Enumerate Application Firewall state and allowed applications
+    description: >-
+      --getglobalstate reports whether the firewall is enabled, --getstealthmode whether stealth
+      mode is active, and --listapps the registered applications with their allow/block state.
+      Together these tell an attacker whether an inbound listener needs the firewall weakened
+      and which existing allow-list entries are worth impersonating. All require root.
+    code: /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
+    tactics:
+      - Discovery
+    tags:
+      - firewall
+      - enumeration
+paths:
+  - /usr/libexec/ApplicationFirewall/socketfilterfw
+detections:
+  - name: "Jamf Protect: Application Firewall configuration changes (socketfilterfw used with --setglobalstate off, --setblockall off, --unblockapp, or --remove)"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/system_config_activity/application_firewall_config_changes.yaml
+  - name: "Splunk: MacOS List Firewall Rules (socketfilterfw --getglobalstate execution)"
+    url: https://research.splunk.com/endpoint/f8db6e0b-55bb-40ca-bc85-2b3700adb0f8/
+  - name: "Sigma: System Network Discovery - macOS (process image path ends with /socketfilterfw)"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_susp_system_network_discovery.yml
+resources:
+  - name: "MITRE ATT&CK T1562.004: Impair Defenses: Disable or Modify System Firewall"
+    url: https://attack.mitre.org/techniques/T1562/004/
+  - name: socketfilterfw(8) manual page
+    url: https://keith.github.io/xcode-man-pages/socketfilterfw.8.html
+  - name: "drduh macOS Security and Privacy Guide (Application Firewall section)"
+    url: https://github.com/drduh/macOS-Security-and-Privacy-Guide
