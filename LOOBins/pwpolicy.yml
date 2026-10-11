@@ -1,0 +1,89 @@
+name: pwpolicy
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Read and modify Directory Services password policies, account state, and stored hash types.
+full_description: >-
+  pwpolicy is the Directory Services password administration tool. It reads and writes the account policy
+  dictionaries governing lockout, expiry, and password complexity, and can also set a user's password, disable
+  and re-enable an account, and report which password hash formats are stored on disk. Reading policy before a
+  guessing attempt reveals the lockout threshold and complexity floor; clearing or rewriting it after a
+  compromise strips the controls that would age out or trip up a planted account. pwpolicy is a signed Apple
+  binary on every macOS install, so running it adds no new file. The legacy -getpolicy, -setpolicy,
+  -getglobalpolicy, and -setglobalpolicy commands are marked DEPRECATED in the man page in favour of the
+  account policy commands.
+created: 2026-09-20
+example_use_cases:
+  - name: Enumerate password policy to learn lockout thresholds and complexity rules
+    description: >-
+      pwpolicy prints the account policy dictionary as XML, including the lockout threshold
+      (policyAttributeMaximumFailedAuthentications), expiry interval, and password content predicates. This
+      reveals how many guesses an account tolerates before any authentication is attempted. Without -u it
+      returns the global policy; with -u <user> it returns any per-account override. Runs without elevation.
+    code: pwpolicy -getaccountpolicies
+    tactics:
+      - Discovery
+    tags: []
+  - name: Identify which password hash formats are stored on disk
+    description: >-
+      -getglobalhashtypes reports the hash formats macOS writes system-wide (the default SALTED-SHA512-PBKDF2
+      for loginwindow, plus any legacy formats such as CRAM-MD5 and SMB-NT), while -gethashtypes for a named
+      user reports which formats are actually stored for that account. This shows which hashes are worth
+      extracting and cracking offline. -gethashtypes requires root.
+    code: pwpolicy -getglobalhashtypes
+    tactics:
+      - Credential Access
+      - Discovery
+    tags: []
+  - name: Confirm a harvested account is still usable without a login attempt
+    description: >-
+      The -authentication-allowed command evaluates a user's account policies and reports whether they currently
+      permit authentication. An attacker holding a recovered credential can confirm the account is not disabled,
+      expired, or locked out before spending it. It evaluates policy only and does not test the password.
+    code: pwpolicy -u <TARGET_USER> -authentication-allowed
+    tactics:
+      - Discovery
+    tags: []
+  - name: Strip or replace account policies so password guessing is not throttled
+    description: >-
+      -clearaccountpolicies removes the policy dictionary, including lockout thresholds, password expiry, and
+      content requirements. Without -u it clears the global policy; with -u it clears a single account's.
+      -setaccountpolicies replaces the dictionary from a plist, leaving a populated-looking policy whose
+      contents the attacker controls. Both require root or an administrator supplied with -a.
+    code: sudo pwpolicy -clearaccountpolicies
+    tactics:
+      - Defense Evasion
+      - Persistence
+    tags:
+      - policy
+  - name: Take over an existing account by setting its password
+    description: >-
+      -setpassword writes a new password for an account. As root it works directly; with -a it authenticates
+      as another administrator. The out-of-band change does not resynchronise the login keychain or a Secure
+      Token protected FileVault credential, so the account can authenticate at loginwindow while its keychain
+      stays locked with the old password.
+    code: sudo pwpolicy -u <TARGET_USER> -setpassword
+    tactics:
+      - Persistence
+      - Credential Access
+    tags:
+      - password
+  - name: Disable or re-enable user accounts at the directory level
+    description: >-
+      -disableuser marks an account as not permitted to authenticate. The record and home directory stay in
+      place, so the account still appears in dscl while its owner is locked out. -enableuser reverses it. An
+      attacker can lock out administrators or responders, or keep a planted account disabled between uses and
+      re-enable it on demand. Requires root or an administrator supplied with -a.
+    code: sudo pwpolicy -u <TARGET_USER> -disableuser
+    tactics:
+      - Impact
+      - Defense Evasion
+    tags: []
+paths:
+  - /usr/bin/pwpolicy
+detections: []
+resources:
+  - name: "pwpolicy(8) man page"
+    url: https://keith.github.io/xcode-man-pages/pwpolicy.8.html
+  - name: "MITRE ATT&CK T1201: Password Policy Discovery"
+    url: https://attack.mitre.org/techniques/T1201/
+  - name: "Atomic Red Team T1201: Examine password policy - macOS"
+    url: https://www.atomicredteam.io/atomic-red-team/atomics/T1201
