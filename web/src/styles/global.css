@@ -10,14 +10,13 @@
   /* Orchard palette from the original LOOBins site and logo, turned up to neon. */
   --color-leaf: #3df58a;
   --color-apple: #ff3b4e;
-  --color-blossom: #b46cff;
   --color-pollen: #ffe000;
-  --color-surface: #0b0714;
-  --color-surface-light: #150d24;
-  --color-surface-lighter: #24163d;
-  --color-text-primary: #eee8f7;
-  --color-text-secondary: #a89bc4;
-  --color-border: #3a2560;
+  --color-surface: #0a0c10;
+  --color-surface-light: #12161d;
+  --color-surface-lighter: #1c222c;
+  --color-text-primary: #e8ebf0;
+  --color-text-secondary: #9aa3b2;
+  --color-border: #262d3a;
 
   /* Hard edges everywhere; the HUD corners and chamfers carry the shape language. */
   --radius-xs: 0;
@@ -37,10 +36,9 @@
     background-image:
       radial-gradient(ellipse 80% 50% at 15% -10%, rgb(255 59 78 / 0.14), transparent 60%),
       radial-gradient(ellipse 70% 50% at 100% 0%, rgb(61 245 138 / 0.10), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 50% 110%, rgb(93 47 134 / 0.35), transparent 70%),
-      linear-gradient(rgb(93 47 134 / 0.22) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(93 47 134 / 0.22) 1px, transparent 1px);
-    background-size: auto, auto, auto, 40px 40px, 40px 40px;
+      linear-gradient(rgb(38 45 58 / 0.45) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(38 45 58 / 0.45) 1px, transparent 1px);
+    background-size: auto, auto, 40px 40px, 40px 40px;
     background-attachment: fixed;
   }
 
