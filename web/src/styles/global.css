@@ -7,14 +7,16 @@
   --font-sans: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-neon: #00e5ff;
-  --color-neon-pink: #ff2e88;
-  --color-surface: #07060f;
-  --color-surface-light: #100c22;
-  --color-surface-lighter: #1d1640;
-  --color-text-primary: #ece8ff;
-  --color-text-secondary: #9b93c9;
-  --color-border: #2b2257;
+  /* Orchard palette from the original LOOBins site and logo, turned up to neon. */
+  --color-leaf: #3df58a;
+  --color-apple: #ff3b4e;
+  --color-pollen: #ffe000;
+  --color-surface: #0a0c10;
+  --color-surface-light: #12161d;
+  --color-surface-lighter: #1c222c;
+  --color-text-primary: #e8ebf0;
+  --color-text-secondary: #9aa3b2;
+  --color-border: #262d3a;
 
   /* Hard edges everywhere; the HUD corners and chamfers carry the shape language. */
   --radius-xs: 0;
@@ -32,11 +34,13 @@
   body {
     background-color: var(--color-surface);
     background-image:
-      radial-gradient(ellipse 80% 50% at 15% -10%, rgb(255 46 136 / 0.14), transparent 60%),
-      radial-gradient(ellipse 70% 50% at 100% 0%, rgb(0 229 255 / 0.12), transparent 60%),
-      linear-gradient(rgb(43 34 87 / 0.35) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(43 34 87 / 0.35) 1px, transparent 1px);
-    background-size: auto, auto, 40px 40px, 40px 40px;
+      radial-gradient(ellipse 80% 50% at 15% -10%, rgb(255 59 78 / 0.14), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 100% 0%, rgb(61 245 138 / 0.10), transparent 60%),
+      /* Orchard rows: dots in a staggered lattice, like trees planted in offset rows. */
+      radial-gradient(circle, rgb(130 142 160 / 0.28) 1.25px, transparent 1.75px),
+      radial-gradient(circle, rgb(130 142 160 / 0.28) 1.25px, transparent 1.75px);
+    background-size: auto, auto, 36px 36px, 36px 36px;
+    background-position: 0 0, 0 0, 0 0, 18px 18px;
     background-attachment: fixed;
   }
 
@@ -52,12 +56,12 @@
   }
 
   ::selection {
-    background: var(--color-neon-pink);
+    background: var(--color-apple);
     color: var(--color-surface);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-neon);
+    outline: 2px solid var(--color-leaf);
     outline-offset: 2px;
   }
 }
@@ -74,7 +78,7 @@
     width: 12px;
     height: 12px;
     pointer-events: none;
-    border: 0 solid var(--color-neon);
+    border: 0 solid var(--color-leaf);
     transition: border-color 150ms, filter 150ms;
   }
   .hud::before {
@@ -93,8 +97,8 @@
   a.hud:hover::after,
   .hud:target::before,
   .hud:target::after {
-    border-color: var(--color-neon-pink);
-    filter: drop-shadow(0 0 4px var(--color-neon-pink));
+    border-color: var(--color-apple);
+    filter: drop-shadow(0 0 4px var(--color-apple));
   }
 
   /* Solid buttons get a clipped corner. */
@@ -102,17 +106,17 @@
     clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
   }
 
-  .neon-text {
-    text-shadow: 0 0 8px rgb(0 229 255 / 0.55);
+  .glow-text {
+    text-shadow: 0 0 8px rgb(61 245 138 / 0.55);
   }
 
   /* Home page title: chromatic split that glitches once on load. */
   .glitch {
     position: relative;
     text-shadow:
-      -3px 0 var(--color-neon-pink),
-      3px 0 var(--color-neon),
-      0 0 24px rgb(0 229 255 / 0.4);
+      -3px 0 var(--color-apple),
+      3px 0 var(--color-leaf),
+      0 0 24px rgb(61 245 138 / 0.4);
     animation: glitch 900ms steps(1) 200ms 1;
   }
 
@@ -121,7 +125,7 @@
     10% { transform: translate(-4px, 1px); clip-path: inset(10% 0 55% 0); }
     20% { transform: translate(4px, -1px); clip-path: inset(60% 0 5% 0); }
     30% { transform: translate(-2px, 0); clip-path: inset(30% 0 35% 0); }
-    40% { transform: translate(0); clip-path: inset(0); text-shadow: -6px 0 var(--color-neon-pink), 6px 0 var(--color-neon); }
+    40% { transform: translate(0); clip-path: inset(0); text-shadow: -6px 0 var(--color-apple), 6px 0 var(--color-leaf); }
     55% { transform: translate(3px, 1px); clip-path: inset(75% 0 0 0); }
     65% { transform: translate(0); clip-path: inset(0); }
     100% { transform: translate(0); clip-path: inset(0); }
@@ -130,7 +134,7 @@
   .cursor::after {
     content: "_";
     margin-left: 2px;
-    color: var(--color-neon-pink);
+    color: var(--color-pollen);
     animation: blink 1.1s steps(1) infinite;
   }
 

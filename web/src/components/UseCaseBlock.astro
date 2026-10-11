@@ -14,12 +14,12 @@ interface Props {
 const { id, name, description, code, tactics, tags } = Astro.props;
 ---
 
-<div id={id} class="hud border border-border p-5 bg-surface-light/80 scroll-mt-20 target:border-neon-pink">
+<div id={id} class="hud border border-border p-5 bg-surface-light/80 scroll-mt-20 target:border-apple">
   <h3 class="group text-lg font-semibold text-text-primary mb-2">
     {name}
     <a
       href={`#${id}`}
-      class="ml-1 text-text-secondary opacity-0 group-hover:opacity-100 focus:opacity-100 hover:text-neon transition-opacity"
+      class="ml-1 text-text-secondary opacity-0 group-hover:opacity-100 focus:opacity-100 hover:text-leaf transition-opacity"
       aria-label={`Link to ${name}`}
       data-pagefind-ignore
     >#</a>
@@ -28,11 +28,11 @@ const { id, name, description, code, tactics, tags } = Astro.props;
 
   {code && (
     <div class="relative mb-3">
-      <pre class="bg-surface p-4 pr-20 overflow-x-auto border border-border border-l-2 border-l-neon-pink"><code class="text-sm text-neon font-mono" set:text={code} /></pre>
+      <pre class="bg-surface p-4 pr-20 overflow-x-auto border border-border border-l-2 border-l-pollen"><code class="text-sm text-leaf font-mono" set:text={code} /></pre>
       <button
         type="button"
         data-pagefind-ignore
-        class="copy-code absolute top-2 right-2 inline-flex items-center gap-1 text-xs px-2 py-1 border border-border bg-surface-light text-text-secondary hover:text-neon hover:border-neon transition-colors"
+        class="copy-code absolute top-2 right-2 inline-flex items-center gap-1 text-xs px-2 py-1 border border-border bg-surface-light text-text-secondary hover:text-leaf hover:border-leaf transition-colors"
       >
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8h11a1 1 0 011 1v11a1 1 0 01-1 1H9a1 1 0 01-1-1V8zM16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3" />

@@ -55,6 +55,7 @@ const ogImage = new URL(url('/loobins.png'), Astro.site);
     })} />
   </head>
   <body class="bg-surface text-text-primary min-h-screen flex flex-col">
+    <div class="horizon" aria-hidden="true"></div>
     <Navbar />
     <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8" data-pagefind-body>
       <slot />

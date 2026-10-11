@@ -9,33 +9,33 @@ const tactics = new Set(loobins.flatMap(loobinTactics));
 
 <BaseLayout title="Home">
   <div class="text-center py-16 sm:py-24">
-    <img src={url('/loobins.png')} alt="LOOBins" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-6 drop-shadow-[0_0_24px_rgb(255_46_136/0.45)]" />
-    <h1 class="glitch text-5xl sm:text-7xl font-bold tracking-wider text-neon mb-4">LOOBins</h1>
+    <img src={url('/loobins.png')} alt="LOOBins" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-6 drop-shadow-[0_0_24px_rgb(255_59_78/0.45)]" />
+    <h1 class="glitch text-5xl sm:text-7xl font-bold tracking-wider text-leaf mb-4">LOOBins</h1>
     <p class="cursor font-mono text-lg sm:text-xl text-text-primary mb-3">Living Off the Orchard: macOS Binaries</p>
     <p class="text-text-secondary max-w-2xl mx-auto mb-8">
       A curated list of macOS built-in binaries that can be used by threat actors for post-exploitation activities.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4 mb-12">
-      <a href={url('/binaries/')} class="chamfer bg-neon text-surface font-semibold px-6 py-3 hover:bg-neon-pink transition-colors">
+      <a href={url('/binaries/')} class="chamfer bg-leaf text-surface font-semibold px-6 py-3 hover:bg-apple transition-colors">
         Browse Binaries
       </a>
-      <a href="https://github.com/infosecB/LOOBins" class="border border-neon/50 text-neon px-6 py-3 hover:border-neon-pink hover:text-neon-pink transition-colors" target="_blank" rel="noopener">
+      <a href="https://github.com/infosecB/LOOBins" class="border border-leaf/50 text-leaf px-6 py-3 hover:border-apple hover:text-apple transition-colors" target="_blank" rel="noopener">
         View on GitHub
       </a>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-md mx-auto">
       <div class="hud bg-surface-light/80 border border-border p-4">
-        <div class="text-2xl font-mono font-semibold text-neon neon-text">{loobins.length}</div>
+        <div class="text-2xl font-mono font-semibold text-leaf glow-text">{loobins.length}</div>
         <div class="text-text-secondary text-sm">Binaries</div>
       </div>
       <div class="hud bg-surface-light/80 border border-border p-4">
-        <div class="text-2xl font-mono font-semibold text-neon neon-text">{tactics.size}</div>
+        <div class="text-2xl font-mono font-semibold text-leaf glow-text">{tactics.size}</div>
         <div class="text-text-secondary text-sm">Tactics</div>
       </div>
       <div class="hud bg-surface-light/80 border border-border p-4">
-        <div class="text-2xl font-mono font-semibold text-neon neon-text">
+        <div class="text-2xl font-mono font-semibold text-leaf glow-text">
           {loobins.reduce((sum, l) => sum + l.data.example_use_cases.length, 0)}
         </div>
         <div class="text-text-secondary text-sm">Use Cases</div>
@@ -50,8 +50,8 @@ const tactics = new Set(loobins.flatMap(loobinTactics));
         .sort((a, b) => b.data.created.getTime() - a.data.created.getTime())
         .slice(0, 6)
         .map((loobin) => (
-          <a href={url(`/binaries/${loobin.id}/`)} class="hud block bg-surface-light/80 border border-border p-5 hover:border-neon-pink/60 transition-colors">
-            <h3 class="text-lg font-mono font-semibold text-neon mb-1">{loobin.data.name}</h3>
+          <a href={url(`/binaries/${loobin.id}/`)} class="hud block bg-surface-light/80 border border-border p-5 hover:border-apple/60 transition-colors">
+            <h3 class="text-lg font-mono font-semibold text-leaf mb-1">{loobin.data.name}</h3>
             <p class="text-text-secondary text-sm line-clamp-2">{loobin.data.short_description}</p>
           </a>
         ))}

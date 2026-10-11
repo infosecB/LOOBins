@@ -41,7 +41,7 @@ const useCases = data.example_use_cases.map((uc) => {
 
   <article>
     <header class="mb-8">
-      <h1 class="text-3xl sm:text-4xl font-mono font-bold text-neon neon-text mb-2" data-pagefind-meta="title">{data.name}</h1>
+      <h1 class="text-3xl sm:text-4xl font-mono font-bold text-leaf glow-text mb-2" data-pagefind-meta="title">{data.name}</h1>
       <p class="text-text-secondary text-lg mb-4">{data.full_description}</p>
 
       <div class="flex flex-wrap gap-4 text-sm text-text-secondary mb-4">
@@ -59,7 +59,7 @@ const useCases = data.example_use_cases.map((uc) => {
       <h2 class="text-xl font-semibold mb-3">Paths</h2>
       <div class="flex flex-wrap gap-2">
         {data.paths.map((p: string) => (
-          <code class="bg-surface-light border border-border border-l-2 border-l-neon px-3 py-1 text-sm font-mono text-text-primary">{p}</code>
+          <code class="bg-surface-light border border-border border-l-2 border-l-leaf px-3 py-1 text-sm font-mono text-text-primary">{p}</code>
         ))}
       </div>
     </section>
@@ -88,7 +88,7 @@ const useCases = data.example_use_cases.map((uc) => {
             {d.url.toLowerCase() === 'n/a' ? (
               <span>{d.name}</span>
             ) : (
-              <a href={d.url} class="text-neon hover:underline" target="_blank" rel="noopener">{d.name}</a>
+              <a href={d.url} class="text-leaf hover:underline" target="_blank" rel="noopener">{d.name}</a>
             )}
           </li>
         ))}
@@ -101,7 +101,7 @@ const useCases = data.example_use_cases.map((uc) => {
         <ul class="space-y-2">
           {data.resources.map((r: any) => (
             <li>
-              <a href={r.url} class="text-neon hover:underline" target="_blank" rel="noopener">{r.name}</a>
+              <a href={r.url} class="text-leaf hover:underline" target="_blank" rel="noopener">{r.name}</a>
             </li>
           ))}
         </ul>
