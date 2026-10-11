@@ -4,12 +4,144 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-apple-green: #22c55e;
-  --color-apple-red: #ef4444;
-  --color-surface: #0f172a;
-  --color-surface-light: #1e293b;
-  --color-surface-lighter: #334155;
-  --color-text-primary: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-border: #334155;
+  --font-sans: "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-neon: #00e5ff;
+  --color-neon-pink: #ff2e88;
+  --color-surface: #07060f;
+  --color-surface-light: #100c22;
+  --color-surface-lighter: #1d1640;
+  --color-text-primary: #ece8ff;
+  --color-text-secondary: #9b93c9;
+  --color-border: #2b2257;
+
+  /* Hard edges everywhere; the HUD corners and chamfers carry the shape language. */
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    background-image:
+      radial-gradient(ellipse 80% 50% at 15% -10%, rgb(255 46 136 / 0.14), transparent 60%),
+      radial-gradient(ellipse 70% 50% at 100% 0%, rgb(0 229 255 / 0.12), transparent 60%),
+      linear-gradient(rgb(43 34 87 / 0.35) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(43 34 87 / 0.35) 1px, transparent 1px);
+    background-size: auto, auto, 40px 40px, 40px 40px;
+    background-attachment: fixed;
+  }
+
+  /* CRT scanlines over the whole viewport. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    background: repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.18) 0 1px, transparent 1px 3px);
+    mix-blend-mode: multiply;
+  }
+
+  ::selection {
+    background: var(--color-neon-pink);
+    color: var(--color-surface);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-neon);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Targeting-bracket corners for panels and cards. Brackets light up pink on hover/target. */
+  .hud {
+    position: relative;
+  }
+  .hud::before,
+  .hud::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    pointer-events: none;
+    border: 0 solid var(--color-neon);
+    transition: border-color 150ms, filter 150ms;
+  }
+  .hud::before {
+    top: -1px;
+    left: -1px;
+    border-top-width: 2px;
+    border-left-width: 2px;
+  }
+  .hud::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom-width: 2px;
+    border-right-width: 2px;
+  }
+  a.hud:hover::before,
+  a.hud:hover::after,
+  .hud:target::before,
+  .hud:target::after {
+    border-color: var(--color-neon-pink);
+    filter: drop-shadow(0 0 4px var(--color-neon-pink));
+  }
+
+  /* Solid buttons get a clipped corner. */
+  .chamfer {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .neon-text {
+    text-shadow: 0 0 8px rgb(0 229 255 / 0.55);
+  }
+
+  /* Home page title: chromatic split that glitches once on load. */
+  .glitch {
+    position: relative;
+    text-shadow:
+      -3px 0 var(--color-neon-pink),
+      3px 0 var(--color-neon),
+      0 0 24px rgb(0 229 255 / 0.4);
+    animation: glitch 900ms steps(1) 200ms 1;
+  }
+
+  @keyframes glitch {
+    0% { transform: translate(0); clip-path: inset(0); }
+    10% { transform: translate(-4px, 1px); clip-path: inset(10% 0 55% 0); }
+    20% { transform: translate(4px, -1px); clip-path: inset(60% 0 5% 0); }
+    30% { transform: translate(-2px, 0); clip-path: inset(30% 0 35% 0); }
+    40% { transform: translate(0); clip-path: inset(0); text-shadow: -6px 0 var(--color-neon-pink), 6px 0 var(--color-neon); }
+    55% { transform: translate(3px, 1px); clip-path: inset(75% 0 0 0); }
+    65% { transform: translate(0); clip-path: inset(0); }
+    100% { transform: translate(0); clip-path: inset(0); }
+  }
+
+  .cursor::after {
+    content: "_";
+    margin-left: 2px;
+    color: var(--color-neon-pink);
+    animation: blink 1.1s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glitch,
+    .cursor::after {
+      animation: none;
+    }
+  }
 }

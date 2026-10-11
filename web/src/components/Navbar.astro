@@ -3,10 +3,10 @@ import SearchWidget from './SearchWidget.astro';
 import { url } from '../utils/helpers';
 ---
 
-<nav class="bg-surface-light border-b border-border sticky top-0 z-50">
+<nav class="bg-surface/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-[0_1px_0_0_rgb(0_229_255/0.35)]">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      <a href={url('/')} class="flex items-center gap-2 text-xl font-bold text-apple-green hover:opacity-80">
+      <a href={url('/')} class="flex items-center gap-2 text-xl font-bold tracking-wide text-neon neon-text hover:text-neon-pink transition-colors">
         <img src={url('/loobins.png')} alt="LOOBins" class="h-8 w-8" />
         <span>LOOBins</span>
       </a>

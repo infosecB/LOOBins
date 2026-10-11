@@ -10,11 +10,11 @@ const { tag, linked = true } = Astro.props;
 ---
 
 {linked ? (
-  <a href={filterUrl('tag', tag)} class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
+  <a href={filterUrl('tag', tag)} class="inline-block text-xs px-2 py-0.5 bg-surface-lighter text-text-secondary hover:text-text-primary transition-colors">
     {tag}
   </a>
 ) : (
-  <span class="inline-block text-xs px-2 py-0.5 rounded bg-surface-lighter text-text-secondary">
+  <span class="inline-block text-xs px-2 py-0.5 bg-surface-lighter text-text-secondary">
     {tag}
   </span>
 )}
