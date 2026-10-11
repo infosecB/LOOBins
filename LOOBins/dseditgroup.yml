@@ -1,0 +1,95 @@
+name: dseditgroup
+author: Hare Sudhan (@cyb3rbuff)
+short_description: Read, create, delete and edit Directory Services group records, including the local admin group.
+full_description: >-
+  dseditgroup is Apple's supported command-line tool for manipulating a single named group record on the local
+  Directory Services node or a bound network node such as Active Directory or LDAP. It grants admin rights, populates
+  service access groups and audits membership. An attacker with code execution can run the same operations: a single
+  "-o edit -a" invocation converts a controlled standard account into a local administrator, and the macOS service
+  access control groups (com.apple.access_ssh, com.apple.access_screensharing) gating Remote Login and Screen Sharing
+  are ordinary group records dseditgroup can add members to or delete. It is Apple-signed, is the documented way to
+  change group membership, and runs constantly in MDM workflows.
+created: 2026-09-20
+example_use_cases:
+  - name: Promote a local account to administrator
+    description: >-
+      Adding a user record to the local "admin" group grants administrator rights, which on macOS include
+      authenticating to authorization prompts, using sudo and installing software. It survives reboots because it
+      changes the local directory database, not a running process. Modifying the admin group requires root, so the
+      command runs under sudo or an already-root context.
+    code: dseditgroup -o edit -a <TARGET_USER> -t user admin
+    tactics:
+      - Privilege Escalation
+      - Persistence
+    tags:
+      - groups
+  - name: Edit a group using explicit credentials on a local or network directory node
+    description: >-
+      The -n parameter selects the Directory Services node (the local node "." or a bound LDAP/Active Directory
+      server) and -u/-P supply admin credentials to authenticate against it. With harvested credentials an attacker
+      can add accounts to groups on the local node without a root shell, or on a bound directory server to propagate
+      changes to every Mac bound to that node. The -P password appears in the process argument list.
+    code: dseditgroup -o edit -n /LDAPv3/<DIRECTORY_SERVER> -u <DIR_ADMIN> -P <PASSWORD> -a <TARGET_USER> -t user <GROUP>
+    tactics:
+      - Privilege Escalation
+      - Lateral Movement
+    tags:
+      - ldap
+  - name: Grant remote service access through a SACL group
+    description: >-
+      When Remote Login or Screen Sharing is restricted to specific users, macOS enforces it through the
+      com.apple.access_ssh and com.apple.access_screensharing groups. Adding a controlled account to either group
+      opens a remote channel (SSH or GUI) without dropping a payload. The account still needs valid credentials
+      or an authorized key. Requires root.
+    code: dseditgroup -o edit -a <TARGET_USER> -t user com.apple.access_ssh
+    tactics:
+      - Persistence
+      - Lateral Movement
+    tags:
+      - ssh
+  - name: Remove a service access group so the service accepts all users
+    description: >-
+      Deleting a com.apple.access_* group record removes the restriction and the service reverts to allowing all
+      users, widening remote access without adding a visible member to an allow list. The -q flag suppresses the
+      delete confirmation, making the operation usable from a non-interactive shell. Requires root.
+    code: dseditgroup -o delete -q com.apple.access_screensharing
+    tactics:
+      - Defense Evasion
+      - Lateral Movement
+    tags: []
+  - name: Enumerate group membership to identify privileged accounts
+    description: >-
+      The read and checkmember operations consult the authentication search policy and do not require root. "read"
+      lists all members of a group (admin, com.apple.access_ssh, etc.), and "checkmember -m" tests whether a
+      specific user belongs to it. Either can map who holds administrator rights or service access without writing
+      to the directory.
+    code: dseditgroup -o read admin
+    tactics:
+      - Discovery
+    tags:
+      - groups
+      - enumeration
+paths:
+  - /usr/sbin/dseditgroup
+detections:
+  - name: "Sigma: User Added To Admin Group Via DseditGroup"
+    url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_dseditgroup_add_to_admin_group.yml
+  - name: "Elastic: Potential Admin Group Account Addition (dscl or dseditgroup adding to the admin group, excluding known MDM agents)"
+    url: https://github.com/elastic/detection-rules/blob/main/rules/macos/privilege_escalation_local_user_added_to_admin.toml
+  - name: "Jamf Protect: User Privilege Escalation by dseditgroup and Self Service"
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/user_privilege_escalation_by_dseditgroup_and_jamf_self_service.yaml
+resources:
+  - name: "MITRE ATT&CK T1098.007: Account Manipulation - Additional Local or Domain Groups"
+    url: https://attack.mitre.org/techniques/T1098/007/
+  - name: "Atomic Red Team T1078.003 Test 5: Add a new/existing user to the admin group using dseditgroup utility - macOS"
+    url: https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1078.003/T1078.003.md#atomic-test-5---add-a-newexisting-user-to-the-admin-group-using-dseditgroup-utility---macos
+  - name: "On macOS User Groups - Scripting OS X"
+    url: https://scriptingosx.com/2018/11/on-macos-user-groups/
+  - name: "Secure Shell (SSH) or Remote Login - ManageMacs wiki (com.apple.access_ssh)"
+    url: https://github.com/scriptingosx/ManageMacs/wiki/Secure-Shell-(SSH)-or-Remote-Login
+  - name: "Set specific users to use Screen Sharing through command lines - Jamf Nation (com.apple.access_screensharing)"
+    url: https://community.jamf.com/t5/jamf-pro/set-specific-users-to-use-screen-sharing-through-command-lines/m-p/231888
+  - name: "dseditgroup - SS64 macOS command reference"
+    url: https://ss64.com/mac/dseditgroup.html
+acknowledgements:
+  - Armin Briegel (@scriptingosx) for documenting macOS group records and the com.apple.access_ssh service access group
