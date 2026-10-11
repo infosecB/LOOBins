@@ -11,11 +11,11 @@ const color = tacticColor(tactic);
 ---
 
 {linked ? (
-  <a href={filterUrl('tactic', tactic)} class={`inline-block text-xs px-2 py-0.5 rounded text-white ${color} hover:opacity-80 transition-opacity`}>
+  <a href={filterUrl('tactic', tactic)} class={`inline-block text-xs px-2 py-0.5 text-white ${color} hover:opacity-80 transition-opacity`}>
     {tactic}
   </a>
 ) : (
-  <span class={`inline-block text-xs px-2 py-0.5 rounded text-white ${color}`}>
+  <span class={`inline-block text-xs px-2 py-0.5 text-white ${color}`}>
     {tactic}
   </span>
 )}

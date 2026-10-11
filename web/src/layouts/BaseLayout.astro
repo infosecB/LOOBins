@@ -41,6 +41,9 @@ const ogImage = new URL(url('/loobins.png'), Astro.site);
     <title>{fullTitle}</title>
     <link rel="icon" type="image/png" href={url('/loobins.png')} />
     <link rel="apple-touch-icon" href={url('/loobins.png')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
