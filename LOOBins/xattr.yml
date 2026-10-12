@@ -22,6 +22,24 @@ example_use_cases:
   tags:
   - xattr
   - quarantine
+- name: Clear extended attributes from a file via xattr
+  description: Use xattr -c to clear a file's extended attributes. This removes com.apple.quarantine when present without naming it, so the command line does not contain the string com.apple.quarantine. AMOS ran this form on a dropped payload before executing it.
+  code: xattr -c FILE
+  tactics:
+  - Execution
+  - Defense Evasion
+  tags:
+  - xattr
+  - quarantine
+- name: Recursively clear extended attributes via xattr
+  description: Use xattr -cr to clear extended attributes, including com.apple.quarantine, across an app bundle or directory tree. Seen in MacSync and CrashStealer infections.
+  code: xattr -cr DIRECTORY
+  tactics:
+  - Execution
+  - Defense Evasion
+  tags:
+  - xattr
+  - quarantine
 paths:
 - /usr/bin/xattr
 detections:
@@ -34,3 +52,11 @@ resources:
   url: https://megancarney.com/presentations/ExternalReport_ThreatHuntingMacOS.pdf
 - name: 'GrrCon 2018: Threat Hunting the macOS edition Megan Carney'
   url: https://www.youtube.com/watch?v=_K4gnSuDkRM&feature=youtu.be
+- name: A new version of the MacSync macOS stealer targets crypto enthusiasts and developers
+  url: https://securelist.com/macsync-new-version/121383
+- name: Field Effect detects AMOS Stealer delivered via Cursor AI agent session
+  url: https://fieldeffect.com/blog/field-effect-detects-amos-stealer-delivered-via-cursor-ai-agent-session
+- name: 'CrashStealer: C++ macOS infostealer posing as crash reporter'
+  url: https://www.jamf.com/blog/crashstealer-macos-infostealer-analysis/
+acknowledgements:
+- Liran Ravich (Cribl) - clear-all (-c / -cr) use cases
