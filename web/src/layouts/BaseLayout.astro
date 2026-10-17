@@ -8,9 +8,11 @@ interface Props {
   title: string;
   description?: string;
   type?: string;
+  // Path to a markdown version of this page, advertised to agents via <link rel="alternate">.
+  markdownPath?: string;
 }
 
-const { title, description = 'LOOBins - Living Off the Orchard: macOS Binaries', type = 'website' } = Astro.props;
+const { title, description = 'LOOBins - Living Off the Orchard: macOS Binaries', type = 'website', markdownPath } = Astro.props;
 const fullTitle = `${title} | LOOBins`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(url('/loobins.png'), Astro.site);
@@ -23,6 +25,8 @@ const ogImage = new URL(url('/loobins.png'), Astro.site);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    {markdownPath && <link rel="alternate" type="text/markdown" href={url(markdownPath)} />}
+    <link rel="alternate" type="text/plain" title="llms.txt" href={url('/llms.txt')} />
 
     <!-- Open Graph -->
     <meta property="og:type" content={type} />

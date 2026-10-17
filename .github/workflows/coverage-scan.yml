@@ -1,0 +1,105 @@
+name: Coverage Scan
+
+# Weekly: Claude reads recent macOS threat research and proposes binaries or
+# techniques LOOBins doesn't cover yet. Each candidate becomes a needs-triage
+# issue for a maintainer to verify.
+#
+# The scan job reads untrusted web pages, so it gets no shell, no GitHub write
+# access, and can only produce findings.json. A separate job with a fresh
+# checkout validates that file and opens the issues.
+
+on:
+  schedule:
+    - cron: '0 14 * * 1' # Mondays 14:00 UTC
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: How many days of published research to consider
+        default: '14'
+      dry_run:
+        description: Print issues to the job summary instead of opening them
+        type: boolean
+        default: false
+
+concurrency:
+  group: coverage-scan
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Snapshot existing issues for de-duplication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue list --state all --limit 1000 --json number,title,state > existing-issues.json
+
+      - name: Get date
+        id: date
+        run: echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Run coverage scan
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Read .github/prompts/coverage-scan.md and follow it exactly.
+
+            Today's date: ${{ steps.date.outputs.today }}
+            Lookback window: ${{ inputs.lookback_days || '14' }} days
+            Output path: findings.json
+          claude_args: |
+            --model claude-sonnet-5-5
+            --max-turns 80
+            --allowedTools WebSearch,WebFetch,Read,Glob,Grep,Write
+            --disallowedTools Bash,Edit,NotebookEdit
+
+      - name: Check findings exist
+        run: test -s findings.json || echo '{"sources_reviewed":[],"candidates":[]}' > findings.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: findings
+          path: |
+            findings.json
+            existing-issues.json
+          retention-days: 30
+
+  file-issues:
+    needs: scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      # Fresh checkout: nothing the scan job wrote can change the code run here.
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: findings
+          path: scan
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Ensure labels exist
+        if: ${{ !inputs.dry_run }}
+        run: |
+          gh label create coverage-scan --color 5319e7 --description "Proposed by the weekly coverage scan" --force
+          gh label create needs-triage --color fbca04 --description "Needs maintainer review" --force
+
+      - name: Open issues
+        run: >-
+          python .github/scripts/file_coverage_issues.py
+          scan/findings.json scan/existing-issues.json LOOBins
+          ${{ inputs.dry_run && '--dry-run' || '' }}
