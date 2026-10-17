@@ -1,0 +1,65 @@
+name: Link Check
+
+# Weekly check of every detection and resource URL. Keeps one open
+# "broken-links" issue up to date, and closes it once everything resolves.
+
+on:
+  schedule:
+    - cron: '0 13 * * 1' # Mondays 13:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-check
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Extract detection and resource links
+        run: |
+          pip install pyyaml
+          python .github/scripts/extract_links.py LOOBins links
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # 429 means rate limited, not dead. Retries absorb flaky hosts.
+          args: >-
+            --no-progress --max-concurrency 8 --timeout 30 --max-retries 3
+            --accept '200..=299,429'
+            'links/*.md'
+          format: markdown
+          output: lychee/out.md
+          fail: false
+
+      - name: Find open report issue
+        id: issue
+        run: |
+          number=$(gh issue list --label broken-links --state open --json number --jq '.[0].number // empty')
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update report issue
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Broken links in LOOBins
+          content-filepath: lychee/out.md
+          labels: broken-links
+          issue-number: ${{ steps.issue.outputs.number }}
+
+      - name: Close report issue when all links pass
+        if: steps.lychee.outputs.exit_code == 0 && steps.issue.outputs.number != ''
+        run: gh issue close "${{ steps.issue.outputs.number }}" --comment "All links resolved in run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}."

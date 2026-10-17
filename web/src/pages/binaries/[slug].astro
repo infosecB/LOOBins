@@ -34,7 +34,7 @@ const useCases = data.example_use_cases.map((uc) => {
 });
 ---
 
-<BaseLayout title={data.name} description={data.short_description} type="article">
+<BaseLayout title={data.name} description={data.short_description} type="article" markdownPath={`/binaries/${loobin.id}.md`}>
   <div class="mb-6">
     <a href={url('/binaries/')} class="text-text-secondary hover:text-text-primary text-sm">&larr; All Binaries</a>
   </div>
