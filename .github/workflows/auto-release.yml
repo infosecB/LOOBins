@@ -9,6 +9,12 @@ on:
       - 'src/**'
       - 'pyproject.toml'
 
+# Queue releases instead of racing: overlapping runs read the same version
+# and collide on the tag and the version-bump push.
+concurrency:
+  group: auto-release
+  cancel-in-progress: false
+
 jobs:
   test:
     name: Test
@@ -42,6 +48,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           token: ${{ secrets.PAT_TOKEN }}
 
@@ -53,15 +60,36 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Bump patch version
         id: version
         run: |
-          CURRENT_VERSION=$(uv run python -c "import importlib.metadata; print(importlib.metadata.version('PyLOOBins'))" 2>/dev/null || grep '^version' pyproject.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          CURRENT_VERSION=$(grep '^version' pyproject.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
           IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
           NEW_VERSION="$MAJOR.$MINOR.$((PATCH + 1))"
+          if git rev-parse -q --verify "refs/tags/$NEW_VERSION" >/dev/null; then
+            echo "::error::Tag $NEW_VERSION already exists; pyproject.toml is behind the latest release"
+            exit 1
+          fi
           sed -i "s/^version = \".*\"/version = \"$NEW_VERSION\"/" pyproject.toml
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      # Push the bump before publishing anything, so a rejected push can't
+      # leave a release on PyPI that main doesn't know about.
+      - name: Commit and push version bump
+        id: bump
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git add pyproject.toml
+          git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]"
+          git pull --rebase https://${PAT_TOKEN}@github.com/infosecB/LOOBins.git main
+          git push https://${PAT_TOKEN}@github.com/infosecB/LOOBins.git HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
 
       - name: Build project for distribution
         run: uv build
@@ -77,23 +105,10 @@ jobs:
             Automated release for version ${{ steps.version.outputs.version }}
 
             Published to PyPI: https://pypi.org/project/PyLOOBins/${{ steps.version.outputs.version }}/
-          commit: ${{ github.sha }}
+          commit: ${{ steps.bump.outputs.sha }}
           makeLatest: true
 
       - name: Publish to PyPI
         env:
           UV_PUBLISH_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: uv publish
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Commit and push version bump
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git add pyproject.toml
-          git commit -m "chore: bump version to ${{ steps.version.outputs.version }} [skip ci]"
-          git push https://${PAT_TOKEN}@github.com/infosecB/LOOBins.git main
