@@ -19,6 +19,15 @@ example_use_cases:
   code: launchctl load -w ~/Library/LaunchAgents/com.apple.updates.plist
   tactics:
   - Persistence
+- name: Run a command through launchd without a plist
+  description: launchctl submit hands a command to launchd as a job identified only by a label, with no plist written to disk. launchd runs it outside the calling process and keeps it alive if it fails, so the command survives the caller exiting or killing its children. Forever Security found this form in a malicious AGENTS.md on a customer machine, where it was used to run an npm install that the AI coding agent would otherwise have cut off. Remove the job afterwards with launchctl remove and the same label.
+  code: launchctl submit -l com.example.job -- /bin/zsh -lc 'echo test > /tmp/test.txt'
+  tactics:
+  - Execution
+  - Defense Evasion
+  tags:
+  - zsh
+  - oneliner
 paths:
 - /bin/launchctl
 detections:
@@ -26,6 +35,8 @@ detections:
   url: N/A
 - name: "Jamf Protect: Detect launchctl activity that unloads or bootsout specific service"
   url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/launchctl_unload_and_bootout_events
+- name: Monitor launchctl executions with the submit subcommand and the processes launchd starts under the submitted label. Plist file monitoring does not cover jobs created this way.
+  url: N/A
 resources:
 - name: '20 Common Tools & Techniques used by macOS threat Actors & Malware' 
   url: https://www.sentinelone.com/labs/20-common-tools-techniques-used-by-macos-threat-actors-malware/
@@ -35,3 +46,9 @@ resources:
   url: https://attack.mitre.org/techniques/T1543/001/
 - name: 'Komplex OS X Trojan (Sofacy)'
   url: https://unit42.paloaltonetworks.com/unit42-sofacys-komplex-os-x-trojan/
+- name: 'Apple launchd: launchctl(1) man page source'
+  url: https://raw.githubusercontent.com/apple-oss-distributions/launchd/main/man/launchctl.1
+- name: 'Forever Security: Markdown Is the New Executable'
+  url: https://forever.security/blog/hijacking-ai-agents-via-downloads-folder/
+acknowledgements:
+- Liran Ravich (Cribl) - launchctl submit use case
