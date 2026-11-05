@@ -14,8 +14,8 @@ interface Props {
 const { id, name, description, code, tactics, tags } = Astro.props;
 ---
 
-<div id={id} class="hud border border-border p-5 bg-surface-light/80 scroll-mt-20 target:border-apple">
-  <h3 class="group text-lg font-semibold text-text-primary mb-2">
+<div id={id} class="group/uc py-8 scroll-mt-24">
+  <h3 class="group text-base sm:text-lg font-semibold text-text-primary group-target/uc:text-leaf mb-2 transition-colors">
     {name}
     <a
       href={`#${id}`}
@@ -24,15 +24,16 @@ const { id, name, description, code, tactics, tags } = Astro.props;
       data-pagefind-ignore
     >#</a>
   </h3>
-  <p class="text-text-secondary mb-3">{description}</p>
+  <p class="text-text-secondary leading-relaxed mb-4 max-w-3xl">{description}</p>
 
   {code && (
-    <div class="relative mb-3">
-      <pre class="bg-surface p-4 pr-20 overflow-x-auto border border-border border-l-2 border-l-pollen"><code class="text-sm text-leaf font-mono" set:text={code} /></pre>
+    <!-- The button sits beside the scrolling <pre>, not over it, so long lines never run underneath. -->
+    <div class="flex items-start mb-4 bg-surface-light border border-border rounded-lg">
+      <pre class="flex-1 min-w-0 p-4 overflow-x-auto"><code class="text-sm text-text-primary font-mono" set:text={code} /></pre>
       <button
         type="button"
         data-pagefind-ignore
-        class="copy-code absolute top-2 right-2 inline-flex items-center gap-1 text-xs px-2 py-1 border border-border bg-surface-light text-text-secondary hover:text-leaf hover:border-leaf transition-colors"
+        class="copy-code shrink-0 m-2 inline-flex items-center gap-1 text-xs px-2 py-1 rounded border border-border bg-surface-lighter text-text-secondary hover:text-text-primary hover:border-text-secondary/60 transition-colors"
       >
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 8h11a1 1 0 011 1v11a1 1 0 01-1 1H9a1 1 0 01-1-1V8zM16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3" />
