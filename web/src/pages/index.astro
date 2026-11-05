@@ -1,60 +1,78 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LOOBinCard from '../components/LOOBinCard.astro';
 import { getCollection } from 'astro:content';
-import { loobinTactics, url } from '../utils/helpers';
+import { filterUrl, loobinTactics, tacticColor, tacticOrder, url } from '../utils/helpers';
 
 const loobins = await getCollection('loobins');
-const tactics = new Set(loobins.flatMap(loobinTactics));
+const useCaseCount = loobins.reduce((sum, l) => sum + l.data.example_use_cases.length, 0);
+const recent = [...loobins].sort((a, b) => b.data.created.getTime() - a.data.created.getTime()).slice(0, 6);
+
+// Counted per binary so the numbers match what the /binaries/ tactic filter shows.
+const binaryTactics = loobins.map(loobinTactics);
+const tactics = tacticOrder
+  .map((t) => ({ name: t, count: binaryTactics.filter((list) => list.includes(t)).length }))
+  .filter((t) => t.count > 0);
 ---
 
 <BaseLayout title="Home">
-  <div class="text-center py-16 sm:py-24">
-    <img src={url('/loobins.png')} alt="LOOBins" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto mb-6 drop-shadow-[0_0_24px_rgb(255_59_78/0.45)]" />
-    <h1 class="glitch text-5xl sm:text-7xl font-bold tracking-wider text-leaf mb-4">LOOBins</h1>
-    <p class="cursor font-mono text-lg sm:text-xl text-text-primary mb-3">Living Off the Orchard: macOS Binaries</p>
-    <p class="text-text-secondary max-w-2xl mx-auto mb-8">
+  <section class="max-w-2xl mx-auto text-center pt-10 pb-16 sm:pt-16 sm:pb-20">
+    <img src={url('/loobins.png')} alt="" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6" />
+    <h1 class="text-4xl sm:text-5xl font-semibold tracking-tight mb-3">LOOBins</h1>
+    <p class="text-lg text-text-primary mb-2">Living Off the Orchard: macOS Binaries</p>
+    <p class="text-text-secondary mb-8">
       A curated list of macOS built-in binaries that can be used by threat actors for post-exploitation activities.
     </p>
 
-    <div class="flex flex-wrap justify-center gap-4 mb-12">
-      <a href={url('/binaries/')} class="chamfer bg-leaf text-surface font-semibold px-6 py-3 hover:bg-apple transition-colors">
-        Browse Binaries
-      </a>
-      <a href="https://github.com/infosecB/LOOBins" class="border border-leaf/50 text-leaf px-6 py-3 hover:border-apple hover:text-apple transition-colors" target="_blank" rel="noopener">
-        View on GitHub
-      </a>
-    </div>
+    <form action={url('/binaries/')} method="get" role="search" class="relative mb-4">
+      <label for="home-q" class="sr-only">Search binaries</label>
+      <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" />
+      </svg>
+      <input
+        id="home-q"
+        name="q"
+        type="search"
+        placeholder="Search by name, path, or tag…"
+        autocomplete="off"
+        class="w-full bg-surface-light border border-border rounded-lg pl-12 pr-4 py-3 text-base text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-leaf transition-colors"
+      />
+    </form>
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-md mx-auto">
-      <div class="hud bg-surface-light/80 border border-border p-4">
-        <div class="text-2xl font-mono font-semibold text-leaf glow-text">{loobins.length}</div>
-        <div class="text-text-secondary text-sm">Binaries</div>
-      </div>
-      <div class="hud bg-surface-light/80 border border-border p-4">
-        <div class="text-2xl font-mono font-semibold text-leaf glow-text">{tactics.size}</div>
-        <div class="text-text-secondary text-sm">Tactics</div>
-      </div>
-      <div class="hud bg-surface-light/80 border border-border p-4">
-        <div class="text-2xl font-mono font-semibold text-leaf glow-text">
-          {loobins.reduce((sum, l) => sum + l.data.example_use_cases.length, 0)}
-        </div>
-        <div class="text-text-secondary text-sm">Use Cases</div>
-      </div>
-    </div>
-  </div>
+    <p class="text-sm text-text-secondary">
+      <span class="tabular-nums">{loobins.length}</span> binaries
+      <span class="mx-1.5" aria-hidden="true">·</span>
+      <span class="tabular-nums">{useCaseCount}</span> use cases
+      <span class="mx-1.5" aria-hidden="true">·</span>
+      <a href={url('/binaries/')} class="text-leaf hover:underline underline-offset-2">Browse all</a>
+    </p>
+  </section>
 
   <section class="pb-16">
-    <h2 class="text-2xl font-bold mb-6 text-center">Recently Added</h2>
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {loobins
-        .sort((a, b) => b.data.created.getTime() - a.data.created.getTime())
-        .slice(0, 6)
-        .map((loobin) => (
-          <a href={url(`/binaries/${loobin.id}/`)} class="hud block bg-surface-light/80 border border-border p-5 hover:border-apple/60 transition-colors">
-            <h3 class="text-lg font-mono font-semibold text-leaf mb-1">{loobin.data.name}</h3>
-            <p class="text-text-secondary text-sm line-clamp-2">{loobin.data.short_description}</p>
-          </a>
-        ))}
+    <div class="flex items-baseline justify-between mb-5">
+      <h2 class="text-xl font-semibold tracking-tight">Recently Added</h2>
+      <a href={url('/binaries/?sort=newest')} class="text-sm text-text-secondary hover:text-text-primary transition-colors">View newest &rarr;</a>
     </div>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {recent.map((loobin) => <LOOBinCard loobin={loobin} />)}
+    </div>
+  </section>
+
+  <section class="pb-16">
+    <h2 class="text-xl font-semibold tracking-tight mb-5">Browse by Tactic</h2>
+    <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      {tactics.map((t) => (
+        <li>
+          <a
+            href={filterUrl('tactic', t.name)}
+            class="flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-border bg-surface-light/60 text-sm hover:border-text-secondary/40 hover:bg-surface-light transition-colors"
+          >
+            <span class={`w-2 h-2 rounded-full ${tacticColor(t.name)}`} aria-hidden="true"></span>
+            <span class="flex-1">{t.name}</span>
+            <span class="text-text-secondary tabular-nums">{t.count}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </section>
 </BaseLayout>

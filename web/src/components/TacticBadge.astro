@@ -7,15 +7,14 @@ interface Props {
 }
 
 const { tactic, linked = true } = Astro.props;
-const color = tacticColor(tactic);
+const Tag = linked ? 'a' : 'span';
+const cls = 'inline-flex items-center gap-1.5 text-xs px-2 py-0.5 rounded border border-border text-text-primary';
 ---
 
-{linked ? (
-  <a href={filterUrl('tactic', tactic)} class={`inline-block text-xs px-2 py-0.5 text-white ${color} hover:opacity-80 transition-opacity`}>
-    {tactic}
-  </a>
-) : (
-  <span class={`inline-block text-xs px-2 py-0.5 text-white ${color}`}>
-    {tactic}
-  </span>
-)}
+<Tag
+  href={linked ? filterUrl('tactic', tactic) : undefined}
+  class:list={[cls, linked && 'hover:border-text-secondary/60 transition-colors']}
+>
+  <span class={`w-1.5 h-1.5 rounded-full ${tacticColor(tactic)}`} aria-hidden="true"></span>
+  {tactic}
+</Tag>

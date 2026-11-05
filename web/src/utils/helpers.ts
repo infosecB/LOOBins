@@ -32,22 +32,22 @@ export function formatDate(date: Date): string {
   return date.toISOString().split('T')[0];
 }
 
-// Shades are chosen so white badge text meets WCAG AA (>= 4.5:1).
+// Tactic colors only fill a small dot beside neutral text, so lighter shades read better on the dark surface.
 const tacticColors: Record<string, string> = {
-  'Reconnaissance': 'bg-blue-600',
-  'Resource Development': 'bg-indigo-600',
-  'Initial Access': 'bg-violet-600',
-  'Execution': 'bg-red-600',
-  'Persistence': 'bg-orange-700',
-  'Privilege Escalation': 'bg-amber-700',
-  'Defense Evasion': 'bg-yellow-700',
-  'Credential Access': 'bg-lime-700',
-  'Discovery': 'bg-green-700',
-  'Lateral Movement': 'bg-emerald-700',
-  'Collection': 'bg-teal-700',
-  'Exfiltration': 'bg-cyan-700',
-  'Command and Control': 'bg-sky-700',
-  'Impact': 'bg-rose-600',
+  'Reconnaissance': 'bg-blue-400',
+  'Resource Development': 'bg-indigo-400',
+  'Initial Access': 'bg-violet-400',
+  'Execution': 'bg-red-400',
+  'Persistence': 'bg-orange-400',
+  'Privilege Escalation': 'bg-amber-400',
+  'Defense Evasion': 'bg-yellow-400',
+  'Credential Access': 'bg-lime-400',
+  'Discovery': 'bg-green-400',
+  'Lateral Movement': 'bg-emerald-400',
+  'Collection': 'bg-teal-400',
+  'Exfiltration': 'bg-cyan-400',
+  'Command and Control': 'bg-sky-400',
+  'Impact': 'bg-rose-400',
 };
 
 // Tactics in ATT&CK kill-chain order.
@@ -59,5 +59,5 @@ export function loobinTactics(loobin: any): string[] {
 }
 
 export function tacticColor(tactic: string): string {
-  return tacticColors[tactic] ?? 'bg-slate-600';
+  return tacticColors[tactic] ?? 'bg-slate-400';
 }
