@@ -11,7 +11,6 @@ example_use_cases:
   - Execution
   - Defense Evasion
   tags:
-  - xattr
   - quarantine
 - name: Bypass Gatekeeper via xattr
   description: Use xattr to remove quarantine extended attribute from multiple files or directories.
@@ -20,7 +19,6 @@ example_use_cases:
   - Execution
   - Defense Evasion
   tags:
-  - xattr
   - quarantine
 - name: Clear extended attributes from a file via xattr
   description: Use xattr -c to clear a file's extended attributes. This removes com.apple.quarantine when present without naming it, so the command line does not contain the string com.apple.quarantine. AMOS ran this form on a dropped payload before executing it.
@@ -29,7 +27,6 @@ example_use_cases:
   - Execution
   - Defense Evasion
   tags:
-  - xattr
   - quarantine
 - name: Recursively clear extended attributes via xattr
   description: Use xattr -cr to clear extended attributes, including com.apple.quarantine, across an app bundle or directory tree. Seen in MacSync and CrashStealer infections.
@@ -38,7 +35,6 @@ example_use_cases:
   - Execution
   - Defense Evasion
   tags:
-  - xattr
   - quarantine
 paths:
 - /usr/bin/xattr

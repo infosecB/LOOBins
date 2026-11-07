@@ -8,14 +8,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.10", "3.12"]
+        python-version: ["3.9", "3.10", "3.12"]
     steps:
     - name: Checkout branch
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    # setup-python has no 3.8 build for current ubuntu-latest images; uv
-    # provides managed interpreters for every supported version and, given
+    # uv provides managed interpreters for every supported version and, given
     # python-version, creates and activates a venv for later steps.
     - name: Set up uv with Python ${{ matrix.python-version }}
       uses: astral-sh/setup-uv@v5

@@ -13,7 +13,6 @@ example_use_cases:
       - smb
       - file-sharing
       - file-transfer
-      - lateral-movement
 paths:
   - /usr/sbin/sharing
 detections:

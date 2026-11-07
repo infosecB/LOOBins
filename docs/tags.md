@@ -10,6 +10,8 @@ Tags describe the technical characteristics of each use case. They complement th
 - **No MITRE tactic names** — use the `tactics` field for those
 - **No MITRE technique IDs** — `T1072` does not belong in tags
 - **Avoid self-referencing** — don't tag a LOOBin with its own binary name (e.g., don't use `mdls` as a tag in `mdls.yml`). Cross-references to other binaries (e.g., `osascript` in `mdfind.yml`) are fine.
+- **Documented tags only** — every tag must appear in a table below. `tests/test_tags.py` enforces this, so add a row here when introducing a new tag.
+- **One spelling per concept** — reuse an existing tag (`clipboard`, `system-info`) instead of adding a synonym.
 
 ## Tag Categories
 
@@ -23,6 +25,8 @@ Tags indicating which shell or scripting language is used in the example.
 | `swift` | Uses Swift language |
 | `jxa` | JavaScript for Automation |
 | `osascript` | Invokes osascript (cross-reference) |
+| `javascript` | Uses JavaScript (outside JXA) |
+| `webassembly` | Uses WebAssembly |
 
 ### Execution Style
 How the command is structured or run.
@@ -55,6 +59,19 @@ What system area the use case targets.
 | `permissions` | Permission management |
 | `startup` | Startup/login items |
 | `system-info` | System information gathering |
+| `apfs` | APFS volumes or containers |
+| `snapshot` | Volume or Time Machine snapshots |
+| `power-management` | Power, sleep, and wake settings |
+| `sleep` | System sleep behavior |
+| `keep-awake` | Preventing the system from sleeping |
+| `schedule` | Scheduled system events |
+| `assertions` | Power management assertions |
+| `policy` | Account or password policies |
+| `user-activity` | User activity or idle state |
+| `user-interface` | User interface processes |
+| `terminal` | Terminal application |
+| `notifications` | Notification services |
+| `active-directory` | Active Directory environments |
 
 ### Protocol
 Network protocol involved.
@@ -68,6 +85,9 @@ Network protocol involved.
 | `dns` | DNS protocol |
 | `snmp` | SNMP protocol |
 | `eppc` | Remote Apple Events protocol |
+| `kerberos` | Kerberos authentication |
+| `gssapi` | GSSAPI/Kerberos-authenticated binds |
+| `wake-on-lan` | Wake-on-LAN / network wake |
 
 ### Technique
 Adversary technique or method described.
@@ -79,12 +99,9 @@ Adversary technique or method described.
 | `covert-channel` | Hidden communication channel |
 | `covert-storage` | Hidden data storage |
 | `c2` | Command and control |
-| `reconnaissance` | Information gathering |
 | `enumeration` | System/resource enumeration |
 | `evasion` | Detection evasion method |
 | `surveillance` | Monitoring/surveillance |
-| `privilege-escalation` | Elevating privileges |
-| `lateral-movement` | Moving between systems |
 | `payload-execution` | Executing a payload |
 | `remote-execution` | Remote command execution |
 | `remote-apple-events` | Uses Remote Apple Events |
@@ -95,6 +112,21 @@ Adversary technique or method described.
 | `geolocation` | Location discovery |
 | `cookie-theft` | Browser cookie theft |
 | `vmcheck` | Virtual machine detection |
+| `domain-enumeration` | Directory/domain enumeration |
+| `kerberoasting` | Kerberoasting service accounts |
+| `asrep-roasting` | AS-REP roasting accounts |
+| `laps` | Reading LAPS passwords |
+| `paged-results` | Paged LDAP queries for large result sets |
+| `staging` | Staging data before exfiltration |
+| `anti-forensics` | Destroying or hiding forensic evidence |
+| `indicator-removal` | Removing indicators of activity |
+| `cleanup` | Cleaning up artifacts |
+| `delete` | Deleting data |
+| `restore` | Restoring data from backup |
+| `wiper` | Destructive data wiping |
+| `inhibit-recovery` | Preventing system recovery |
+| `disruption` | Disrupting services or processes |
+| `edr` | Security/EDR tooling tampering or discovery |
 
 ### macOS-Specific
 macOS frameworks, features, or security mechanisms.
@@ -115,6 +147,8 @@ macOS frameworks, features, or security mechanisms.
 | `system-events` | System Events scripting |
 | `lockscreen` | Lock screen interaction |
 | `system-reset` | System reset operations |
+| `filevault` | FileVault disk encryption |
+| `passphrase` | Disk or volume passphrases |
 
 ### Application
 Specific application targeted.
@@ -151,6 +185,24 @@ Known malware that uses this technique (lowercase).
 | `genieo` | Genieo adware |
 | `shlayer` | Shlayer trojan |
 | `cleanmaster` | CleanMaster PUP |
+
+### Vulnerability Reference
+CVE identifiers (lowercase) for vulnerabilities the use case exploits.
+
+| Tag | Description |
+|-----|-------------|
+| `cve-2023-42931` | CVE-2023-42931 (diskutil noowners privilege escalation) |
+
+### Binary Option
+Specific flags, verbs, or settings of the binary named in the use case.
+
+| Tag | Description |
+|-----|-------------|
+| `noowners` | diskutil `noowners` mount option |
+| `secureerase` | diskutil `secureErase` verb |
+| `destroyfvkeyonstandby` | pmset `DestroyFVKeyOnStandby` setting |
+| `wakeorpoweron` | pmset `wakeorpoweron` schedule type |
+| `womp` | pmset `womp` (wake on magic packet) setting |
 
 ### Binary Reference
 Cross-references to other macOS binaries used in the example.
