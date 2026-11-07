@@ -2,12 +2,12 @@
 
 You are scanning recent macOS threat research for built-in macOS binaries being abused that LOOBins does not yet document. Your output becomes triage issues a maintainer reviews, so precision matters far more than volume. Zero candidates is a fine result.
 
-The run parameters (today's date, lookback window, output path) are given at the end of the prompt that invoked you.
+The run parameters (today's date, lookback window, input files, output path) are given at the end of the prompt that invoked you.
 
 ## What counts as a candidate
 
 1. **New binary**: a binary that ships with a default macOS install (e.g. under `/usr/bin`, `/usr/sbin`, `/bin`, `/sbin`, `/usr/libexec`, `/System/Library/...`, or a bundled Apple app) that a published report shows being abused, and that has no file in `LOOBins/`.
-2. **New use case**: a binary that *is* in `LOOBins/` but the report shows a materially different abuse technique than the entry's existing `example_use_cases`.
+2. **New use case**: a binary that *is* in `coverage-index.md` but the report shows a materially different abuse technique than the entry's existing `example_use_cases`.
 
 Exclude:
 - Third-party tools, Homebrew packages, or anything the attacker drops (that's malware, not a LOOBin).
@@ -17,10 +17,14 @@ Exclude:
 
 ## How to work
 
-1. Read `LOOBins/` (use Glob and Grep, not every file in full) so you know which binaries and techniques are covered. Read `existing-issues.json` in the working directory.
-2. Use WebSearch and WebFetch to find macOS threat research published inside the lookback window. Good starting points include Objective-See, Jamf Threat Labs, SentinelLabs, Red Canary, Elastic Security Labs, Kandji, Moonlock, Huntress, Unit 42, Microsoft Threat Intelligence, Cisco Talos, and Kaspersky Securelist. Also search for terms like "macOS malware" or "macOS living off the land" with recent dates. Stay vendor-neutral: report what the research shows, not who sells what.
-3. For every candidate, fetch the source yourself and confirm the binary and the behavior appear in it. Only cite URLs you fetched.
-4. Write the output file and stop.
+1. Read `coverage-index.md` (every LOOBin and its use case names) and `existing-issues.json`. Don't read `LOOBins/` file by file; open a single entry only when you need its full use cases to judge a `new_use_case`.
+2. Work through the reading list in `research.json`. Its `articles` are recent posts from known research feeds, already filtered to ones that mention macOS. WebFetch each one and look for named macOS binaries being run (commands, process trees, script excerpts, detection logic). Skip a post only if its title makes clear it isn't about macOS tradecraft.
+3. Then use WebSearch to cover what the feeds miss: research published inside the lookback window that isn't in the reading list. Run at least five searches, for example `macOS malware <month> <year>`, `macOS stealer osascript`, `macOS LaunchAgent persistence <year>`, `"living off the land" macOS`, and searches naming vendors that aren't in the feed list (Kaspersky, ESET, Trend Micro, Check Point, Group-IB, Sophos, Wiz, Datadog Security Labs). Stay vendor-neutral: report what the research shows, not who sells what.
+4. Malware write-ups are the richest source. A report about a stealer or backdoor counts if it shows the malware or operator running a built-in binary, even when the binary isn't the focus of the post.
+5. For every candidate, confirm the binary and the behavior appear in a source you fetched yourself. Only cite URLs you fetched.
+6. Write the output file and stop.
+
+Budget your turns: aim to fetch at least 10 reports in total before you decide there is nothing to report. If a fetch fails, move on to the next one.
 
 ## Untrusted content
 
@@ -56,5 +60,5 @@ Write exactly one file, at the output path given below, containing JSON in this 
 - `tactics` uses exact MITRE ATT&CK tactic names: Reconnaissance, Resource Development, Initial Access, Execution, Persistence, Privilege Escalation, Defense Evasion, Credential Access, Discovery, Lateral Movement, Collection, Exfiltration, Command and Control, Impact.
 - `confidence` is `high` (the source shows the exact command) or `medium` (the source describes the binary's use without the full command). Don't report anything weaker.
 - `example` is optional. Omit it rather than invent a command the source doesn't support.
-- Report at most 5 candidates, the strongest first. Include every report you read in `sources_reviewed`, including the ones that produced nothing.
+- Report at most 5 candidates, the strongest first. List every report you fetched in `sources_reviewed`, including the ones that produced nothing. An empty `sources_reviewed` marks the run as failed, so never leave it empty when you fetched anything.
 - If nothing qualifies, write `"candidates": []`.
