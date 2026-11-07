@@ -9,6 +9,8 @@ example_use_cases:
       code: tccutil reset AppleEvents
       tactics:
           - Defense Evasion
+      techniques:
+          - T1548.006
       tags:
           - bash
     - name: Use the tccutil to reset specific permissions for an application
@@ -16,6 +18,8 @@ example_use_cases:
       code: tccutil reset AppleEvents com.apple.Terminal
       tactics:
           - Defense Evasion
+      techniques:
+          - T1548.006
       tags:
           - bash
 paths:

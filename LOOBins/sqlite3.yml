@@ -20,6 +20,8 @@ example_use_cases:
   tactics:
   - Collection
   - Credential Access
+  techniques:
+  - T1539
   tags:
   - oneliner
   - cookie-theft
@@ -30,6 +32,8 @@ example_use_cases:
   tactics:
   - Collection
   - Credential Access
+  techniques:
+  - T1005
   tags:
   - oneliner
   - cookie-theft

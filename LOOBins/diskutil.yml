@@ -28,6 +28,8 @@ example_use_cases:
     code: diskutil list -plist external
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - disk
       - enumeration
@@ -40,6 +42,8 @@ example_use_cases:
     code: diskutil apfs list -plist
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - apfs
       - enumeration
@@ -52,6 +56,8 @@ example_use_cases:
     code: diskutil info -plist -all
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - disk
       - filevault
@@ -64,6 +70,8 @@ example_use_cases:
     code: diskutil apfs listCryptoUsers -plist <VOLUME_DEVICE>
     tactics:
       - Discovery
+    techniques:
+      - T1087.001
     tags:
       - filevault
       - enumeration
@@ -76,6 +84,8 @@ example_use_cases:
     code: echo '<PASSPHRASE>' | diskutil apfs unlockVolume <VOLUME_DEVICE> -user <CRYPTO_USER_UUID> -stdinpassphrase -verify
     tactics:
       - Credential Access
+    techniques:
+      - T1110.001
     tags:
       - filevault
       - passphrase
@@ -96,6 +106,8 @@ example_use_cases:
       - Privilege Escalation
       - Defense Evasion
       - Collection
+    techniques:
+      - T1068
     tags:
       - noowners
       - cve-2023-42931
@@ -115,6 +127,8 @@ example_use_cases:
     tactics:
       - Defense Evasion
       - Impact
+    techniques:
+      - T1485
     tags:
       - secureerase
       - anti-forensics
@@ -127,6 +141,8 @@ example_use_cases:
     code: diskutil zeroDisk force short /dev/<DISK>
     tactics:
       - Impact
+    techniques:
+      - T1561.002
     tags:
       - wiper
       - disk
@@ -139,6 +155,8 @@ example_use_cases:
     code: diskutil eraseDisk JHFS+ Untitled <DISK>
     tactics:
       - Impact
+    techniques:
+      - T1561.002
     tags:
       - wiper
       - disk
@@ -150,6 +168,8 @@ example_use_cases:
     code: diskutil apfs deleteContainer <CONTAINER_DEVICE>
     tactics:
       - Impact
+    techniques:
+      - T1561.002
     tags:
       - wiper
       - apfs
@@ -162,6 +182,8 @@ example_use_cases:
     code: diskutil apfs listSnapshots -plist <VOLUME_DEVICE>
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - snapshot
       - enumeration
@@ -174,6 +196,8 @@ example_use_cases:
     code: diskutil apfs deleteSnapshot <VOLUME_DEVICE> -name <SNAPSHOT_NAME> -wait
     tactics:
       - Impact
+    techniques:
+      - T1490
     tags:
       - snapshot
       - inhibit-recovery

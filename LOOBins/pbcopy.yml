@@ -9,6 +9,8 @@ example_use_cases:
     code: echo '<COMMAND>' | pbcopy && eval "$(pbpaste)"
     tactics:
       - Execution
+    techniques:
+      - T1204.004
     tags:
       - clipboard
   - name: Park staged data on a non-general pasteboard to evade inspection
@@ -17,6 +19,8 @@ example_use_cases:
     tactics:
       - Collection
       - Defense Evasion
+    techniques:
+      - T1074.001
     tags:
       - clipboard
       - staging
@@ -25,6 +29,8 @@ example_use_cases:
     code: printf '' | pbcopy
     tactics:
       - Defense Evasion
+    techniques:
+      - T1070
     tags:
       - clipboard
 paths:

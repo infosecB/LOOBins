@@ -9,6 +9,8 @@ example_use_cases:
   code: log erase --all
   tactics:
   - Defense Evasion
+  techniques:
+  - T1685.006
   tags:
   - requires-root
 - name: Search log messages for tokens
@@ -16,6 +18,8 @@ example_use_cases:
   code: log show --info --debug --predicate 'eventMessage CONTAINS[d] "eyJ"'
   tactics:
   - Credential Access
+  techniques:
+  - T1552
   tags:
   - bash
   - zsh

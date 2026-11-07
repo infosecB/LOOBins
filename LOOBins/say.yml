@@ -10,6 +10,8 @@ example_use_cases:
   tactics:
   - Defense Evasion
   - Collection
+  techniques:
+  - T1005
   tags:
   - bash
 - name: Collect clipboard data
@@ -20,6 +22,8 @@ example_use_cases:
   - Reconnaissance
   - Discovery
   - Collection
+  techniques:
+  - T1115
   tags:
   - pbpaste
   - clipboard

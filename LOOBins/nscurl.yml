@@ -10,18 +10,24 @@ example_use_cases:
     tactics:
       - Defense Evasion
       - Command and Control
+    techniques:
+      - T1105
   - name: Download file
     description: Download file to the Downloads directory using -dl 
     code: nscurl https://google.com -dl
     tactics:
       - Defense Evasion
       - Command and Control
+    techniques:
+      - T1105
   - name: Download file
     description: Download file to a designated directory using -dir 
     code: nscurl https://google.com -dir /private/tmp/google
     tactics:
       - Defense Evasion
       - Command and Control             
+    techniques:
+      - T1105
 paths:
   - /usr/bin/nscurl
 detections:

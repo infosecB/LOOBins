@@ -9,6 +9,8 @@ example_use_cases:
     code: system_profiler -listDataTypes
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh
@@ -17,6 +19,8 @@ example_use_cases:
     code: system_profiler SPHardwareDataType
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh
@@ -25,6 +29,8 @@ example_use_cases:
     code: system_profiler SPSoftwareDataType
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh
@@ -33,6 +39,8 @@ example_use_cases:
     code: system_profiler SPDeveloperToolsDataType
     tactics:
       - Discovery
+    techniques:
+      - T1518
     tags:
       - bash
       - zsh
@@ -41,6 +49,8 @@ example_use_cases:
     code: system_profiler SPPowerDataType
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh

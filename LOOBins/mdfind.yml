@@ -10,6 +10,8 @@ example_use_cases:
     tactics:
       - Reconnaissance
       - Discovery
+    techniques:
+      - T1083
     tags:
       - bash
       - zsh
@@ -20,6 +22,9 @@ example_use_cases:
     tactics:
       - Reconnaissance
       - Discovery
+    techniques:
+      - T1552.001
+      - T1083
     tags:
       - bash
       - zsh
@@ -31,6 +36,9 @@ example_use_cases:
       - Reconnaissance
       - Discovery
       - Defense Evasion
+    techniques:
+      - T1518
+      - T1083
     tags:
       - osascript
       - xcsset

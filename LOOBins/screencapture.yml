@@ -9,6 +9,8 @@ example_use_cases:
   code: while true; do ts=$(date +"%Y%m%d-%H%M%S"); o="/tmp/screenshots"; screencapture -x "$o/ss-$ts.png"; sleep 10; done
   tactics:
   - Collection
+  techniques:
+  - T1113
   tags:
   - oneliner
 paths:

@@ -9,6 +9,8 @@ example_use_cases:
   code: sudo defaults write /Library/Preferences/com.apple.security GKAutoRearm -bool NO
   tactics:
   - Defense Evasion
+  techniques:
+  - T1553.001
   tags:
   - gatekeeper
 - name: Show mounted servers
@@ -16,16 +18,22 @@ example_use_cases:
   code: defaults read com.apple.finder "ShowMountedServersOnDesktop"
   tactics:
   - Discovery
+  techniques:
+  - T1135
 - name: Add a login item to the current user
   description: An attacker can use defaults to add a login hook in attempt to gain persistence. This command requires root privileges.
   code: sudo defaults write /Library/Preferences/com.apple.loginwindow LoginHook gain_persistence.sh
   tactics:
   - Persistence
+  techniques:
+  - T1037.002
 - name: Get Active Directory user info from Jamf Connect
   description: Retrieve Active Directory user info from Jamf Connect defaults configuration.
   code: defaults read com.jamf.connect.state
   tactics:
   - Discovery
+  techniques:
+  - T1087.002
 - name: Enable Firewall
   description: Enables macOS' default firewall. This command requires root privileges.
   code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 1
@@ -38,6 +46,8 @@ example_use_cases:
   code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 0
   tactics:
   - Defense Evasion
+  techniques:
+  - T1686
   tags:
   - firewall
 paths:

@@ -9,6 +9,8 @@ example_use_cases:
   code: sudo spctl --master-disable
   tactics:
   - Defense Evasion
+  techniques:
+  - T1553.001
   tags:
   - gatekeeper
 paths:

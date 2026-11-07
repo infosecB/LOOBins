@@ -21,6 +21,8 @@ example_use_cases:
     tactics:
       - Privilege Escalation
       - Persistence
+    techniques:
+      - T1098.007
     tags:
       - groups
   - name: Edit a group using explicit credentials on a local or network directory node
@@ -33,6 +35,8 @@ example_use_cases:
     tactics:
       - Privilege Escalation
       - Lateral Movement
+    techniques:
+      - T1098.007
     tags:
       - ldap
   - name: Grant remote service access through a SACL group
@@ -45,6 +49,8 @@ example_use_cases:
     tactics:
       - Persistence
       - Lateral Movement
+    techniques:
+      - T1098.007
     tags:
       - ssh
   - name: Remove a service access group so the service accepts all users
@@ -56,6 +62,8 @@ example_use_cases:
     tactics:
       - Defense Evasion
       - Lateral Movement
+    techniques:
+      - T1021
     tags: []
   - name: Enumerate group membership to identify privileged accounts
     description: >-
@@ -66,6 +74,8 @@ example_use_cases:
     code: dseditgroup -o read admin
     tactics:
       - Discovery
+    techniques:
+      - T1069.001
     tags:
       - groups
       - enumeration

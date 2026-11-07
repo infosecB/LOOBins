@@ -9,6 +9,8 @@ example_use_cases:
     code: codesign --force --deep -s - MyApp.app
     tactics:
       - Defense Evasion
+    techniques:
+      - T1553.002
     tags:
       - oneliner
 paths:

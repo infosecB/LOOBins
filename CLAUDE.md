@@ -63,7 +63,7 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 - `short_description`: Brief description for card display (used in search results and cards)
 - `full_description`: Detailed description (displays on LOOBin's page)
 - `created`: Date in YYYY-MM-DD format
-- `example_use_cases`: Array of use cases with name, description, optional code, tactics, and tags
+- `example_use_cases`: Array of use cases with name, description, optional code, tactics, techniques (ATT&CK IDs like `T1059.002`), and tags
 - `paths`: Array of binary paths on macOS (e.g., `/usr/bin/osascript`)
 - `detections`: Array of detection sources with name and URL
 
@@ -83,7 +83,7 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 
 1. **Models** (`src/pyloobins/models.py`):
    - Pydantic v2 models: `LOOBin`, `ExampleUseCase`, `Detection`, `Resource`, `LOOBinsGroup`
-   - Methods: `to_yaml()`, `to_md()`, `to_stix()`, `combine_tactics()`, `combine_tags()`
+   - Methods: `to_yaml()`, `to_md()`, `to_stix()`, `combine_tactics()`, `combine_techniques()`, `combine_tags()`
    - STIX2 integration for exporting threat intelligence data
 
 2. **Utilities** (`src/pyloobins/util.py`):

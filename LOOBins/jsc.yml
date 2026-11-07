@@ -13,6 +13,8 @@ example_use_cases:
     tactics:
       - Execution
       - Defense Evasion
+    techniques:
+      - T1059.007
     tags:
       - javascript
       - oneliner
@@ -23,6 +25,9 @@ example_use_cases:
     tactics:
       - Execution
       - Defense Evasion
+    techniques:
+      - T1059.007
+      - T1140
     tags:
       - javascript
       - base64
@@ -33,6 +38,8 @@ example_use_cases:
     tactics:
       - Collection
       - Credential Access
+    techniques:
+      - T1005
     tags:
       - javascript
       - base64
@@ -42,6 +49,8 @@ example_use_cases:
     code: /System/Library/Frameworks/JavaScriptCore.framework/Versions/Current/Helpers/jsc -e 'var s=atob("<base64 blob>"); var b=new Uint8Array(s.length); for(var i=0;i<s.length;i++) b[i]=s.charCodeAt(i); writeFile("/tmp/payload", b)'
     tactics:
       - Defense Evasion
+    techniques:
+      - T1140
     tags:
       - javascript
       - base64
@@ -52,6 +61,9 @@ example_use_cases:
     tactics:
       - Execution
       - Defense Evasion
+    techniques:
+      - T1059.007
+      - T1027
     tags:
       - javascript
       - webassembly

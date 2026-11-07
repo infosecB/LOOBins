@@ -13,6 +13,8 @@ example_use_cases:
   code: chflags hidden ~/evil
   tactics:
   - Defense Evasion
+  techniques:
+  - T1564.001
   tags:
   - finder
 - name: Remove hidden flag

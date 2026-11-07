@@ -10,6 +10,8 @@ example_use_cases:
     tactics:
       - Persistence
       - Defense Evasion
+    techniques:
+      - T1564.001
     tags:
       - bash
       - zsh
@@ -19,6 +21,8 @@ example_use_cases:
     code: SetFile -d "04/25/2023 11:11:00" -m "04/25/2023 11:12:00" targetfile.txt
     tactics:
       - Defense Evasion
+    techniques:
+      - T1070.006
     tags:
       - bash
       - zsh

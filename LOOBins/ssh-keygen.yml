@@ -10,6 +10,8 @@ example_use_cases:
   tactics:
   - Execution
   - Defense Evasion
+  techniques:
+  - T1129
   tags:
   - dylib
 paths:

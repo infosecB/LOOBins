@@ -9,6 +9,8 @@ example_use_cases:
     code: mdls -name "kMDItemWhereFroms" -name "kMDItemDownloadedDate"
     tactics:
       - Defense Evasion
+    techniques:
+      - T1083
     tags:
       - genieo
       - shlayer
@@ -17,6 +19,8 @@ example_use_cases:
     code: xargs -0 mdls -n kMDItemPath -n kMDItemFSSize
     tactics:
       - Discovery
+    techniques:
+      - T1083
     tags:
       - cleanmaster
   - name: Extract and execute payload stored in Finder comment metadata
@@ -26,6 +30,9 @@ example_use_cases:
       - Execution
       - Collection
       - Defense Evasion
+    techniques:
+      - T1140
+      - T1059.004
     tags:
       - finder-comment
       - spotlight

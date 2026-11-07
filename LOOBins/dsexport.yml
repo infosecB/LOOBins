@@ -10,6 +10,8 @@ example_use_cases:
   tactics:
   - Reconnaissance
   - Discovery
+  techniques:
+  - T1087.001
   tags:
   - ldap
   - users
@@ -19,6 +21,8 @@ example_use_cases:
   tactics:
   - Reconnaissance
   - Discovery
+  techniques:
+  - T1069.001
   tags:
   - ldap
   - groups

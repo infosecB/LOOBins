@@ -22,6 +22,8 @@ example_use_cases:
     code: /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate off
     tactics:
       - Defense Evasion
+    techniques:
+      - T1686
     tags:
       - firewall
   - name: Register and allow a planted listener to receive inbound connections
@@ -35,6 +37,8 @@ example_use_cases:
       - Defense Evasion
       - Persistence
       - Command and Control
+    techniques:
+      - T1686
     tags:
       - firewall
   - name: Disable block-all mode to re-open inbound access
@@ -46,6 +50,8 @@ example_use_cases:
     code: /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall off
     tactics:
       - Defense Evasion
+    techniques:
+      - T1686
     tags:
       - firewall
   - name: Enumerate Application Firewall state and allowed applications
@@ -57,6 +63,8 @@ example_use_cases:
     code: /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate
     tactics:
       - Discovery
+    techniques:
+      - T1518.001
     tags:
       - firewall
       - enumeration

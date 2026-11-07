@@ -9,6 +9,8 @@ example_use_cases:
     code: sudo security dump-keychain -d login.keychain
     tactics:
       - Credential Access
+    techniques:
+      - T1555.001
     tags:
       - bash
   - name: Retrieve Chrome's "Chrome Safe Storage" password manager secret
@@ -16,6 +18,8 @@ example_use_cases:
     code: security find-generic-password -w -s "Chrome Safe Storage"
     tactics:
       - Credential Access
+    techniques:
+      - T1555.001
     tags:
       - bash
       - chrome
@@ -24,6 +28,8 @@ example_use_cases:
     code: security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain bad_cert.crt
     tactics:
       - Defense Evasion
+    techniques:
+      - T1553.004
     tags:
       - bash
       - certificate 

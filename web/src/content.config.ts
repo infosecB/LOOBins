@@ -32,6 +32,10 @@ const loobins = defineCollection({
         description: z.string(),
         code: z.string().optional(),
         tactics: z.array(z.enum(tactics)).optional().default([]),
+        techniques: z
+          .array(z.string().regex(/^T\d{4}(\.\d{3})?$/, 'ATT&CK technique ID, e.g. T1059.002'))
+          .optional()
+          .default([]),
         tags: z.array(z.string()).optional().default([]),
       })
     ),

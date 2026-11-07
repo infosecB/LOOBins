@@ -9,6 +9,8 @@ example_use_cases:
     code: csrutil disable
     tactics:
       - Defense Evasion
+    techniques:
+      - T1685
     tags:
       - users
   - name: Disable authenticated-root
@@ -16,6 +18,8 @@ example_use_cases:
     code: csrutil authenticated-root disable
     tactics:
       - Defense Evasion
+    techniques:
+      - T1685
     tags:
       - users
   - name: Add a netboot server
@@ -38,6 +42,8 @@ example_use_cases:
     code: csrutil status
     tactics:
       - Discovery
+    techniques:
+      - T1082
 paths:
   - /usr/bin/csrutil
 detections:

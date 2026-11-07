@@ -9,6 +9,8 @@ example_use_cases:
   code: pkill -f "Little Snitch|ESET|osqueryd|Falcon"
   tactics:
   - Defense Evasion
+  techniques:
+  - T1685
   tags:
   - processes
   - evasion
@@ -17,6 +19,8 @@ example_use_cases:
   code: pkill -9 osqueryd
   tactics:
   - Defense Evasion
+  techniques:
+  - T1685
   tags:
   - processes
   - sigkill
@@ -26,6 +30,8 @@ example_use_cases:
   tactics:
   - Defense Evasion
   - Impact
+  techniques:
+  - T1489
   tags:
   - processes
   - users
@@ -34,6 +40,8 @@ example_use_cases:
   code: pkill -f "syslog|auditd|osqueryd|esensor|nessusd"
   tactics:
   - Defense Evasion
+  techniques:
+  - T1685
   tags:
   - logging
   - monitoring
@@ -43,6 +51,8 @@ example_use_cases:
   tactics:
   - Defense Evasion
   - Impact
+  techniques:
+  - T1489
   tags:
   - processes
 paths:

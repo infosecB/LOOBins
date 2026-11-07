@@ -9,6 +9,8 @@ example_use_cases:
     code: dsconfigad -show
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh
@@ -17,6 +19,8 @@ example_use_cases:
     code: dsconfigad -show |awk '/Active Directory Domain/{print $NF}'
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh

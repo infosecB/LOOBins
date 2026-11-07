@@ -2,6 +2,9 @@
 
 from datetime import date
 
+import pytest
+from pydantic import ValidationError
+
 from pyloobins.models import (
     Detection,
     ExampleUseCase,
@@ -30,12 +33,14 @@ def _sample_loobin() -> LOOBin:
                 name="uc1",
                 description="d1",
                 tactics=["Discovery", "Execution"],
+                techniques=["T1082", "T1059.002"],
                 tags=["a", "b"],
             ),
             ExampleUseCase(
                 name="uc2",
                 description="d2",
                 tactics=["Execution", "Persistence"],
+                techniques=["T1059.002", "T1543.001"],
                 tags=["b", "c"],
             ),
         ],
@@ -95,3 +100,27 @@ def test_to_md_renders_sections_and_na_detection():
     assert "- no detection" in md
     # A detection with a real URL renders as a Markdown link.
     assert "[Sigma](https://example.com)" in md
+
+
+def test_combine_techniques_dedupes_preserving_order():
+    """combine_techniques unions use-case techniques, de-duped, in first-seen order."""
+    assert _sample_loobin().combine_techniques() == ["T1082", "T1059.002", "T1543.001"]
+
+
+@pytest.mark.parametrize("technique", ["T1059", "T1059.002"])
+def test_technique_id_accepted(technique):
+    euc = ExampleUseCase(name="n", description="d", techniques=[technique])
+    assert euc.techniques == [technique]
+
+
+@pytest.mark.parametrize(
+    "technique", ["t1059", "T159", "T1059.2", "T1059.0021", "TA0005", "Command"]
+)
+def test_malformed_technique_id_rejected(technique):
+    with pytest.raises(ValidationError):
+        ExampleUseCase(name="n", description="d", techniques=[technique])
+
+
+def test_to_md_links_techniques():
+    md = _sample_loobin().to_md()
+    assert "https://attack.mitre.org/techniques/T1059/002/" in md

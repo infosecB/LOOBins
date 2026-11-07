@@ -10,6 +10,8 @@ example_use_cases:
   tactics:
   - Execution
   - Defense Evasion
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 - name: Bypass Gatekeeper via xattr
@@ -18,6 +20,8 @@ example_use_cases:
   tactics:
   - Execution
   - Defense Evasion
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 - name: Clear extended attributes from a file via xattr
@@ -26,6 +30,8 @@ example_use_cases:
   tactics:
   - Execution
   - Defense Evasion
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 - name: Recursively clear extended attributes via xattr
@@ -34,6 +40,8 @@ example_use_cases:
   tactics:
   - Execution
   - Defense Evasion
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 paths:

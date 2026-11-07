@@ -10,6 +10,9 @@ example_use_cases:
     tactics:
       - Collection
       - Exfiltration
+    techniques:
+      - T1560.001
+      - T1048
     tags:
       - files
       - compress

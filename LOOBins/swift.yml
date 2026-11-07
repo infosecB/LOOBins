@@ -9,6 +9,8 @@ example_use_cases:
     code: swift mycode.swift
     tactics:    
       - Execution
+    techniques:
+      - T1059
     tags:  
       - repl
       - bash
@@ -19,6 +21,8 @@ example_use_cases:
     tactics:    
       - Execution
       - Defense Evasion
+    techniques:
+      - T1059
     tags:  
       - repl
       - bash
@@ -29,6 +33,8 @@ example_use_cases:
     tactics:    
       - Execution
       - Defense Evasion
+    techniques:
+      - T1059
     tags:  
       - repl
       - bash

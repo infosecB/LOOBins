@@ -12,6 +12,8 @@ example_use_cases:
       systemextensionsctl list com.apple.system_extension.network_extension
     tactics:
       - Discovery
+    techniques:
+      - T1518.001
     tags:
       - oneliner
       - bash
@@ -21,6 +23,8 @@ example_use_cases:
     code: sudo systemextensionsctl uninstall <teamID> <bundleID>
     tactics:
       - Defense Evasion
+    techniques:
+      - T1685
     tags:
       - oneliner
       - bash
@@ -31,6 +35,8 @@ example_use_cases:
     tactics:
       - Defense Evasion
       - Impact
+    techniques:
+      - T1685
     tags:
       - oneliner
       - bash
@@ -41,6 +47,8 @@ example_use_cases:
     tactics:
       - Defense Evasion
       - Persistence
+    techniques:
+      - T1685
     tags:
       - oneliner
       - bash

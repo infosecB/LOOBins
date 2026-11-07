@@ -10,6 +10,8 @@ example_use_cases:
     plutil -insert LSUIElement -string "1" /Applications/TargetApp.app/Contents/Info.plist
   tactics:
   - Defense Evasion
+  techniques:
+  - T1564.003
   tags:
   - plist
 paths:

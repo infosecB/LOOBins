@@ -19,6 +19,8 @@ example_use_cases:
   tactics:
   - Impact
   - Defense Evasion
+  techniques:
+  - T1489
   tags:
   - processes
   - user-interface
@@ -29,6 +31,8 @@ example_use_cases:
   tactics:
   - Defense Evasion
   - Impact
+  techniques:
+  - T1685
   tags:
   - notifications
   - processes
@@ -38,6 +42,8 @@ example_use_cases:
   tactics:
   - Defense Evasion
   - Impact
+  techniques:
+  - T1489
   tags:
   - processes
   - sigkill

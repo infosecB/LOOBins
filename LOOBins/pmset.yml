@@ -41,6 +41,8 @@ example_use_cases:
     code: pmset -g log
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - user-activity
   - name: List active power assertions to identify running applications
@@ -48,6 +50,8 @@ example_use_cases:
     code: pmset -g assertions
     tactics:
       - Discovery
+    techniques:
+      - T1057
     tags:
       - assertions
       - user-activity

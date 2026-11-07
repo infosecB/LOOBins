@@ -10,6 +10,8 @@ example_use_cases:
   tactics:
   - Execution
   - Persistence
+  techniques:
+  - T1569.001
   tags:
   - bash
   - zsh
@@ -19,6 +21,8 @@ example_use_cases:
   code: launchctl load -w ~/Library/LaunchAgents/com.apple.updates.plist
   tactics:
   - Persistence
+  techniques:
+  - T1543.001
 paths:
 - /bin/launchctl
 detections:

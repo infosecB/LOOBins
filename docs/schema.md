@@ -249,6 +249,34 @@
 
 
 
+### example_use_cases.techniques
+
+
+<table>
+  <tbody>
+    <tr>
+      <th>Title</th>
+      <td colspan="2">Techniques</td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td colspan="2">MITRE ATT&amp;CK Enterprise technique or sub-technique IDs, e.g. <code>T1059</code> or <code>T1059.002</code>. Use current IDs from <a href="https://attack.mitre.org/techniques/enterprise/">attack.mitre.org</a>, not revoked ones.</td>
+    </tr>
+    <tr><th>Type</th><td colspan="2">Array</td></tr>
+    <tr>
+      <th>Required</th>
+      <td colspan="2">No</td>
+    </tr>
+    <tr>
+      <th>Pattern</th>
+      <td colspan="2"><code>^T\d{4}(\.\d{3})?$</code></td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
 ### example_use_cases.tags
 
 
@@ -636,6 +664,8 @@ example_use_cases:
   code: A code snippet goes here.
   tactics:
   - Discovery
+  techniques:
+  - T1082
   tags:
   - example-tag
   - another-tag

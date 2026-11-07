@@ -10,6 +10,8 @@ example_use_cases:
     tactics:
       - Lateral Movement
       - Persistence
+    techniques:
+      - T1570
     tags:
       - launchctl
       - file-transfer
@@ -18,6 +20,8 @@ example_use_cases:
     code: "tftp <TARGET_IP> << EOF\nbinary\nput /tmp/payload.sh payload.sh\nquit\nEOF"
     tactics:
       - Lateral Movement
+    techniques:
+      - T1570
     tags:
       - file-transfer
       - oneliner
@@ -28,6 +32,9 @@ example_use_cases:
       - Lateral Movement
       - Defense Evasion
       - Persistence
+    techniques:
+      - T1570
+      - T1543.001
     tags:
       - launchctl
       - file-transfer

@@ -17,6 +17,9 @@ example_use_cases:
     tactics:
       - Persistence
       - Defense Evasion
+    techniques:
+      - T1543.001
+      - T1543.004
     tags:
       - plist
   - name: Insert a malicious authorization plugin mechanism into an exported right
@@ -25,6 +28,8 @@ example_use_cases:
     tactics:
       - Credential Access
       - Persistence
+    techniques:
+      - T1556
     tags: []
   - name: Parse live I/O Kit registry output from stdin to read screen lock state
     description: PlistBuddy accepts /dev/stdin as its file argument, so a plist produced by another command can be queried without touching disk. Google Threat Intelligence Group's UNC1069 report records the SILENCELIFT backdoor using this to read :IOConsoleUsers:0:CGSSessionScreenIsLocked from ioreg output and beacon the lock state to C2. The key is absent when the screen is unlocked, so PlistBuddy exits non-zero and the error is discarded. No privileges required.
@@ -32,6 +37,8 @@ example_use_cases:
     tactics:
       - Discovery
       - Collection
+    techniques:
+      - T1082
     tags:
       - lockscreen
   - name: Read a downloadUrl key with PlistBuddy and fetch the next stage
@@ -39,6 +46,8 @@ example_use_cases:
     code: curl "$(/usr/libexec/PlistBuddy -c "Print :downloadUrl" /tmp/version.plist)" --output /tmp/<STAGE_TWO>
     tactics:
       - Command and Control
+    techniques:
+      - T1105
     tags: []
   - name: Read an installed application's version from its Info.plist
     description: >-
@@ -48,6 +57,8 @@ example_use_cases:
     code: /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" /Applications/<APP>.app/Contents/Info.plist
     tactics:
       - Discovery
+    techniques:
+      - T1518
     tags: []
 paths:
   - /usr/libexec/PlistBuddy

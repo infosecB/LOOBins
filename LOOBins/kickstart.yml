@@ -28,6 +28,8 @@ example_use_cases:
       - Lateral Movement
       - Persistence
       - Command and Control
+    techniques:
+      - T1021.005
     tags: []
   - name: Grant ARD access to a single attacker-controlled account
     description: |
@@ -40,6 +42,8 @@ example_use_cases:
     tactics:
       - Persistence
       - Lateral Movement
+    techniques:
+      - T1021.005
     tags: []
   - name: Enable legacy VNC authentication with an attacker-chosen password
     description: |
@@ -54,6 +58,8 @@ example_use_cases:
     tactics:
       - Persistence
       - Defense Evasion
+    techniques:
+      - T1021.005
     tags: []
   - name: Hide the Remote Management menu bar indicator
     description: |
@@ -65,6 +71,8 @@ example_use_cases:
       sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -clientopts -setmenuextra -menuextra no -restart -menu
     tactics:
       - Defense Evasion
+    techniques:
+      - T1564
     tags: []
   - name: Escalate a headless SSH foothold to an interactive desktop session
     description: |
@@ -79,6 +87,9 @@ example_use_cases:
       - Collection
       - Defense Evasion
       - Lateral Movement
+    techniques:
+      - T1021.005
+      - T1021.004
     tags:
       - ssh
   - name: Deactivate the service and strip the access privileges after use
@@ -92,6 +103,8 @@ example_use_cases:
       sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -uninstall -settings -deactivate -stop -quiet
     tactics:
       - Defense Evasion
+    techniques:
+      - T1070
     tags: []
 paths:
   - /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart

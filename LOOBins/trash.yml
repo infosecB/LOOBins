@@ -23,6 +23,8 @@ example_use_cases:
     code: trash /private/tmp/stage.bin /Users/<USER>/Library/LaunchAgents/com.attacker.helper.plist /Users/<USER>/Library/Caches/.workdir
     tactics:
       - Defense Evasion
+    techniques:
+      - T1070.004
     tags:
       - indicator-removal
   - name: Verify a scripted cleanup with --stopOnError
@@ -34,6 +36,8 @@ example_use_cases:
     code: trash --stopOnError --verbose /private/tmp/impl /private/tmp/creds.json
     tactics:
       - Defense Evasion
+    techniques:
+      - T1070.004
     tags:
       - cleanup
 paths:
