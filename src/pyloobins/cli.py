@@ -1,5 +1,6 @@
 """Model for CLI functions"""
 
+import json
 import os
 import sys
 
@@ -108,6 +109,34 @@ def export_stix(file_name: str, path: str) -> None:
     file_path = path if path and os.path.exists(path) else "./"
     with open(os.path.join(file_path, file_name), mode="w+", encoding="utf-8") as f:
         f.write(stix_bundle.to_stix_bundle().serialize(pretty=True))
+
+
+@cli.command()
+@click.option(
+    "--path",
+    type=str,
+    required=False,
+    help="Enter the directory where you would like to write the layer file.",
+    default=".",
+)
+@click.option(
+    "--file-name",
+    type=str,
+    required=False,
+    help="Enter the file name for the exported ATT&CK Navigator layer.",
+    default="loobins_navigator_layer.json",
+)
+def export_navigator(file_name: str, path: str) -> None:
+    """Export an ATT&CK Navigator layer of the techniques LOOBins cover."""
+    layer = LOOBinsGroup(get_loobins()).to_navigator_layer()
+    if path and not os.path.exists(path):
+        click.echo(
+            f"The specified path did not exist. "
+            f"Creating the {file_name} file in the current directory."
+        )
+    file_path = path if path and os.path.exists(path) else "./"
+    with open(os.path.join(file_path, file_name), mode="w+", encoding="utf-8") as f:
+        json.dump(layer, f, indent=2)
 
 
 if __name__ == "__main__":

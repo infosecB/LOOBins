@@ -25,6 +25,7 @@ example_use_cases:
   tactics:
   - Collection
   - Exfiltration
+  - Defense Impairment
   techniques:
   - T1553.001
   tags:
@@ -49,6 +50,7 @@ example_use_cases:
   code: ditto -V /path/to/malicious-library/malicious_library.dylib /path/to/target-library/original_library.dylib
   tactics:
   - Persistence
+  - Execution
   techniques:
   - T1574.004
   tags:

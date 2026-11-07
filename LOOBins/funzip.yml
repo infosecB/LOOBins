@@ -10,6 +10,7 @@ example_use_cases:
     code: tail -c <> $0 | funzip  -<password>
     tactics:
       - Execution
+      - Stealth
     techniques:
       - T1140
     tags:

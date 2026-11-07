@@ -23,10 +23,11 @@ Options:
   --help     Show this message and exit.
 
 Commands:
-  create       Create a YAML template file for a new LOOBin.
-  export-stix  Export the LOOBins STIX bundle file.
-  get          Get a LOOBin object.
-  validate     Validate a LOOBin YAML file.
+  create            Create a YAML template file for a new LOOBin.
+  export-navigator  Export an ATT&CK Navigator layer of the techniques...
+  export-stix       Export the LOOBins STIX bundle file.
+  get               Get a LOOBin object.
+  validate          Validate a LOOBin YAML file.
 ```
 
 You can run `pyloobins <command> --help` to see the available options for a specific command.

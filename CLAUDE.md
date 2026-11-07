@@ -49,6 +49,9 @@ uv run pyloobins get --name "osascript"
 # Export STIX bundle (--path controls output directory, not input)
 uv run pyloobins export-stix --file-name loobins_stix.json --path .
 
+# Export ATT&CK Navigator layer (same --path semantics as export-stix)
+uv run pyloobins export-navigator --file-name loobins_navigator_layer.json --path .
+
 # Run multi-version tests with tox (Python 3.9–3.12)
 uv run tox
 ```
@@ -93,7 +96,7 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
    - `normalize_file_name(title)`: Converts binary name to lowercase with underscores
 
 3. **CLI** (`src/pyloobins/cli.py`):
-   - Click-based command interface with commands: `validate`, `create`, `get`, `export-stix`
+   - Click-based command interface with commands: `validate`, `create`, `get`, `export-stix`, `export-navigator`
 
 ### Data Flow
 
@@ -112,6 +115,7 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 ## Gotchas
 
 - **`create --path` requires a trailing slash**: The CLI concatenates path and filename directly (`f"{file_path}{file_name}.yml"`), so use `LOOBins/` not `LOOBins`
+- **The site's Navigator layer and STIX bundle are generated at deploy time**: `deploy-web.yml` runs `pyloobins export-navigator` / `export-stix` into `web/public/` (gitignored), so a local `npm run build` won't have them unless you run those commands first
 - **`export-stix --path` is output-only**: The `--path` flag controls where the STIX JSON file is written; input LOOBins are always loaded via auto-discovery (`get_loobins()` with no args)
 - **Detection URLs can be `"N/A"`**: The `loobin.md.j2` template handles `"N/A"` as a sentinel value, rendering detections without a link
 - **`polyfactory` is a production dependency**: Listed under `[project.dependencies]` but only used in tests (`tests/test_data.py`)

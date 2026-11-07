@@ -18,6 +18,7 @@ example_use_cases:
   code: profiles remove -identifier com.profile.identifier -password <password>
   tactics:
   - Impact
+  - Defense Impairment
   techniques:
   - T1685
   tags:
