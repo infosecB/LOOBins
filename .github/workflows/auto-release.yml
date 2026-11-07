@@ -23,19 +23,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Install every version in tox's env_list. The last one listed is the
-      # default `python` used by uv below.
-      - name: Set up Python 3.9-3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: |
-            3.9
-            3.11
-            3.12
-            3.10
-
       - name: Install uv
         uses: astral-sh/setup-uv@v5
+
+      # setup-python doesn't publish every version for every runner image
+      # (3.9 is missing on Ubuntu 26.04), so get tox's interpreters from uv.
+      - name: Install Python 3.9-3.12
+        run: uv python install 3.9 3.10 3.11 3.12
 
       - name: Install dependencies
         run: uv sync --group dev
