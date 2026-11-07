@@ -1,0 +1,60 @@
+name: systemextensionsctl
+author: Brendan Chamberlain (@infosecB)
+short_description: Enumerate and manage system extensions, including EDR and network security extensions.
+full_description: systemextensionsctl examines and manages system extensions, the user-space replacement for kernel extensions introduced in macOS Catalina. Endpoint security, network extension, and DriverKit components of EDR, DLP, VPN, and content filtering products are installed as system extensions. Any user can run systemextensionsctl list to identify installed security tooling. The uninstall, reset, and developer subcommands can remove security extensions or relax extension loading checks, but currently require System Integrity Protection (SIP) to be disabled, so they are most relevant after an attacker has disabled SIP or on hosts where SIP is already off.
+created: 2026-11-07
+example_use_cases:
+  - name: Enumerate installed security products
+    description: List all installed system extensions with their Team ID, bundle ID, version, and state. Filtering on the endpoint security and network extension categories identifies EDR agents, firewalls, VPNs, and content filters installed on the host. This command does not require root.
+    code: |-
+      systemextensionsctl list
+      systemextensionsctl list com.apple.system_extension.endpoint_security
+      systemextensionsctl list com.apple.system_extension.network_extension
+    tactics:
+      - Discovery
+    tags:
+      - oneliner
+      - bash
+      - edr
+  - name: Uninstall an EDR system extension
+    description: Uninstall a specific system extension by Team ID and bundle ID, as returned by systemextensionsctl list. Removing an endpoint security extension stops the security product from receiving Endpoint Security events. This requires SIP to be disabled.
+    code: sudo systemextensionsctl uninstall <teamID> <bundleID>
+    tactics:
+      - Defense Evasion
+    tags:
+      - oneliner
+      - bash
+      - edr
+  - name: Remove all system extensions
+    description: Forcibly reset system extension state, removing every installed system extension and clearing related state in a single command. This requires SIP to be disabled.
+    code: sudo systemextensionsctl reset
+    tactics:
+      - Defense Evasion
+      - Impact
+    tags:
+      - oneliner
+      - bash
+      - edr
+  - name: Enable system extension developer mode
+    description: Turn on developer mode, which skips the version check performed when a new system extension is examined. This can be used to replace an installed extension with an attacker-modified build. This requires SIP to be disabled.
+    code: sudo systemextensionsctl developer on
+    tactics:
+      - Defense Evasion
+      - Persistence
+    tags:
+      - oneliner
+      - bash
+paths:
+  - /usr/bin/systemextensionsctl
+detections:
+  - name: "Command-line detection: systemextensionsctl with uninstall, reset, or developer on arguments"
+    url: N/A
+  - name: "Process execution detection: systemextensionsctl list executed by a script interpreter, an unsigned process, or a non-administrative user session"
+    url: N/A
+  - name: "Correlation: systemextensionsctl uninstall or reset following a csrutil disable or csrutil status check"
+    url: N/A
+resources:
+  - name: System Extensions and DriverKit - Apple Developer
+    url: https://developer.apple.com/system-extensions/
+  - name: "Impair Defenses: Disable or Modify Tools - MITRE ATT&CK"
+    url: https://attack.mitre.org/techniques/T1562/001/
