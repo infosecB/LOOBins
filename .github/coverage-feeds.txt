@@ -1,0 +1,23 @@
+# Feeds the weekly coverage scan reads before it runs Claude.
+#
+# One feed per line: <url> [mac]
+#   mac  The feed is macOS-focused, so every recent post is kept. Without it,
+#        only posts whose title, summary or categories mention macOS are kept.
+#
+# The job summary lists each feed's status. If one keeps failing, fix or
+# remove its line here.
+
+https://objective-see.org/rss.xml mac
+https://moonlock.com/feed mac
+https://www.jamf.com/blog/rss/ mac
+https://www.kandji.io/blog/rss.xml mac
+https://www.sentinelone.com/labs/feed/
+https://www.elastic.co/security-labs/rss/feed.xml
+https://redcanary.com/feed/
+https://www.huntress.com/blog/rss.xml
+https://unit42.paloaltonetworks.com/feed/
+https://www.microsoft.com/en-us/security/blog/feed/
+https://blog.talosintelligence.com/rss/
+https://securelist.com/feed/
+https://www.bleepingcomputer.com/feed/
+https://thehackernews.com/feeds/posts/default

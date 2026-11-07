@@ -72,9 +72,23 @@ def existing_names(loobins_dir):
     return names
 
 
+TRACKING_TITLE_RE = re.compile(
+    r"^(?:add loobin for|new loobin candidate:|new use case candidate:)\s*(.+?)\s*$",
+    re.I,
+)
+
+
 def tracked_binaries(issues):
-    """Binary names already mentioned in an issue title (open or closed)."""
-    return [issue["title"].lower() for issue in issues]
+    """Lowercased titles of issues that track a binary (open or closed).
+
+    Only titles in the "Add LOOBin for X" / scan formats count, so an unrelated
+    issue such as "Open redirect in docs" doesn't block the binary `open`.
+    """
+    return [
+        issue["title"].lower()
+        for issue in issues
+        if TRACKING_TITLE_RE.match(issue.get("title", ""))
+    ]
 
 
 def validate(candidate, names, titles):
@@ -91,7 +105,8 @@ def validate(candidate, names, titles):
     if kind == "new_use_case" and not known:
         raise ValueError(f"{binary} has no LOOBin to add a use case to")
     if kind == "new_binary" and any(
-        re.search(rf"\b{re.escape(binary.lower())}\b", t) for t in titles
+        TRACKING_TITLE_RE.match(t).group(1).strip().lower() == binary.lower()
+        for t in titles
     ):
         raise ValueError(f"{binary} is already mentioned in an existing issue")
     if candidate.get("confidence") not in ("high", "medium"):
@@ -202,6 +217,12 @@ def main():
         with open(out, "a", encoding="utf-8") as fh:
             fh.write(text)
     print(text)
+
+    if not sources:
+        # A real scan always reads something. Zero sources means the agent
+        # bailed early or its output was lost, so fail instead of looking green.
+        print("::error::The scan reviewed no sources; check the claude-log artifact.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

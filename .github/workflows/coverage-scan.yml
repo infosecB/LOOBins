@@ -44,7 +44,20 @@ jobs:
         id: date
         run: echo "today=$(date -u +%F)" >> "$GITHUB_OUTPUT"
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Pull recent posts from known research feeds up front, so the scan
+      # starts from a concrete reading list instead of open-ended searching.
+      - name: Collect recent research
+        run: >-
+          python .github/scripts/collect_research.py
+          .github/coverage-feeds.txt LOOBins
+          ${{ inputs.lookback_days || '14' }} .
+
       - name: Run coverage scan
+        id: claude
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
@@ -53,15 +66,22 @@ jobs:
 
             Today's date: ${{ steps.date.outputs.today }}
             Lookback window: ${{ inputs.lookback_days || '14' }} days
+            Reading list: research.json
+            Coverage index: coverage-index.md
+            Existing issues: existing-issues.json
             Output path: findings.json
           claude_args: |
             --model claude-sonnet-5-5
-            --max-turns 80
+            --max-turns 120
             --allowedTools WebSearch,WebFetch,Read,Glob,Grep,Write
             --disallowedTools Bash,Edit,NotebookEdit
 
       - name: Check findings exist
-        run: test -s findings.json || echo '{"sources_reviewed":[],"candidates":[]}' > findings.json
+        run: |
+          if [ ! -s findings.json ]; then
+            echo "::warning::Claude did not write findings.json; see the claude-log artifact."
+            echo '{"sources_reviewed":[],"candidates":[]}' > findings.json
+          fi
 
       - uses: actions/upload-artifact@v4
         with:
@@ -69,7 +89,17 @@ jobs:
           path: |
             findings.json
             existing-issues.json
+            research.json
           retention-days: 30
+
+      # The action hides Claude's transcript from the public log. Keep it as
+      # an artifact so a quiet run can be diagnosed.
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.claude.outputs.execution_file
+        with:
+          name: claude-log
+          path: ${{ steps.claude.outputs.execution_file }}
+          retention-days: 14
 
   file-issues:
     needs: scan
