@@ -8,7 +8,7 @@ example_use_cases:
   description: The following command can read and process sensitive files and redirects the output to a file.. 
   code:  say -f /home/user/sensitive-files -i  > loot.txt;  
   tactics:
-  - Defense Evasion
+  - Stealth
   - Collection
   techniques:
   - T1005
@@ -18,7 +18,7 @@ example_use_cases:
   description: The command is designed to enhance privacy by muting the system volume,using a less recognizable "Whisper" voice with the "say" command, processing the copied text in the clipboard, and saving the output to a file named "loot.txt."
   code:  osascript -e 'set volume output muted true' ;   say $(pbpaste) -i  > loot.txt; 
   tactics:
-  - Defense Evasion
+  - Stealth
   - Reconnaissance
   - Discovery
   - Collection

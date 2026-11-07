@@ -8,6 +8,8 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from pydantic import BaseModel, Field, RootModel, StringConstraints
 from stix2 import Bundle, Tool
 
+# ATT&CK Enterprise v20 tactics. v20 replaced Defense Evasion (TA0005) with
+# Stealth and added Defense Impairment (TA0112).
 AttackTactics = Literal[
     "Reconnaissance",
     "Resource Development",
@@ -15,7 +17,8 @@ AttackTactics = Literal[
     "Execution",
     "Persistence",
     "Privilege Escalation",
-    "Defense Evasion",
+    "Stealth",
+    "Defense Impairment",
     "Credential Access",
     "Discovery",
     "Lateral Movement",

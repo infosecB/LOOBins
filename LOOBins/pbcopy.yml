@@ -18,7 +18,7 @@ example_use_cases:
     code: cat <STAGED_FILE> | pbcopy -pboard find
     tactics:
       - Collection
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1074.001
     tags:
@@ -28,7 +28,7 @@ example_use_cases:
     description: Piping empty input to pbcopy overwrites the general pasteboard with nothing, discarding whatever the user had copied (for example a password copied from a manager). An attacker can use this to remove sensitive data after harvesting it, or to erase evidence that clipboard monitoring took place, before an investigator or DLP agent inspects the pasteboard. It requires only user-level code execution.
     code: printf '' | pbcopy
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1070
     tags:

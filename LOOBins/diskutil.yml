@@ -104,7 +104,7 @@ example_use_cases:
     code: diskutil mount nobrowse -mountOptions noowners -mountPoint <MOUNT_PATH> <DEVICE>
     tactics:
       - Privilege Escalation
-      - Defense Evasion
+      - Defense Impairment
       - Collection
     techniques:
       - T1068
@@ -125,7 +125,7 @@ example_use_cases:
       may survive regardless.
     code: diskutil secureErase freespace 0 /Volumes/<VOLUME_NAME>
     tactics:
-      - Defense Evasion
+      - Stealth
       - Impact
     techniques:
       - T1485

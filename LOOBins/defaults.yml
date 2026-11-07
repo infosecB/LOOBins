@@ -8,7 +8,7 @@ example_use_cases:
   description: The following command can be used to disable Gatekeepers rearm functionality. This command requires root privileges.
   code: sudo defaults write /Library/Preferences/com.apple.security GKAutoRearm -bool NO
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   techniques:
   - T1553.001
   tags:
@@ -38,14 +38,14 @@ example_use_cases:
   description: Enables macOS' default firewall. This command requires root privileges.
   code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 1
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   tags:
   - firewall
 - name: Disable Firewall
   description: Disables macOS' default firewall. This command requires root privileges.
   code: sudo defaults write /Library/Preferences/com.apple.alf globalstate -int 0
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   techniques:
   - T1686
   tags:

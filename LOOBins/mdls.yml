@@ -8,7 +8,7 @@ example_use_cases:
     description: Use mdls to validate payload download sources and timestamps to guard against sandbox executions.
     code: mdls -name "kMDItemWhereFroms" -name "kMDItemDownloadedDate"
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1083
     tags:
@@ -29,7 +29,7 @@ example_use_cases:
     tactics:
       - Execution
       - Collection
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1140
       - T1059.004

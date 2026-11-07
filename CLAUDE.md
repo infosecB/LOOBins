@@ -71,9 +71,9 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 - `resources`: External references (name and URL)
 - `acknowledgements`: Array of acknowledgement strings
 
-**MITRE ATT&CK Tactics** (use exact spelling):
+**MITRE ATT&CK Tactics** (ATT&CK v20; use exact spelling):
 - Reconnaissance, Resource Development, Initial Access, Execution
-- Persistence, Privilege Escalation, Defense Evasion, Credential Access
+- Persistence, Privilege Escalation, Stealth, Defense Impairment, Credential Access
 - Discovery, Lateral Movement, Collection, Exfiltration
 - Command and Control, Impact
 
