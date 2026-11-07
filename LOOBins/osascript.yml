@@ -10,6 +10,8 @@ example_use_cases:
     tactics:    
       - Collection    
       - Credential Access  
+    techniques:
+      - T1115
     tags:  
       - clipboard
       - bash
@@ -20,6 +22,8 @@ example_use_cases:
     tactics:
       - Collection
       - Discovery
+    techniques:
+      - T1082
     tags:
       - system-info
       - oneliner
@@ -28,6 +32,8 @@ example_use_cases:
     code: osascript -e 'set popup to display dialog "Keychain Access wants to use the login keychain" & return & return & "Please enter the keychain password" & return default answer "" with icon file "System:Library:CoreServices:CoreTypes.bundle:Contents:Resources:FileVaultIcon.icns" with title "Authentication Needed" with hidden answer'
     tactics:
       - Credential Access
+    techniques:
+      - T1056.002
     tags:
       - oneliner
       - prompt
@@ -36,6 +42,8 @@ example_use_cases:
     code: echo "ObjC.import('Cocoa');\nObjC.import('stdlib');\nvar currentApp = Application.currentApplication();\ncurrentApp.includeStandardAdditions = true;\ncurrentApp.doShellScript('open -a Calculator.app');" > calc.js && osascript -l JavaScript calc.js
     tactics:
       - Execution
+    techniques:
+      - T1059.007
     tags:
       - jxa
   - name: Execute shell commands via osascript do shell script
@@ -43,8 +51,11 @@ example_use_cases:
     code: "osascript -e 'do shell script \"id\"'"
     tactics:
       - Execution
-      - Defense Evasion
+      - Stealth
       - Privilege Escalation
+    techniques:
+      - T1059.002
+      - T1059.004
     tags:
       - do-shell-script
       - oneliner
@@ -54,6 +65,9 @@ example_use_cases:
     tactics:
       - Lateral Movement
       - Execution
+    techniques:
+      - T1021.004
+      - T1059.002
     tags:
       - ssh
       - remote-execution
@@ -62,6 +76,8 @@ example_use_cases:
     code: "osascript -e 'mount volume \"smb://user:<PASSWORD>@<TARGET_IP>/share\"'"
     tactics:
       - Lateral Movement
+    techniques:
+      - T1021
     tags:
       - smb
       - file-transfer
@@ -72,6 +88,9 @@ example_use_cases:
     tactics:
       - Execution
       - Lateral Movement
+    techniques:
+      - T1059.002
+      - T1021
     tags:
       - remote-apple-events
       - remote-apple-services
@@ -84,6 +103,8 @@ example_use_cases:
     tactics:
       - Discovery
       - Lateral Movement
+    techniques:
+      - T1135
     tags:
       - remote-apple-events
       - eppc

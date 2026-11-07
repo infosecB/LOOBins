@@ -9,7 +9,9 @@ example_use_cases:
   code: xattr -d com.apple.quarantine FILE
   tactics:
   - Execution
-  - Defense Evasion
+  - Defense Impairment
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 - name: Bypass Gatekeeper via xattr
@@ -17,7 +19,9 @@ example_use_cases:
   code: xattr -d -r com.apple.quarantine *
   tactics:
   - Execution
-  - Defense Evasion
+  - Defense Impairment
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 - name: Clear extended attributes from a file via xattr
@@ -25,7 +29,9 @@ example_use_cases:
   code: xattr -c FILE
   tactics:
   - Execution
-  - Defense Evasion
+  - Defense Impairment
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 - name: Recursively clear extended attributes via xattr
@@ -33,7 +39,9 @@ example_use_cases:
   code: xattr -cr DIRECTORY
   tactics:
   - Execution
-  - Defense Evasion
+  - Defense Impairment
+  techniques:
+  - T1553.001
   tags:
   - quarantine
 paths:

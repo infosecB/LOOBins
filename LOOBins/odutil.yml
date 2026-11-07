@@ -9,6 +9,8 @@ example_use_cases:
     code: odutil show nodenames
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh
@@ -17,6 +19,8 @@ example_use_cases:
     code: odutil show sessions
     tactics:
       - Discovery
+    techniques:
+      - T1033
     tags:
       - bash
       - zsh
@@ -25,6 +29,8 @@ example_use_cases:
     code: odutil show configuration /Search
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh
@@ -33,6 +39,8 @@ example_use_cases:
     code: odutil show configuration /Contacts
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - zsh

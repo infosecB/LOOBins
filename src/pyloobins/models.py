@@ -1,13 +1,15 @@
 """Model that represents a LOOBin and its various components"""
 
 from datetime import date, datetime, time, timezone
-from typing import List, Literal, Optional
+from typing import Annotated, List, Literal, Optional
 
 import yaml
 from jinja2 import Environment, PackageLoader, select_autoescape
-from pydantic import BaseModel, Field, RootModel
+from pydantic import BaseModel, Field, RootModel, StringConstraints
 from stix2 import Bundle, Tool
 
+# ATT&CK Enterprise v20 tactics. v20 replaced Defense Evasion (TA0005) with
+# Stealth and added Defense Impairment (TA0112).
 AttackTactics = Literal[
     "Reconnaissance",
     "Resource Development",
@@ -15,7 +17,8 @@ AttackTactics = Literal[
     "Execution",
     "Persistence",
     "Privilege Escalation",
-    "Defense Evasion",
+    "Stealth",
+    "Defense Impairment",
     "Credential Access",
     "Discovery",
     "Lateral Movement",
@@ -24,6 +27,9 @@ AttackTactics = Literal[
     "Command and Control",
     "Impact",
 ]
+
+# A MITRE ATT&CK Enterprise technique or sub-technique ID, e.g. T1059 or T1059.002
+AttackTechnique = Annotated[str, StringConstraints(pattern=r"^T\d{4}(\.\d{3})?$")]
 
 
 class Detection(BaseModel):
@@ -47,6 +53,10 @@ class ExampleUseCase(BaseModel):
     description: str
     code: Optional[str] = None
     tactics: Optional[List[AttackTactics]] = None
+    techniques: Optional[List[AttackTechnique]] = Field(
+        default=None,
+        description="MITRE ATT&CK technique or sub-technique IDs (e.g. T1059.002)",
+    )
     tags: Optional[List[str]] = None
 
 
@@ -94,6 +104,17 @@ class LOOBin(BaseModel):
                 for euc in self.example_use_cases
                 if euc.tactics is not None
                 for tactic in euc.tactics
+            )
+        )
+
+    def combine_techniques(self) -> List[str]:
+        """Returns a list of all ATT&CK technique IDs across all LOOBin example use cases"""
+        return list(
+            dict.fromkeys(
+                technique
+                for euc in self.example_use_cases
+                if euc.techniques is not None
+                for technique in euc.techniques
             )
         )
 

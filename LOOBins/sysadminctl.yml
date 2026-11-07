@@ -12,12 +12,16 @@ example_use_cases:
       sudo sysadminctl -guestAccount on
     tactics:
       - Initial Access
+    techniques:
+      - T1078.001
   - name: Create Local User Account
     description: sysadminctl can be used to create a local user account
     code: |
       sudo sysadminctl -addUser randomUser -password "randomPassword"
     tactics:
       - Persistence
+    techniques:
+      - T1136.001
     tags:
       - users
   - name: Create a Local Admin Account
@@ -26,6 +30,8 @@ example_use_cases:
       sudo sysadminctl -addUser randomUser -password "randomPassword" -admin
     tactics:
       - Persistence
+    techniques:
+      - T1136.001
     tags:
       - users
   - name: Reset user password
@@ -34,6 +40,8 @@ example_use_cases:
       sudo sysadminctl -resetPasswordFor randomUser -newPassword "randomPassword"
     tactics:
       - Persistence
+    techniques:
+      - T1098
     tags:
       - password
       - users
@@ -43,6 +51,8 @@ example_use_cases:
       sudo sysadminctl -deleteUser randomUser
     tactics:
       - Impact
+    techniques:
+      - T1531
     tags:
       - users
   - name: Enable SMB Guest Access

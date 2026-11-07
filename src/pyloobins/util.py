@@ -82,6 +82,7 @@ def make_template(name: str = "") -> LOOBin:
                 description="A description of the use case goes here.",
                 code="A code snippet goes here.",
                 tactics=["Discovery"],
+                techniques=["T1082"],
                 tags=["example_tag", "another_tag"],
             )
         ],

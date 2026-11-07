@@ -10,6 +10,8 @@ example_use_cases:
   tactics:
   - Credential Access
   - Collection
+  techniques:
+  - T1115
   tags:
   - bash
   - oneliner

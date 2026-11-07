@@ -11,6 +11,8 @@ example_use_cases:
     code: dscacheutil -q user -a name <USER_NAME>
     tactics:
       - Discovery
+    techniques:
+      - T1087.001
     tags:
       - bash
       - zsh
@@ -19,6 +21,8 @@ example_use_cases:
     code: dscacheutil -q user
     tactics:
       - Discovery
+    techniques:
+      - T1087.001
     tags:
       - bash
       - zsh

@@ -9,6 +9,9 @@ example_use_cases:
     code: softwareupdate --list
     tactics:
       - Discovery
+    techniques:
+      - T1082
+      - T1518
     tags:
       - system-info
   - name: Get OS update policy
@@ -16,6 +19,8 @@ example_use_cases:
     code: softwareupdate --schedule
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - system-info
 paths:

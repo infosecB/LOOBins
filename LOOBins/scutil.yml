@@ -9,6 +9,8 @@ example_use_cases:
     code: scutil --dns
     tactics:
       - Discovery
+    techniques:
+      - T1016
     tags:
       - network
   - name: Proxy configuration
@@ -16,6 +18,8 @@ example_use_cases:
     code: scutil --proxy
     tactics:
       - Discovery
+    techniques:
+      - T1016
     tags:
       - network
       - configuration
@@ -24,6 +28,8 @@ example_use_cases:
     code: scutil -r { nodename | address | local-address remote-address }
     tactics:
       - Discovery
+    techniques:
+      - T1016
     tags:
       - network
       - configuration
@@ -32,6 +38,8 @@ example_use_cases:
     code: scutil --get { HostName | LocalHostName | ComputerName }
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - configuration
 paths:

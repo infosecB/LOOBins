@@ -8,8 +8,10 @@ example_use_cases:
     description: A one-liner can load the content of multiple RTF files in a directory, concatenate their contents, and write the results out as a new file. This provides two sub-use-cases; one is building a malicious file from a collection of smaller files which could evade both network and host-based security controls as the traditional means of signature-based detection would be redundant; two is concatenating the content of several, potentially sensitive files before exfiltration. This command can also be looped to iterate a directory of files.
     code: textutil -convert html Quote.doc secondQuote.doc
     tactics:
-      - Defense Evasion
+      - Stealth
       - Collection
+    techniques:
+      - T1005
     tags:
       - bash
       - oneliner
@@ -19,6 +21,8 @@ example_use_cases:
     tactics:
       - Credential Access
       - Collection
+    techniques:
+      - T1115
     tags:
       - bash
       - oneliner

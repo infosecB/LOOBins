@@ -9,11 +9,15 @@ example_use_cases:
   code: '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f'
   tactics:
   - Discovery
+  techniques:
+  - T1518
 - name: Get a list of apps and their bindings
   description: The -dump flag can be used to get a list of apps and their bindings
   code: '/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -dump | grep -E "path:|bindings:|name: | more"'
   tactics:
   - Discovery
+  techniques:
+  - T1518
 - name: Delete the Launch Services database
   description: The -delete flag can be used to delete the Launch Services database to impact normal operation of the system.
   code: lsregister -delete

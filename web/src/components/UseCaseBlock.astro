@@ -8,10 +8,11 @@ interface Props {
   description: string;
   code?: string;
   tactics: string[];
+  techniques: string[];
   tags: string[];
 }
 
-const { id, name, description, code, tactics, tags } = Astro.props;
+const { id, name, description, code, tactics, techniques, tags } = Astro.props;
 ---
 
 <div id={id} class="group/uc py-8 scroll-mt-24">
@@ -45,6 +46,15 @@ const { id, name, description, code, tactics, tags } = Astro.props;
 
   <div class="flex flex-wrap gap-1.5">
     {tactics.map((t) => <TacticBadge tactic={t} />)}
+    {techniques.map((t) => (
+      <a
+        href={`https://attack.mitre.org/techniques/${t.replace('.', '/')}/`}
+        target="_blank"
+        rel="noopener noreferrer"
+        title={`MITRE ATT&CK ${t}`}
+        class="inline-block text-xs font-mono px-2 py-0.5 rounded border border-border text-text-secondary hover:text-text-primary hover:border-text-secondary/60 transition-colors"
+      >{t}</a>
+    ))}
     {tags.map((t) => <TagBadge tag={t} />)}
   </div>
 </div>

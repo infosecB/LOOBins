@@ -8,7 +8,9 @@ example_use_cases:
     description: Use mdls to validate payload download sources and timestamps to guard against sandbox executions.
     code: mdls -name "kMDItemWhereFroms" -name "kMDItemDownloadedDate"
     tactics:
-      - Defense Evasion
+      - Stealth
+    techniques:
+      - T1083
     tags:
       - genieo
       - shlayer
@@ -17,6 +19,8 @@ example_use_cases:
     code: xargs -0 mdls -n kMDItemPath -n kMDItemFSSize
     tactics:
       - Discovery
+    techniques:
+      - T1083
     tags:
       - cleanmaster
   - name: Extract and execute payload stored in Finder comment metadata
@@ -25,7 +29,10 @@ example_use_cases:
     tactics:
       - Execution
       - Collection
-      - Defense Evasion
+      - Stealth
+    techniques:
+      - T1140
+      - T1059.004
     tags:
       - finder-comment
       - spotlight

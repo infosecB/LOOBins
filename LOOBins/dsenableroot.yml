@@ -19,6 +19,9 @@ example_use_cases:
     tactics:
       - Persistence
       - Privilege Escalation
+    techniques:
+      - T1098
+      - T1078.003
     tags: []
   - name: Enable the root account interactively to keep credentials out of the command line
     description: |
@@ -28,7 +31,10 @@ example_use_cases:
     code: dsenableroot
     tactics:
       - Persistence
-      - Defense Evasion
+      - Stealth
+    techniques:
+      - T1098
+      - T1078.003
     tags: []
   - name: Disable the root account to clean up after use
     description: |
@@ -36,7 +42,9 @@ example_use_cases:
       enable root, use it, and disable it again, leaving the account state as it was before.
     code: dsenableroot -d -u <ADMIN_USER> -p <ADMIN_PASSWORD>
     tactics:
-      - Defense Evasion
+      - Stealth
+    techniques:
+      - T1070
     tags: []
 paths:
   - /usr/sbin/dsenableroot

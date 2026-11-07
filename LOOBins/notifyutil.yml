@@ -10,6 +10,8 @@ example_use_cases:
     tactics:
       - Discovery
       - Collection
+    techniques:
+      - T1082
     tags:
       - monitoring
       - surveillance
@@ -24,7 +26,7 @@ example_use_cases:
       notifyutil -1 com.example.hidden.channel -g com.example.hidden.channel
     tactics:
       - Command and Control
-      - Defense Evasion
+      - Stealth
     tags:
       - ipc
       - covert-channel
@@ -35,6 +37,8 @@ example_use_cases:
     tactics:
       - Discovery
       - Collection
+    techniques:
+      - T1016
     tags:
       - network
       - monitoring
@@ -45,6 +49,8 @@ example_use_cases:
     tactics:
       - Collection
       - Discovery
+    techniques:
+      - T1614
     tags:
       - geolocation
       - monitoring
@@ -54,6 +60,8 @@ example_use_cases:
     tactics:
       - Discovery
       - Privilege Escalation
+    techniques:
+      - T1033
     tags:
       - authentication
       - monitoring
@@ -65,6 +73,8 @@ example_use_cases:
       notifyutil -g com.apple.screenIsLocked
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - enumeration
 paths:

@@ -47,7 +47,7 @@ Write exactly one file, at the output path given below, containing JSON in this 
       "summary": "One or two sentences: what the binary is and how it was abused.",
       "macos_specific": "Why this belongs in LOOBins rather than GTFOBins, or why it is a new technique for an existing entry.",
       "example": "binaryname --flag <payload>",
-      "tactics": ["Execution", "Defense Evasion"],
+      "tactics": ["Execution", "Stealth"],
       "confidence": "high",
       "sources": [{ "title": "Report title", "url": "https://...", "published": "YYYY-MM-DD" }]
     }
@@ -57,7 +57,7 @@ Write exactly one file, at the output path given below, containing JSON in this 
 
 - `kind` is `new_binary` or `new_use_case`.
 - `binary` is the binary name only, matching the on-disk name. For `new_use_case` it must match the `name` of an existing LOOBin.
-- `tactics` uses exact MITRE ATT&CK tactic names: Reconnaissance, Resource Development, Initial Access, Execution, Persistence, Privilege Escalation, Defense Evasion, Credential Access, Discovery, Lateral Movement, Collection, Exfiltration, Command and Control, Impact.
+- `tactics` uses exact MITRE ATT&CK v20 tactic names: Reconnaissance, Resource Development, Initial Access, Execution, Persistence, Privilege Escalation, Stealth, Defense Impairment, Credential Access, Discovery, Lateral Movement, Collection, Exfiltration, Command and Control, Impact.
 - `confidence` is `high` (the source shows the exact command) or `medium` (the source describes the binary's use without the full command). Don't report anything weaker.
 - `example` is optional. Omit it rather than invent a command the source doesn't support.
 - Report at most 5 candidates, the strongest first. List every report you fetched in `sources_reviewed`, including the ones that produced nothing. An empty `sources_reviewed` marks the run as failed, so never leave it empty when you fetched anything.

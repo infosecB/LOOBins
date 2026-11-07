@@ -9,6 +9,8 @@ example_use_cases:
   code: dns-sd -B _ssh._tcp
   tactics:
   - Discovery
+  techniques:
+  - T1046
   tags:
   - network
 - name: Discover web hosts
@@ -16,6 +18,8 @@ example_use_cases:
   code: dns-sd -B _http._tcp
   tactics:
   - Discovery
+  techniques:
+  - T1046
   tags:
   - network
 - name: Discover hosts serving remote screen sharing
@@ -23,6 +27,8 @@ example_use_cases:
   code: dns-sd -B _rfb._tcp
   tactics:
   - Discovery
+  techniques:
+  - T1046
   tags:
   - network
 - name: Discover hosts serving SMB
@@ -30,6 +36,8 @@ example_use_cases:
   code: dns-sd -B _smb._tcp
   tactics:
   - Discovery
+  techniques:
+  - T1046
   tags:
   - network
 paths:
