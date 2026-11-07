@@ -1,0 +1,62 @@
+name: shortcuts
+author: Brendan Chamberlain (@infosecB)
+short_description: List, run, and sign Shortcuts automation workflows from the command line.
+full_description: shortcuts is the command-line interface to the Shortcuts app introduced in macOS Monterey. It can list the current user's shortcuts, run a shortcut by name or identifier with file input and output, and sign shortcut files for sharing. Shortcuts can contain scripting actions such as "Run Shell Script", "Run AppleScript", and "Run JavaScript for Automation", as well as actions that read files and send data to remote URLs. An attacker can use the shortcuts binary to proxy execution of these actions through an Apple-signed process, enumerate a user's existing automations, and prepare signed shortcut files for delivery to victims. Scripting actions only run when "Allow Running Scripts" is enabled in the Shortcuts Advanced settings.
+created: 2026-11-07
+example_use_cases:
+  - name: Enumerate a user's shortcuts
+    description: List the shortcuts and folders in the current user's Shortcuts library, including their identifiers. Existing shortcuts can reveal automations that interact with sensitive apps, files, or services, and identify shortcuts that can be modified or run for proxy execution.
+    code: |-
+      shortcuts list --show-identifiers
+      shortcuts list --folders
+    tactics:
+      - Discovery
+    tags:
+      - oneliner
+      - bash
+  - name: Proxy execution of a shortcut that contains a scripting action
+    description: Run a shortcut that contains a "Run Shell Script", "Run AppleScript", or "Run JavaScript for Automation" action. The script runs as a child of the Shortcuts infrastructure rather than as a direct child of the attacker's shell, which can break simple parent-child process detection logic.
+    code: shortcuts run "Update Helper"
+    tactics:
+      - Execution
+      - Defense Evasion
+    tags:
+      - oneliner
+      - bash
+      - osascript
+  - name: Pass a file to a shortcut for collection or exfiltration
+    description: The --input-path option passes one or more files to a shortcut and --output-path writes its result to disk. A shortcut that uses the "Get Contents of URL" action can upload the supplied file to an attacker-controlled server.
+    code: shortcuts run "Backup" --input-path ~/Library/Keychains/login.keychain-db --output-path /tmp/result.txt
+    tactics:
+      - Collection
+      - Exfiltration
+    tags:
+      - oneliner
+      - file-transfer
+      - network
+  - name: Sign a malicious shortcut for distribution
+    description: Sign a shortcut file so that anyone can import it. Signed shortcuts can be delivered through phishing or downloads and imported by a victim with open, after which they can be run with shortcuts run.
+    code: |-
+      shortcuts sign --mode anyone --input malicious.shortcut --output signed.shortcut
+      open signed.shortcut
+    tactics:
+      - Resource Development
+      - Initial Access
+    tags:
+      - bash
+paths:
+  - /usr/bin/shortcuts
+detections:
+  - name: "Process execution detection: shortcuts run invoked by a script interpreter, an unsigned process, or a process launched from a download or temporary directory"
+    url: N/A
+  - name: "Process execution detection: shells or script interpreters (sh, bash, zsh, osascript, python3) spawned by the Shortcuts infrastructure (WorkflowKit / BackgroundShortcutRunner)"
+    url: N/A
+  - name: "Command-line detection: shortcuts sign with --mode anyone, or shortcuts run with --input-path referencing credential stores such as ~/Library/Keychains, ~/.ssh, or browser profile directories"
+    url: N/A
+resources:
+  - name: Run shortcuts from the command line - Apple Support
+    url: https://support.apple.com/guide/shortcuts-mac/run-shortcuts-from-the-command-line-apd455c82f02/mac
+  - name: Advanced Privacy and security settings in Shortcuts on Mac - Apple Support
+    url: https://support.apple.com/guide/shortcuts-mac/apdfeb05586f/mac
+  - name: shortcuts man page - SS64
+    url: https://ss64.com/mac/shortcuts.html
