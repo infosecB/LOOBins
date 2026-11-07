@@ -12,6 +12,8 @@ example_use_cases:
       dscl . ls /Users
     tactics:
       - Discovery
+    techniques:
+      - T1087.001
     tags:
       - users
   - name: Active Directory user enumeration
@@ -22,6 +24,8 @@ example_use_cases:
       dscl "/Active Directory/TEST/All Domains" ls /Users
     tactics:
       - Discovery
+    techniques:
+      - T1087.002
     tags:
       - network
       - users
@@ -33,6 +37,8 @@ example_use_cases:
       dscl . cat /Users/$USERNAME
     tactics:
     - Discovery
+    techniques:
+    - T1087.001
     tags:
     - users
     - configuration
@@ -44,6 +50,8 @@ example_use_cases:
       dscl "/Active Directory/TEST/All Domains" cat /Users/$USERNAME
     tactics:
     - Discovery
+    techniques:
+    - T1087.002
     tags:
     - network
     - users
@@ -56,6 +64,8 @@ example_use_cases:
       dscl . ls /Groups
     tactics:
     - Discovery
+    techniques:
+    - T1069.001
     tags:
     - groups
   - name: Active Directory group enumeration
@@ -66,6 +76,8 @@ example_use_cases:
       dscl "/Active Directory/TEST/All Domains" ls /Groups
     tactics:
     - Discovery
+    techniques:
+    - T1069.002
     tags:
     - network
     - groups
@@ -77,6 +89,8 @@ example_use_cases:
       dscl . cat /Groups/$GROUPNAME
     tactics:
     - Discovery
+    techniques:
+    - T1069.001
     tags:
     - groups
     - configuration
@@ -88,6 +102,8 @@ example_use_cases:
       dscl "/Active Directory/TEST/All Domains" cat /Groups/$GROUPNAME
     tactics:
     - Discovery
+    techniques:
+    - T1069.002
     tags:
     - network
     - groups
@@ -100,6 +116,8 @@ example_use_cases:
       dscl  "/Active Directory/TEST/All Domains" ls /Computers
     tactics:
     - Discovery
+    techniques:
+    - T1018
     tags:
     - network
     - shares
@@ -111,6 +129,8 @@ example_use_cases:
       dscl . ls /SharePoints
     tactics:
     - Discovery
+    techniques:
+    - T1135
     tags:
     - network
     - shares
@@ -122,6 +142,8 @@ example_use_cases:
       dscl . cat /Config/shadowhash
     tactics:
     - Discovery
+    techniques:
+    - T1201
     tags:
     - password
     - policy
@@ -130,6 +152,8 @@ example_use_cases:
     code: dscl . passwd /Users/$USERNAME oldPassword newPassword
     tactics:
     - Persistence
+    techniques:
+    - T1098
     tags:
     - password
   - name: Local account creation
@@ -137,6 +161,8 @@ example_use_cases:
     code: dscl -create
     tactics:
     - Persistence  
+    techniques:
+    - T1136.001
 paths:
   - /usr/bin/dscl
 detections:

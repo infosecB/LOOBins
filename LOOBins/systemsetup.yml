@@ -12,6 +12,8 @@ example_use_cases:
       sudo systemsetup -setremotelogin on
     tactics:
       - "Lateral Movement"
+    techniques:
+      - T1021.004
     tags:
       - ssh
       - configuration
@@ -23,6 +25,8 @@ example_use_cases:
       sudo systemsetup -setremoteappleevents on
     tactics:
       - "Lateral Movement"
+    techniques:
+      - T1021
     tags:
       - configuration
 paths:

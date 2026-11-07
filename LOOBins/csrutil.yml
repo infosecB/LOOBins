@@ -8,21 +8,25 @@ example_use_cases:
     description: disable SIP (System Integrity Protection) - requires booting into recovery mode
     code: csrutil disable
     tactics:
-      - Defense Evasion
+      - Defense Impairment
+    techniques:
+      - T1685
     tags:
       - users
   - name: Disable authenticated-root
     description: When authenticated-root is disabled, booting is allowed from non-sealed system snapshots - requires booting into recovery mode
     code: csrutil authenticated-root disable
     tactics:
-      - Defense Evasion
+      - Defense Impairment
+    techniques:
+      - T1685
     tags:
       - users
   - name: Add a netboot server
     description: Insert a new IPv4 address in the list of allowed NetBoot sources
     code: csrutil netboot add <address>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
     tags:
       - configuration
   - name: Map infrastructure
@@ -38,6 +42,8 @@ example_use_cases:
     code: csrutil status
     tactics:
       - Discovery
+    techniques:
+      - T1082
 paths:
   - /usr/bin/csrutil
 detections:

@@ -9,6 +9,8 @@ example_use_cases:
   code: sysctl -n hw.model
   tactics:
   - Discovery
+  techniques:
+  - T1082
   tags:
   - bash
   - oneliner

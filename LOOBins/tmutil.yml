@@ -9,6 +9,8 @@ example_use_cases:
   code: tmutil disable
   tactics:
   - Impact
+  techniques:
+  - T1490
   tags:
   - backup
 - name: Delete a backup
@@ -16,6 +18,8 @@ example_use_cases:
   code: tmutil delete /path/to/backup
   tactics:
   - Impact
+  techniques:
+  - T1490
   tags:
   - delete
 - name: Restore a backup
@@ -23,6 +27,8 @@ example_use_cases:
   code: tmutil restore /path/to/backup
   tactics:
   - Collection
+  techniques:
+  - T1005
   tags:
   - restore
 - name: Tamper with system logs
@@ -49,7 +55,7 @@ example_use_cases:
   description: An adversary could exclude a path from Time Machine backups to prevent certain files from being backed up.
   code: tmutil addexclusion /path/to/exclude
   tactics:
-  - Defense Evasion
+  - Stealth
   tags:
   - backup
 paths:

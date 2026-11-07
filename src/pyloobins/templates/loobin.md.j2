@@ -33,6 +33,10 @@ tags: {{ tags }}
 #### {{ example.name }}
 {{ example.description }}
 
+{% if example.techniques %}
+ATT&CK techniques: {% for t in example.techniques %}[{{ t }}](https://attack.mitre.org/techniques/{{ t | replace(".", "/") }}/){% if not loop.last %}, {% endif %}{% endfor %}
+
+{% endif %}
 {% if example.code %}
 ```
 {{ example.code }}

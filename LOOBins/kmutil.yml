@@ -25,12 +25,16 @@ example_use_cases:
     code: kmutil showloaded --list-only --no-kernel-components
     tactics:
       - Discovery
+    techniques:
+      - T1518.001
     tags: []
   - name: Unload a kernel extension to disable a kernel-resident security product
     description: unload invokes a kext's stop function and ends its IOKit lifecycle, stopping a legacy security kext from observing the system. It requires root and fails if another loaded kext holds a reference to the target (shown by the Refs column of showloaded). The kext stays in its collection, so the change does not survive a reboot. Applies only to products still shipping a kext rather than a System Extension.
     code: sudo kmutil unload --bundle-identifier <TARGET_KEXT_BUNDLE_ID>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
+    techniques:
+      - T1685
     tags: []
   - name: Terminate IOService instances to disable a driver without fully unloading its kext
     description: >-
@@ -39,7 +43,9 @@ example_use_cases:
       form stops the driver from doing work while leaving the kext visible in showloaded output. Requires root.
     code: sudo kmutil unload --class-name <TARGET_IOSERVICE_CLASS>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
+    techniques:
+      - T1685
     tags: []
   - name: Install an attacker-supplied kernel extension for boot persistence
     description: load stages a kext bundle from disk and, if it is not already in the auxiliary kext collection, has kernelmanagerd rebuild that collection so the kext loads at every subsequent boot. The prerequisites are steep. It requires root; with SIP enabled the signature is verified before the kext is added; kernelmanagerd prompts a logged-in administrator to approve the rebuild; the machine must reboot; and on Apple silicon it must already be in Reduced Security with third-party kexts enabled. kmutil signals the last two states with exit codes 27 (approval required) and 28 (reboot required).
@@ -47,20 +53,26 @@ example_use_cases:
     tactics:
       - Persistence
       - Privilege Escalation
+    techniques:
+      - T1547.006
     tags: []
   - name: Install a custom boot object to gain pre-boot code execution on Apple silicon
     description: The Recovery-only configure-boot subcommand installs a Mach-O that iBoot loads and starts, placing attacker-controlled code ahead of the OS in the boot chain by setting the CustomOS Image4 manifest hash in a Mac's LocalPolicy. The prerequisites are interactive. The machine must be in Recovery, an administrator must already have selected Reduced Security in Startup Security Utility, and kmutil prompts for confirmation before downgrading further to Permissive Security. It needs physical access or a management path that can force a Recovery boot, not remote code execution alone.
     code: kmutil configure-boot --custom-boot-object <PAYLOAD_MACHO> --volume /Volumes/<TARGET_VOLUME>
     tactics:
       - Persistence
-      - Defense Evasion
+      - Stealth
+    techniques:
+      - T1542
     tags: []
   - name: Strip all third-party kext approvals with trigger-panic-medic
     description: trigger-panic-medic is meant to recover a machine from a kext that panics at boot. It removes the auxiliary kext collection and revokes every kext approval on the next boot, which on a managed fleet drops any third-party kernel extension the organization deployed, including a security vendor's kext, and forces user re-approval before any can load again. It runs only in Recovery Mode, needing the same access as configure-boot.
     code: kmutil trigger-panic-medic
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Impact
+    techniques:
+      - T1685
     tags: []
 paths:
   - /usr/bin/kmutil

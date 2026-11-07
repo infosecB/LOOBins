@@ -9,6 +9,8 @@ example_use_cases:
     code: for FILE in ~/Downloads/*; do echo $(GetFileInfo $FILE) >> fileinfo.txt; sleep 2; done
     tactics:
       - Discovery
+    techniques:
+      - T1083
     tags:
       - bash
       - zsh

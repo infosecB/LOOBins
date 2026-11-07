@@ -21,6 +21,8 @@ example_use_cases:
     code: pwpolicy -getaccountpolicies
     tactics:
       - Discovery
+    techniques:
+      - T1201
     tags: []
   - name: Identify which password hash formats are stored on disk
     description: >-
@@ -32,6 +34,8 @@ example_use_cases:
     tactics:
       - Credential Access
       - Discovery
+    techniques:
+      - T1201
     tags: []
   - name: Confirm a harvested account is still usable without a login attempt
     description: >-
@@ -41,6 +45,8 @@ example_use_cases:
     code: pwpolicy -u <TARGET_USER> -authentication-allowed
     tactics:
       - Discovery
+    techniques:
+      - T1087.001
     tags: []
   - name: Strip or replace account policies so password guessing is not throttled
     description: >-
@@ -50,7 +56,7 @@ example_use_cases:
       contents the attacker controls. Both require root or an administrator supplied with -a.
     code: sudo pwpolicy -clearaccountpolicies
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Persistence
     tags:
       - policy
@@ -64,6 +70,8 @@ example_use_cases:
     tactics:
       - Persistence
       - Credential Access
+    techniques:
+      - T1098
     tags:
       - password
   - name: Disable or re-enable user accounts at the directory level
@@ -75,7 +83,9 @@ example_use_cases:
     code: sudo pwpolicy -u <TARGET_USER> -disableuser
     tactics:
       - Impact
-      - Defense Evasion
+      - Stealth
+    techniques:
+      - T1531
     tags: []
 paths:
   - /usr/bin/pwpolicy

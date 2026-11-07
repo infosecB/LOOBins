@@ -9,6 +9,8 @@ example_use_cases:
   code: nvram -p
   tactics:
   - Discovery
+  techniques:
+  - T1082
 paths:
 - /usr/sbin/nvram
 detections:

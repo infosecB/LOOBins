@@ -9,6 +9,8 @@ example_use_cases:
     code: networksetup -listnetworkserviceorder
     tactics:
       - Discovery
+    techniques:
+      - T1016
     tags:
       - network
       - configuration
@@ -17,6 +19,8 @@ example_use_cases:
     code: networksetup -detectnewhardware
     tactics:
     - Discovery
+    techniques:
+    - T1016
     tags:
     - network
     - configuration
@@ -25,6 +29,8 @@ example_use_cases:
     code: networksetup -listallhardwareports
     tactics:
     - Discovery
+    techniques:
+    - T1016
     tags:
     - network
     - configuration
@@ -33,6 +39,8 @@ example_use_cases:
     code: networksetup -listallnetworkservices
     tactics:
     - Discovery
+    techniques:
+    - T1016
     tags:
     - network
     - configuration
@@ -41,6 +49,8 @@ example_use_cases:
     code: networksetup -getdnsservers Wi-Fi
     tactics:
     - Discovery
+    techniques:
+    - T1016
     tags:
     - network
     - configuration
@@ -50,6 +60,8 @@ example_use_cases:
     code: networksetup -getautoproxyurl "Thunderbolt Ethernet"
     tactics:
     - Discovery
+    techniques:
+    - T1016
     tags:
     - network
     - configuration
@@ -59,6 +71,8 @@ example_use_cases:
     code: networksetup -getwebproxy "Wi-Fi"
     tactics:
     - Discovery
+    techniques:
+    - T1016
     tags:
     - network
     - configuration
@@ -68,6 +82,8 @@ example_use_cases:
     code: networksetup -setsecurewebproxy "Wi-Fi" 46.226.108.171
     tactics:
     - Command and Control
+    techniques:
+    - T1090
     tags:
     - network
     - configuration
@@ -77,6 +93,8 @@ example_use_cases:
     code: networksetup -setwebproxy "Wi-Fi" 46.226.108.171 
     tactics:
     - Command and Control
+    techniques:
+    - T1090
     tags:
     - network
     - configuration
@@ -86,6 +104,8 @@ example_use_cases:
     code: networksetup -setautoproxyurl "Wi-Fi" $autoProxyURL
     tactics:
     - Command and Control
+    techniques:
+    - T1090
     tags:
     - network
     - configuration
@@ -95,6 +115,8 @@ example_use_cases:
     code: networksetup -setautoproxystate "Wi-Fi" on
     tactics:
     - Command and Control
+    techniques:
+    - T1090
     tags:
     - network
     - configuration

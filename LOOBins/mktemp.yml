@@ -8,14 +8,14 @@ example_use_cases:
     description: The following command can be used to generate a random directory name for staging payloads
     code: export tmpDir="$(mktemp -d /tmp/XXXXXXXXXXXX)"
     tactics:
-      - Defense Evasion
+      - Stealth
     tags:
       - payload
   - name: Generate directory based on template file (Bundlore)
     description: The following command can be used to generate a unique directory based on a template
     code: TMP_DIR="mktemp -d -t x"
     tactics:
-      - Defense Evasion
+      - Stealth
     tags:
       - payload
 paths:

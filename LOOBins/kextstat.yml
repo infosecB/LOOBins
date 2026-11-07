@@ -9,6 +9,8 @@ example_use_cases:
   code: kexstat
   tactics:
   - Discovery
+  techniques:
+  - T1082
   tags:
   - bash
   - zsh

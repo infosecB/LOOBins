@@ -9,6 +9,8 @@ example_use_cases:
   code: hdiutil mount malicious.dmg
   tactics:
   - Execution
+  techniques:
+  - T1204.002
   tags:
   - bash
   - zsh
@@ -18,6 +20,8 @@ example_use_cases:
   code: hdiutil attach malicious.dmg
   tactics:
   - Execution
+  techniques:
+  - T1204.002
   tags:
   - bash
   - zsh
@@ -27,6 +31,8 @@ example_use_cases:
   code: hdiutil mount malicious.iso
   tactics:
   - Execution
+  techniques:
+  - T1204.002
   tags:
   - bash
   - zsh
@@ -36,6 +42,8 @@ example_use_cases:
   code: hdiutil attach malicious.iso
   tactics:
   - Execution
+  techniques:
+  - T1204.002
   tags:
   - bash
   - zsh
@@ -45,6 +53,9 @@ example_use_cases:
   code: hdiutil create -volname "Volume Name" -srcfolder /path/to/folder -ov diskimage.dmg
   tactics:
   - Collection
+  techniques:
+  - T1560
+  - T1074.001
   tags:
   - bash
   - zsh
@@ -54,6 +65,9 @@ example_use_cases:
   code: hdiutil create -encryption -stdinpass -volname "Volume Name" -srcfolder /path/to/folder -ov encrypteddiskimage.dmg
   tactics:
   - Collection
+  techniques:
+  - T1560
+  - T1074.001
   tags:
   - bash
   - zsh

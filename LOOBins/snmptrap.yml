@@ -11,6 +11,8 @@ example_use_cases:
       - Lateral Movement
       - Exfiltration
       - Command and Control
+    techniques:
+      - T1048
     tags:
       - snmp
       - file-transfer

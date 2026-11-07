@@ -9,6 +9,8 @@ example_use_cases:
   code: sudo profiles show -type enrollment
   tactics:
   - Discovery
+  techniques:
+  - T1082
   tags:
   - oneliner
 - name: Remove configuration profiles.
@@ -16,6 +18,8 @@ example_use_cases:
   code: profiles remove -identifier com.profile.identifier -password <password>
   tactics:
   - Impact
+  techniques:
+  - T1685
   tags:
   - oneliner
 paths:

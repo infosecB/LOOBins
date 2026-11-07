@@ -9,6 +9,8 @@ example_use_cases:
     code: sw_vers
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - configuration
@@ -17,6 +19,8 @@ example_use_cases:
     code: sw_vers -productVersion
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - configuration
@@ -25,6 +29,8 @@ example_use_cases:
     code: sw_vers -productName
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - configuration
@@ -33,6 +39,8 @@ example_use_cases:
     code: sw_vers -buildVersion
     tactics:
       - Discovery
+    techniques:
+      - T1082
     tags:
       - bash
       - configuration

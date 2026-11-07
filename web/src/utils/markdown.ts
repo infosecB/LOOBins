@@ -51,6 +51,7 @@ export function loobinMarkdown(loobin: LOOBin, site: URL, depth = 1): string {
     if (uc.code) lines.push(fence(uc.code), '');
     const tactics = tacticOrder.filter((t) => uc.tactics.includes(t));
     if (tactics.length) lines.push(`- Tactics: ${tactics.join(', ')}`);
+    if (uc.techniques.length) lines.push(`- ATT&CK techniques: ${uc.techniques.join(', ')}`);
     if (uc.tags.length) lines.push(`- Tags: ${uc.tags.join(', ')}`);
   }
 

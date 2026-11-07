@@ -9,6 +9,8 @@ example_use_cases:
   code:  echo "load bad.dylib" | tclsh
   tactics:
   - Execution
+  techniques:
+  - T1129
   tags:
   - dylib
 paths:

@@ -281,7 +281,10 @@ const viewBtn = 'p-2 text-text-secondary hover:text-text-primary aria-pressed:bg
     state.q = params.get('q') ?? '';
     const sort = params.get('sort');
     state.sort = sort && sort in comparators ? (sort as SortKey) : 'name';
-    state.tactics = new Set(params.getAll('tactic'));
+    // ATT&CK v20 split Defense Evasion into Stealth and Defense Impairment; keep old links working.
+    state.tactics = new Set(
+      params.getAll('tactic').flatMap((t) => (t === 'defense-evasion' ? ['stealth', 'defense-impairment'] : [t]))
+    );
     state.tags = new Set(params.getAll('tag'));
   }
 

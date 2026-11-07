@@ -8,7 +8,9 @@ example_use_cases:
   description: An attacker can cover up their tracks by removing all log messages using the following command. Requires root privileges.
   code: log erase --all
   tactics:
-  - Defense Evasion
+  - Defense Impairment
+  techniques:
+  - T1685.006
   tags:
   - requires-root
 - name: Search log messages for tokens
@@ -16,6 +18,8 @@ example_use_cases:
   code: log show --info --debug --predicate 'eventMessage CONTAINS[d] "eyJ"'
   tactics:
   - Credential Access
+  techniques:
+  - T1552
   tags:
   - bash
   - zsh
