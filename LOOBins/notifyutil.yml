@@ -48,7 +48,6 @@ example_use_cases:
     tags:
       - geolocation
       - monitoring
-      - reconnaissance
   - name: Monitor login/logout events for privilege escalation timing
     description: By monitoring authentication-related notification keys, an attacker can detect login and logout events to time privilege escalation attempts or other malicious activities when defenses may be weakened during authentication transitions.
     code: notifyutil -w com.apple.loginwindow.logout -w com.apple.springboard.attemptactivationend
@@ -58,7 +57,6 @@ example_use_cases:
     tags:
       - authentication
       - monitoring
-      - privilege-escalation
   - name: Query system notification state values for reconnaissance
     description: Threat actors can query state values of system notification keys to gather information about the current system configuration without executing more suspicious commands.
     code: |
@@ -68,7 +66,6 @@ example_use_cases:
     tactics:
       - Discovery
     tags:
-      - reconnaissance
       - enumeration
 paths:
   - /usr/bin/notifyutil

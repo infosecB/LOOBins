@@ -14,7 +14,6 @@ example_use_cases:
       - clipboard
       - bash
       - oneliner
-      - osascript
   - name: Use the osascript binary to gather system information
     description: osascript can be used to gather the operating system version, current username, user ID, computer name, IP address, and other information.
     code: osascript -e 'return (system info)'
@@ -22,9 +21,8 @@ example_use_cases:
       - Collection
       - Discovery
     tags:
-      - systeminfo
+      - system-info
       - oneliner
-      - osascript
   - name: Use the osascript binary to prompt the user for credentials
     description: osascript can be used to generate a dialogue box and request the user to enter the keychain password.
     code: osascript -e 'set popup to display dialog "Keychain Access wants to use the login keychain" & return & return & "Please enter the keychain password" & return default answer "" with icon file "System:Library:CoreServices:CoreTypes.bundle:Contents:Resources:FileVaultIcon.icns" with title "Authentication Needed" with hidden answer'
@@ -33,7 +31,6 @@ example_use_cases:
     tags:
       - oneliner
       - prompt
-      - osascript
   - name: Use the osascript binary to execute a JXA (JavaScript for Automation) file.
     description: JXA is often used by red teams (and potentially attackers) as a macOS payload, as JXA is native to macOS and can access various internal macOS APIs (such as Cocoa, Foundation, OSAKit, etc.). The osascript binary can be used to execute JXA payloads by simply running "osascript [file.js]" but some malware or offensive tools may also use "osascript -l JavaScript [file.js]".
     code: echo "ObjC.import('Cocoa');\nObjC.import('stdlib');\nvar currentApp = Application.currentApplication();\ncurrentApp.includeStandardAdditions = true;\ncurrentApp.doShellScript('open -a Calculator.app');" > calc.js && osascript -l JavaScript calc.js
@@ -41,7 +38,6 @@ example_use_cases:
       - Execution
     tags:
       - jxa
-      - osascript
   - name: Execute shell commands via osascript do shell script
     description: osascript's 'do shell script' handler executes arbitrary shell commands through the AppleScript runtime. Commands spawned this way are children of osascript rather than the calling shell, which can bypass detection logic tied to specific parent-child process relationships. The 'with administrator privileges' flag triggers a native macOS authentication prompt and runs the command as root if the user authenticates, without requiring sudo.
     code: "osascript -e 'do shell script \"id\"'"
@@ -50,7 +46,6 @@ example_use_cases:
       - Defense Evasion
       - Privilege Escalation
     tags:
-      - osascript
       - do-shell-script
       - oneliner
   - name: Remote command execution over SSH using osascript do shell script
@@ -60,7 +55,6 @@ example_use_cases:
       - Lateral Movement
       - Execution
     tags:
-      - osascript
       - ssh
       - remote-execution
   - name: Mount SMB volume without GUI using osascript mount volume
@@ -69,7 +63,6 @@ example_use_cases:
     tactics:
       - Lateral Movement
     tags:
-      - osascript
       - smb
       - file-transfer
       - oneliner
@@ -80,7 +73,6 @@ example_use_cases:
       - Execution
       - Lateral Movement
     tags:
-      - osascript
       - remote-apple-events
       - remote-apple-services
       - eppc
@@ -93,7 +85,6 @@ example_use_cases:
       - Discovery
       - Lateral Movement
     tags:
-      - osascript
       - remote-apple-events
       - eppc
       - finder

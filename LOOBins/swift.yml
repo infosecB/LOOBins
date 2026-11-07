@@ -10,7 +10,6 @@ example_use_cases:
     tactics:    
       - Execution
     tags:  
-      - swift  
       - repl
       - bash
       - zsh
@@ -21,7 +20,6 @@ example_use_cases:
       - Execution
       - Defense Evasion
     tags:  
-      - swift  
       - repl
       - bash
       - zsh
@@ -32,7 +30,6 @@ example_use_cases:
       - Execution
       - Defense Evasion
     tags:  
-      - swift  
       - repl
       - bash
       - zsh
