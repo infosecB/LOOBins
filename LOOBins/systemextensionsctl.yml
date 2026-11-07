@@ -22,7 +22,7 @@ example_use_cases:
     description: Uninstall a specific system extension by Team ID and bundle ID, as returned by systemextensionsctl list. Removing an endpoint security extension stops the security product from receiving Endpoint Security events. This requires SIP to be disabled.
     code: sudo systemextensionsctl uninstall <teamID> <bundleID>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
     techniques:
       - T1685
     tags:
@@ -33,7 +33,7 @@ example_use_cases:
     description: Forcibly reset system extension state, removing every installed system extension and clearing related state in a single command. This requires SIP to be disabled.
     code: sudo systemextensionsctl reset
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Impact
     techniques:
       - T1685
@@ -45,7 +45,7 @@ example_use_cases:
     description: Turn on developer mode, which skips the version check performed when a new system extension is examined. This can be used to replace an installed extension with an attacker-modified build. This requires SIP to be disabled.
     code: sudo systemextensionsctl developer on
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Persistence
     techniques:
       - T1685

@@ -8,7 +8,7 @@ example_use_cases:
       description: Banshee Stealer resets the permissions that have already been allowed to applications on the system, which will cause the user to be prompted to give them again. This action may be intended to trick the user into unknowingly giving authorizations to the malware.
       code: tccutil reset AppleEvents
       tactics:
-          - Defense Evasion
+          - Defense Impairment
       techniques:
           - T1548.006
       tags:
@@ -17,7 +17,7 @@ example_use_cases:
       description: Attackers use tccutil to reset permissions for services like Camera, Microphone, or AppleEvents.
       code: tccutil reset AppleEvents com.apple.Terminal
       tactics:
-          - Defense Evasion
+          - Defense Impairment
       techniques:
           - T1548.006
       tags:

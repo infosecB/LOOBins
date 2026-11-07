@@ -16,6 +16,8 @@ export default defineConfig({
     // The tactic and tag index pages were folded into the /binaries/ filters.
     '/tactics': '/binaries/',
     '/tags': '/binaries/',
+    // ATT&CK v20 split Defense Evasion into Stealth and Defense Impairment.
+    '/tactics/defense-evasion': '/binaries/?tactic=stealth&tactic=defense-impairment',
     // Used By is now a section of the About page.
     '/used-by': '/about/#used-by',
   },

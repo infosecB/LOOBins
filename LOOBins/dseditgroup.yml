@@ -60,7 +60,7 @@ example_use_cases:
       delete confirmation, making the operation usable from a non-interactive shell. Requires root.
     code: dseditgroup -o delete -q com.apple.access_screensharing
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Lateral Movement
     techniques:
       - T1021

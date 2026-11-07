@@ -21,7 +21,6 @@ example_use_cases:
     code: sudo pmset -a sleep 0 disksleep 0 displaysleep 0
     tactics:
       - Command and Control
-      - Defense Evasion
     tags:
       - sleep
       - keep-awake
@@ -60,7 +59,7 @@ example_use_cases:
     code: sudo pmset -a destroyfvkeyonstandby 0
     tactics:
       - Credential Access
-      - Defense Evasion
+      - Defense Impairment
     tags:
       - filevault
       - destroyfvkeyonstandby

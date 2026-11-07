@@ -22,7 +22,7 @@ example_use_cases:
       rather than destroying the data.
     code: trash /private/tmp/stage.bin /Users/<USER>/Library/LaunchAgents/com.attacker.helper.plist /Users/<USER>/Library/Caches/.workdir
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1070.004
     tags:
@@ -35,7 +35,7 @@ example_use_cases:
       are recoverable until the Trash is emptied.
     code: trash --stopOnError --verbose /private/tmp/impl /private/tmp/creds.json
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1070.004
     tags:

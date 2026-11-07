@@ -32,7 +32,7 @@ example_use_cases:
     description: unload invokes a kext's stop function and ends its IOKit lifecycle, stopping a legacy security kext from observing the system. It requires root and fails if another loaded kext holds a reference to the target (shown by the Refs column of showloaded). The kext stays in its collection, so the change does not survive a reboot. Applies only to products still shipping a kext rather than a System Extension.
     code: sudo kmutil unload --bundle-identifier <TARGET_KEXT_BUNDLE_ID>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
     techniques:
       - T1685
     tags: []
@@ -43,7 +43,7 @@ example_use_cases:
       form stops the driver from doing work while leaving the kext visible in showloaded output. Requires root.
     code: sudo kmutil unload --class-name <TARGET_IOSERVICE_CLASS>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
     techniques:
       - T1685
     tags: []
@@ -61,7 +61,7 @@ example_use_cases:
     code: kmutil configure-boot --custom-boot-object <PAYLOAD_MACHO> --volume /Volumes/<TARGET_VOLUME>
     tactics:
       - Persistence
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1542
     tags: []
@@ -69,7 +69,7 @@ example_use_cases:
     description: trigger-panic-medic is meant to recover a machine from a kext that panics at boot. It removes the auxiliary kext collection and revokes every kext approval on the next boot, which on a managed fleet drops any third-party kernel extension the organization deployed, including a security vendor's kext, and forces user re-approval before any can load again. It runs only in Recovery Mode, needing the same access as configure-boot.
     code: kmutil trigger-panic-medic
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Impact
     techniques:
       - T1685

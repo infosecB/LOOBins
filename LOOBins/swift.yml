@@ -20,7 +20,7 @@ example_use_cases:
     code: echo 'print("loobins")' | swift -
     tactics:    
       - Execution
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1059
     tags:  
@@ -32,7 +32,7 @@ example_use_cases:
     code: "swift -e 'import Foundation; let process = Process(); process.executableURL = URL(fileURLWithPath:\"/bin/bash\"); process.arguments = [\"-c\", \"ls -alh\"]; let stdout = Pipe(); let stderr = Pipe(); process.standardOutput = stdout; process.standardError = stderr; try process.run(); print(String(decoding: stdout.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self)); print(String(decoding: stderr.fileHandleForReading.readDataToEndOfFile(), as: UTF8.self));'"
     tactics:    
       - Execution
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1059
     tags:  

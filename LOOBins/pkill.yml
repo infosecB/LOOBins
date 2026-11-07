@@ -8,7 +8,7 @@ example_use_cases:
   description: Terminate defensive processes like firewalls, AV, or monitoring tools.
   code: pkill -f "Little Snitch|ESET|osqueryd|Falcon"
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   techniques:
   - T1685
   tags:
@@ -18,7 +18,7 @@ example_use_cases:
   description: Use the -9 signal to forcefully terminate processes that may not respond to normal termination signals. Useful for killing hung security tools.
   code: pkill -9 osqueryd
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   techniques:
   - T1685
   tags:
@@ -28,7 +28,7 @@ example_use_cases:
   description: Terminate all processes belonging to a specific user, potentially ending user sessions or disrupting monitoring.
   code: pkill -u username
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   - Impact
   techniques:
   - T1489
@@ -39,7 +39,7 @@ example_use_cases:
   description: Terminate system logging and monitoring processes to evade detection.
   code: pkill -f "syslog|auditd|osqueryd|esensor|nessusd"
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   techniques:
   - T1685
   tags:
@@ -49,7 +49,7 @@ example_use_cases:
   description: Use exact matching with -x flag to kill specific process by exact name rather than pattern.
   code: pkill -x com.apple.Safari
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   - Impact
   techniques:
   - T1489

@@ -9,7 +9,7 @@ example_use_cases:
     code: for FILE in ~/*; do echo $(SetFile -a V $FILE && echo $(GetFileInfo $FILE)) >> /tmp/fileinfo.txt; sleep 2; done
     tactics:
       - Persistence
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1564.001
     tags:
@@ -20,7 +20,7 @@ example_use_cases:
     description: Setfile can be used with the -d and -m arguments to alter a file's creation and modification date, respectively.
     code: SetFile -d "04/25/2023 11:11:00" -m "04/25/2023 11:12:00" targetfile.txt
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1070.006
     tags:

@@ -38,7 +38,7 @@ example_use_cases:
   - Collection
   - Exfiltration
   - Lateral Movement
-  - Defense Evasion
+  - Stealth
   techniques:
   - T1560.001
   - T1021.004

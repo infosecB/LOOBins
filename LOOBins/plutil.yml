@@ -9,7 +9,7 @@ example_use_cases:
   code: >-
     plutil -insert LSUIElement -string "1" /Applications/TargetApp.app/Contents/Info.plist
   tactics:
-  - Defense Evasion
+  - Stealth
   techniques:
   - T1564.003
   tags:

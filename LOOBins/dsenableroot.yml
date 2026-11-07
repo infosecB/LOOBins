@@ -31,7 +31,7 @@ example_use_cases:
     code: dsenableroot
     tactics:
       - Persistence
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1098
       - T1078.003
@@ -42,7 +42,7 @@ example_use_cases:
       enable root, use it, and disable it again, leaving the account state as it was before.
     code: dsenableroot -d -u <ADMIN_USER> -p <ADMIN_PASSWORD>
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1070
     tags: []

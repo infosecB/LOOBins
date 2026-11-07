@@ -8,7 +8,7 @@ example_use_cases:
     description: Download file and ignore cert checking 
     code: nscurl -k https://google.com -o /private/tmp/google
     tactics:
-      - Defense Evasion
+      - Stealth
       - Command and Control
     techniques:
       - T1105
@@ -16,7 +16,7 @@ example_use_cases:
     description: Download file to the Downloads directory using -dl 
     code: nscurl https://google.com -dl
     tactics:
-      - Defense Evasion
+      - Stealth
       - Command and Control
     techniques:
       - T1105
@@ -24,7 +24,7 @@ example_use_cases:
     description: Download file to a designated directory using -dir 
     code: nscurl https://google.com -dir /private/tmp/google
     tactics:
-      - Defense Evasion
+      - Stealth
       - Command and Control             
     techniques:
       - T1105

@@ -57,7 +57,7 @@ example_use_cases:
       sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -clientopts -setvnclegacy -vnclegacy yes -setvncpw -vncpw <PASSWORD>
     tactics:
       - Persistence
-      - Defense Evasion
+      - Defense Impairment
     techniques:
       - T1021.005
     tags: []
@@ -70,7 +70,7 @@ example_use_cases:
     code: |
       sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -configure -clientopts -setmenuextra -menuextra no -restart -menu
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1564
     tags: []
@@ -85,7 +85,7 @@ example_use_cases:
       ssh <USER>@<TARGET_IP> "sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -activate -configure -access -on -privs -all -users <USERNAME> -restart -agent -console"
     tactics:
       - Collection
-      - Defense Evasion
+      - Stealth
       - Lateral Movement
     techniques:
       - T1021.005
@@ -102,7 +102,7 @@ example_use_cases:
     code: |
       sudo /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -uninstall -settings -deactivate -stop -quiet
     tactics:
-      - Defense Evasion
+      - Stealth
     techniques:
       - T1070
     tags: []

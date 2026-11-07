@@ -583,7 +583,8 @@
                             "Execution",
                             "Persistence",
                             "Privilege Escalation",
-                            "Defense Evasion",
+                            "Stealth",
+                            "Defense Impairment",
                             "Credential Access",
                             "Discovery",
                             "Lateral Movement",
@@ -592,6 +593,15 @@
                             "Command and Control",
                             "Impact"
                         ],
+                        "type": "string"
+                    }
+                },
+                "techniques": {
+                    "title": "Techniques",
+                    "description": "MITRE ATT&CK technique or sub-technique IDs (e.g. T1059.002)",
+                    "type": "array",
+                    "items": {
+                        "pattern": "^T\\d{4}(\\.\\d{3})?$",
                         "type": "string"
                     }
                 },

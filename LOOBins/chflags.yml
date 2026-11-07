@@ -12,7 +12,7 @@ example_use_cases:
       visible in Finder and Terminal.
   code: chflags hidden ~/evil
   tactics:
-  - Defense Evasion
+  - Stealth
   techniques:
   - T1564.001
   tags:
@@ -23,7 +23,7 @@ example_use_cases:
       and Terminal.
   code: chflags nohidden ~/evil
   tactics:
-  - Defense Evasion
+  - Stealth
   tags:
   - finder
 paths:

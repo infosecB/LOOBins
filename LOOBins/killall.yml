@@ -8,7 +8,7 @@ example_use_cases:
   description: Terminate running Terminal processes after malicious commands have been launched, reducing visible evidence of execution and interfering with manual analysis.
   code: killall Terminal
   tactics:
-  - Defense Evasion
+  - Stealth
   tags:
   - processes
   - terminal
@@ -18,7 +18,6 @@ example_use_cases:
   code: while true; do killall Finder Dock SystemUIServer NotificationCenter 2>/dev/null; sleep 0.1; done
   tactics:
   - Impact
-  - Defense Evasion
   techniques:
   - T1489
   tags:
@@ -29,7 +28,7 @@ example_use_cases:
   description: Repeatedly terminate NotificationCenter to interfere with the display of macOS notifications.
   code: killall NotificationCenter
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   - Impact
   techniques:
   - T1685
@@ -40,7 +39,7 @@ example_use_cases:
   description: Send SIGKILL to immediately terminate processes that may ignore the default termination signal.
   code: killall -9 Terminal
   tactics:
-  - Defense Evasion
+  - Defense Impairment
   - Impact
   techniques:
   - T1489
