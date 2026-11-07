@@ -6,6 +6,7 @@ jobs:
   validate_loobin:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.8", "3.10", "3.12"]
     steps:
@@ -13,14 +14,15 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    # setup-python has no 3.8 build for current ubuntu-latest images; uv
+    # provides managed interpreters for every supported version and, given
+    # python-version, creates and activates a venv for later steps.
+    - name: Set up uv with Python ${{ matrix.python-version }}
+      uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install pyloobins from local source
-      run: |
-        python -m pip install --upgrade pip
-        pip install .
+      run: uv pip install .
     - name: Validate the full LOOBins corpus with local pyloobins
       run: |
         status=0

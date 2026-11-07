@@ -23,7 +23,7 @@ def _discover_loobin_files() -> list[pathlib.Path]:
     bundled = list((package_dir / "LOOBins").glob("**/*.yml"))
     if bundled:
         return bundled
-    for parent in package_dir.parents[:5]:
+    for parent in list(package_dir.parents)[:5]:
         candidate = list((parent / "LOOBins").glob("**/*.yml"))
         if candidate:
             return candidate
