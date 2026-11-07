@@ -32,6 +32,7 @@ dev = [
     "pre-commit>=3.2.2",
     "pytest>=7.3.1",
     "tox>=4.5.1",
+    "tox-uv>=1.11",
     "isort>=5.12.0",
     "polyfactory>=2.18.0,<3",
     "mypy>=1.8.0",
@@ -72,6 +73,9 @@ legacy_tox_ini = """
   env_list =
       py39,py310,py311,py312
   minversion = 4.5.1
+  # tox-uv lets tox find (and download) interpreters through uv, so CI
+  # doesn't depend on which versions setup-python ships for the runner image.
+  requires = tox-uv>=1.11
   # Don't fail the whole run when a Python version in env_list isn't installed
   # locally; CI still provides the full 3.9-3.12 matrix.
   skip_missing_interpreters = true
