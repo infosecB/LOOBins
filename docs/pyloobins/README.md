@@ -4,7 +4,7 @@ PyLOOBins is a Python SDK and command-line utility for programmatically interact
 You can download PyLOOBins from PyPI by running the following command:
 `pip install pyloobins`
 
-PyLOOBins requires Python 3.8 or later.
+PyLOOBins requires Python 3.9 or later.
 
 ## Usage
 ### Command-line

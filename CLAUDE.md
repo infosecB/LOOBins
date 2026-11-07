@@ -12,7 +12,7 @@ LOOBins (Living Off the Orchard: macOS Binaries) is a cybersecurity resource tha
 
 **Important**: This project does NOT include Unix binaries covered by GTFOBins unless they have macOS-specific use cases (e.g., sqlite3).
 
-**Python version**: `^3.8` (tested against 3.8, 3.9, 3.10, 3.11, 3.12 via tox)
+**Python version**: `^3.9` (tested against 3.9, 3.10, 3.11, 3.12 via tox)
 
 ## Development Commands
 
@@ -49,7 +49,7 @@ uv run pyloobins get --name "osascript"
 # Export STIX bundle (--path controls output directory, not input)
 uv run pyloobins export-stix --file-name loobins_stix.json --path .
 
-# Run multi-version tests with tox (Python 3.8–3.12)
+# Run multi-version tests with tox (Python 3.9–3.12)
 uv run tox
 ```
 
