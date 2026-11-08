@@ -104,7 +104,7 @@ Each LOOBin must follow the schema defined in `/docs/schema.md`:
 ### Validation Pipeline
 
 - **CI/CD**: `.github/workflows/validate_loobins.yml` validates changed YAML files on PRs (uses `pip install pyloobins` from PyPI, not local source)
-- **Auto-release**: `.github/workflows/auto-release.yml` on push to `main` — runs tox via uv, bumps patch version, builds with `uv build`, publishes to PyPI with `uv publish`, creates GitHub release, commits version bump with `[skip ci]`
+- **Auto-release**: `.github/workflows/auto-release.yml` nightly (06:00 UTC, or manual `workflow_dispatch` with optional `force`) — skips if nothing in `LOOBins/`, `src/`, or `pyproject.toml` changed since the tag matching the current version; otherwise runs tox via uv, bumps patch version, builds with `uv build`, publishes to PyPI with `uv publish`, creates GitHub release, commits version bump with `[skip ci]`
 - **Pre-commit hooks**: `check-yaml`, `check-toml`, `end-of-file-fixer`, `mixed-line-ending`, `black`, `isort --profile black` (note: pylint is not a pre-commit hook, run it separately)
 - **Schema validation**: Pydantic models ensure YAML files match schema
 - **VS Code integration**: SchemaStore provides YAML validation in VS Code (requires YAML extension)
