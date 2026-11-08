@@ -1,13 +1,17 @@
 name: Auto Release to PyPI
 
+# Nightly: release whatever has landed on main since the last release.
+# Skips when nothing under LOOBins/, src/, or pyproject.toml has changed.
+
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'LOOBins/**'
-      - 'src/**'
-      - 'pyproject.toml'
+  schedule:
+    - cron: '0 6 * * *' # Daily 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Release even if nothing changed since the last release
+        type: boolean
+        default: false
 
 # Queue releases instead of racing: overlapping runs read the same version
 # and collide on the tag and the version-bump push.
@@ -16,9 +20,43 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  changes:
+    name: Check for unreleased changes
+    runs-on: ubuntu-latest
+    outputs:
+      release: ${{ steps.diff.outputs.release }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      # Each release tags its version-bump commit with the bare version, so
+      # the tag matching pyproject.toml marks the last release.
+      - name: Diff against last release
+        id: diff
+        run: |
+          CURRENT_VERSION=$(grep '^version' pyproject.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
+          if [ "${{ inputs.force }}" = "true" ]; then
+            echo "Forced release"
+            echo "release=true" >> $GITHUB_OUTPUT
+          elif ! git rev-parse -q --verify "refs/tags/$CURRENT_VERSION" >/dev/null; then
+            echo "No tag for $CURRENT_VERSION; releasing"
+            echo "release=true" >> $GITHUB_OUTPUT
+          elif git diff --quiet "$CURRENT_VERSION" HEAD -- LOOBins src pyproject.toml; then
+            echo "No changes since $CURRENT_VERSION; skipping release"
+            echo "release=false" >> $GITHUB_OUTPUT
+          else
+            git diff --stat "$CURRENT_VERSION" HEAD -- LOOBins src pyproject.toml
+            echo "release=true" >> $GITHUB_OUTPUT
+          fi
+
   test:
     name: Test
     runs-on: ubuntu-latest
+    needs: changes
+    if: needs.changes.outputs.release == 'true'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
