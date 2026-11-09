@@ -14,7 +14,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     'Each binary below links to a markdown version of its page. Entries list the binary paths, example ' +
       'commands (which are illustrative abuse examples, not detection signatures), the ATT&CK tactics ' +
-      'they map to, and detection references. Built-in Unix binaries already covered by GTFOBins are ' +
+      'and techniques they map to, and detection references. Built-in Unix binaries already covered by GTFOBins are ' +
       'only included when they have macOS-specific abuse.',
     '',
     '## Binaries',
@@ -24,6 +24,8 @@ export const GET: APIRoute = async ({ site }) => {
     '## Data',
     '',
     `- [loobins.json](${abs('/loobins.json')}): Every entry as structured JSON`,
+    `- [loobins_navigator_layer.json](${abs('/loobins_navigator_layer.json')}): ATT&CK Navigator layer of the techniques LOOBins cover`,
+    `- [loobins_stix.json](${abs('/loobins_stix.json')}): STIX 2.1 bundle with one Tool per LOOBin`,
     `- [llms-full.txt](${abs('/llms-full.txt')}): Every entry as a single markdown document`,
     '- [Schema](https://github.com/infosecB/LOOBins/blob/main/docs/schema.md): YAML schema for entries',
     '',
