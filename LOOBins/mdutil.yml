@@ -1,0 +1,60 @@
+name: mdutil
+author: Brendan Chamberlain (@infosecB)
+short_description: Manage Spotlight metadata indexing on local and external volumes.
+full_description: mdutil manages the Spotlight metadata indexes stored on each volume. Spotlight indexes are used by mdfind, the Finder, and incident responders to locate files, and the on-disk Spotlight store can retain metadata useful during forensic investigations. An attacker with root can use mdutil to stop indexing so staged files do not appear in Spotlight searches, or erase and remove existing indexes to destroy forensic evidence. Any user can query indexing status.
+created: 2026-11-07
+example_use_cases:
+  - name: Check Spotlight indexing status of all volumes
+    description: Print the indexing status of every mounted volume. Volumes with indexing disabled are less likely to have staged files discovered through Spotlight searches. This command does not require root.
+    code: mdutil -sa
+    tactics:
+      - Discovery
+    tags:
+      - oneliner
+      - bash
+      - spotlight
+  - name: Disable Spotlight indexing to hide staged files
+    description: Turn off Spotlight indexing for the data volume or for all volumes. Files written afterwards are not added to the index, so they do not appear in mdfind or Finder search results.
+    code: |-
+      sudo mdutil -i off /System/Volumes/Data
+      sudo mdutil -a -i off
+    tactics:
+      - Defense Evasion
+    tags:
+      - oneliner
+      - bash
+      - spotlight
+  - name: Erase the Spotlight index to remove forensic artifacts
+    description: Erase and rebuild the Spotlight index, discarding metadata about files that were previously indexed, including files that have since been deleted.
+    code: sudo mdutil -E /System/Volumes/Data
+    tactics:
+      - Defense Evasion
+    tags:
+      - oneliner
+      - bash
+      - spotlight
+      - forensics
+  - name: Remove the Spotlight index from an external volume
+    description: Delete the Spotlight index directory from a volume such as a USB drive used to stage or exfiltrate data, then disable indexing so it is not rebuilt.
+    code: |-
+      sudo mdutil -X /Volumes/USB
+      sudo mdutil -i off /Volumes/USB
+    tactics:
+      - Defense Evasion
+    tags:
+      - bash
+      - spotlight
+      - forensics
+      - disk
+paths:
+  - /usr/bin/mdutil
+detections:
+  - name: "Command-line detection: mdutil with -i off, -d, -E, or -X arguments"
+    url: N/A
+  - name: "Process execution detection: mdutil executed by a script interpreter, an unsigned process, or as part of a sequence with other anti-forensics commands such as log erase or tmutil deletelocalsnapshots"
+    url: N/A
+resources:
+  - name: mdutil man page - SS64
+    url: https://ss64.com/mac/mdutil.html
+  - name: Indicator Removal - MITRE ATT&CK
+    url: https://attack.mitre.org/techniques/T1070/
