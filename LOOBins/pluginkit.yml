@@ -1,0 +1,49 @@
+name: pluginkit
+author: Brendan Chamberlain (@infosecB)
+short_description: Register, enable, disable, and enumerate app extensions (plug-ins) such as Finder Sync extensions.
+full_description: pluginkit manages the PlugInKit subsystem for the current user, which tracks app extensions such as Finder Sync, Quick Look, Share, and Safari web extensions. It can query the plug-in database, explicitly register extensions from arbitrary paths, and set the user election that controls whether an extension is used. Because it operates on the current user's database, no root access is required. Attackers can register and enable a malicious Finder Sync extension so that it is automatically launched by the system, enumerate installed extensions, and disable extensions belonging to security or data loss prevention products.
+created: 2026-11-07
+example_use_cases:
+  - name: Enumerate registered app extensions
+    description: List all registered app extensions with their paths, versions, and parent applications. Filtering by extension point (protocol) identifies Finder Sync extensions, Quick Look previewers, and Safari web extensions. The leading + or - on each line shows whether the user has elected to use or ignore the extension.
+    code: |-
+      pluginkit -mAvvv
+      pluginkit -mAvvv -p com.apple.FinderSync
+      pluginkit -mA -p com.apple.Safari.web-extension
+    tactics:
+      - Discovery
+    tags:
+      - oneliner
+      - bash
+  - name: Persist through a malicious Finder Sync extension
+    description: Register a Finder Sync extension bundled with an attacker-controlled application, then elect to use it. Once enabled, the extension is launched automatically by the system whenever Finder runs, without a LaunchAgent or login item.
+    code: |-
+      pluginkit -a /Applications/Updater.app/Contents/PlugIns/UpdaterSync.appex
+      pluginkit -e use -i com.example.Updater.UpdaterSync
+    tactics:
+      - Persistence
+    tags:
+      - bash
+      - findersync
+  - name: Disable a security product's app extension
+    description: Elect to ignore an extension by bundle ID, which stops it from being used for the current user. This can disable extensions that provide security or data loss prevention functionality, such as Finder Sync or Safari content-blocking extensions.
+    code: pluginkit -e ignore -i <extension bundle ID>
+    tactics:
+      - Defense Evasion
+    tags:
+      - oneliner
+      - bash
+paths:
+  - /usr/bin/pluginkit
+detections:
+  - name: Finder Sync Plugin Registered and Enabled - Elastic
+    url: https://www.elastic.co/guide/en/security/current/finder-sync-plugin-registered-and-enabled.html
+  - name: "Command-line detection: pluginkit -a with an extension path outside /Applications or /System, or pluginkit -e ignore executed by a script interpreter or unsigned process"
+    url: N/A
+resources:
+  - name: Beyond the good ol' LaunchAgents - 26 - Finder Sync Plugins
+    url: https://theevilbit.github.io/beyond/beyond_0026/
+  - name: Analyzing 'Mac File Opener' Persistence - Objective-See
+    url: https://objective-see.org/blog/blog_0x11.html
+acknowledgements:
+  - Csaba Fitzl (@theevilbit)
