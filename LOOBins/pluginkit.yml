@@ -24,12 +24,12 @@ example_use_cases:
       - Persistence
     tags:
       - bash
-      - findersync
+      - finder
   - name: Disable a security product's app extension
     description: Elect to ignore an extension by bundle ID, which stops it from being used for the current user. This can disable extensions that provide security or data loss prevention functionality, such as Finder Sync or Safari content-blocking extensions.
     code: pluginkit -e ignore -i <extension bundle ID>
     tactics:
-      - Defense Evasion
+      - Defense Impairment
     tags:
       - oneliner
       - bash

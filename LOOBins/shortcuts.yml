@@ -19,7 +19,7 @@ example_use_cases:
     code: shortcuts run "Update Helper"
     tactics:
       - Execution
-      - Defense Evasion
+      - Stealth
     tags:
       - oneliner
       - bash
