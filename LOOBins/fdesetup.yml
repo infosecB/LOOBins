@@ -1,0 +1,76 @@
+name: fdesetup
+author: Brendan Chamberlain (@infosecB)
+short_description: Query and manage FileVault full disk encryption, users, and recovery keys.
+full_description: fdesetup configures and reports on FileVault full disk encryption. Some status verbs are available to any user, while most management verbs require root and authentication with a FileVault user's password or a recovery key. An attacker can use fdesetup to determine whether the disk is encrypted and how recovery is configured, perform an authenticated restart that bypasses the FileVault unlock screen, generate a new personal recovery key, grant an attacker-controlled account FileVault unlock rights, or disable FileVault entirely.
+created: 2026-11-07
+example_use_cases:
+  - name: Determine FileVault status and recovery configuration
+    description: Check whether FileVault is enabled and whether the host supports authenticated restarts without root. With root, an attacker can also list FileVault-enabled users and determine whether personal or institutional recovery keys exist.
+    code: |-
+      fdesetup status
+      fdesetup isactive
+      fdesetup supportsauthrestart
+      sudo fdesetup list -extended
+      sudo fdesetup haspersonalrecoverykey
+      sudo fdesetup hasinstitutionalrecoverykey
+    tactics:
+      - Discovery
+    tags:
+      - oneliner
+      - bash
+      - filevault
+  - name: Bypass the FileVault unlock screen on the next restart
+    description: Perform an authenticated restart, which stores an unlock key in memory so the system boots directly to the login window without requiring the FileVault password. Using -delayminutes -1 arms the bypass for the next user-initiated restart instead of rebooting immediately, so services that need the data volume unlocked, such as SSH or remote management, come back up after the reboot.
+    code: sudo fdesetup authrestart -delayminutes -1
+    tactics:
+      - Defense Evasion
+      - Persistence
+    tags:
+      - oneliner
+      - bash
+      - filevault
+  - name: Generate a new personal recovery key
+    description: Replace the existing personal recovery key with a newly generated key printed to stdout. The attacker gains a key that can unlock the disk, and any previously escrowed key no longer works, which can prevent the organization from recovering the host.
+    code: sudo fdesetup changerecovery -personal
+    tactics:
+      - Credential Access
+      - Persistence
+      - Impact
+    tags:
+      - oneliner
+      - bash
+      - filevault
+  - name: Grant an attacker-controlled account FileVault unlock rights
+    description: Add an existing local account, such as one created with sysadminctl or dscl, as a FileVault user so it can unlock the disk at boot. Authentication with an existing FileVault user's password or the recovery key is required.
+    code: sudo fdesetup add -usertoadd backdoor
+    tactics:
+      - Persistence
+    tags:
+      - oneliner
+      - bash
+      - filevault
+      - users
+  - name: Disable FileVault
+    description: Decrypt the boot volume and disable FileVault, removing at-rest protection for the data on the host.
+    code: sudo fdesetup disable
+    tactics:
+      - Defense Evasion
+      - Impact
+    tags:
+      - oneliner
+      - bash
+      - filevault
+paths:
+  - /usr/bin/fdesetup
+detections:
+  - name: "Command-line detection: fdesetup with authrestart, changerecovery, removerecovery, add, or disable arguments outside of approved MDM or management tooling"
+    url: N/A
+  - name: "Process execution detection: fdesetup status, list, or has*recoverykey executed by a script interpreter or an unsigned process"
+    url: N/A
+  - name: "MDM telemetry: FileVault recovery key escrow change or FileVault disabled event reported by the MDM server"
+    url: N/A
+resources:
+  - name: Volume encryption with FileVault in macOS - Apple Platform Security
+    url: https://support.apple.com/guide/security/volume-encryption-with-filevault-sec4c6dc1b6e/web
+  - name: Security Implications of fdesetup authrestart on FileVault-Enabled Macs - Apple Developer Forums
+    url: https://developer.apple.com/forums/thread/774703
