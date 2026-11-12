@@ -23,7 +23,7 @@ example_use_cases:
     description: Perform an authenticated restart, which stores an unlock key in memory so the system boots directly to the login window without requiring the FileVault password. Using -delayminutes -1 arms the bypass for the next user-initiated restart instead of rebooting immediately, so services that need the data volume unlocked, such as SSH or remote management, come back up after the reboot.
     code: sudo fdesetup authrestart -delayminutes -1
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Persistence
     tags:
       - oneliner
@@ -54,7 +54,7 @@ example_use_cases:
     description: Decrypt the boot volume and disable FileVault, removing at-rest protection for the data on the host.
     code: sudo fdesetup disable
     tactics:
-      - Defense Evasion
+      - Defense Impairment
       - Impact
     tags:
       - oneliner

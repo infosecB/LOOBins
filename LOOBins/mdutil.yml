@@ -19,7 +19,7 @@ example_use_cases:
       sudo mdutil -i off /System/Volumes/Data
       sudo mdutil -a -i off
     tactics:
-      - Defense Evasion
+      - Stealth
     tags:
       - oneliner
       - bash
@@ -28,23 +28,23 @@ example_use_cases:
     description: Erase and rebuild the Spotlight index, discarding metadata about files that were previously indexed, including files that have since been deleted.
     code: sudo mdutil -E /System/Volumes/Data
     tactics:
-      - Defense Evasion
+      - Stealth
     tags:
       - oneliner
       - bash
       - spotlight
-      - forensics
+      - anti-forensics
   - name: Remove the Spotlight index from an external volume
     description: Delete the Spotlight index directory from a volume such as a USB drive used to stage or exfiltrate data, then disable indexing so it is not rebuilt.
     code: |-
       sudo mdutil -X /Volumes/USB
       sudo mdutil -i off /Volumes/USB
     tactics:
-      - Defense Evasion
+      - Stealth
     tags:
       - bash
       - spotlight
-      - forensics
+      - anti-forensics
       - disk
 paths:
   - /usr/bin/mdutil
