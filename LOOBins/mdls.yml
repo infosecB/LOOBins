@@ -9,6 +9,7 @@ example_use_cases:
     code: mdls -name "kMDItemWhereFroms" -name "kMDItemDownloadedDate"
     tactics:
       - Stealth
+      - Discovery
     techniques:
       - T1083
     tags:

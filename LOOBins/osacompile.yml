@@ -10,6 +10,7 @@ example_use_cases:
   tactics:
   - Command and Control
   - Resource Development
+  - Execution
   techniques:
   - T1105
   - T1059.002

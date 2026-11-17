@@ -58,6 +58,7 @@ example_use_cases:
     tactics:
       - Persistence
       - Defense Impairment
+      - Lateral Movement
     techniques:
       - T1021.005
     tags: []

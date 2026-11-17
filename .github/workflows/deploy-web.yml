@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'LOOBins/**'
+      - 'src/**'
       - 'web/**'
   workflow_dispatch:
 
@@ -34,6 +35,15 @@ jobs:
       - name: Install dependencies
         working-directory: web
         run: npm ci
+
+      # Generated with pyloobins so the site serves exactly what the SDK exports.
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Export ATT&CK Navigator layer and STIX bundle
+        run: |
+          uv run --no-dev pyloobins export-navigator --path web/public --file-name loobins_navigator_layer.json
+          uv run --no-dev pyloobins export-stix --path web/public --file-name loobins_stix.json
 
       - name: Build site
         working-directory: web

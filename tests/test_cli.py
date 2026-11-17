@@ -68,3 +68,14 @@ def test_export_stix_writes_bundle(tmp_path):
     assert out.exists()
     bundle = json.loads(out.read_text(encoding="utf-8"))
     assert bundle["type"] == "bundle"
+
+
+def test_export_navigator_writes_layer(tmp_path):
+    """export-navigator writes an ATT&CK Navigator layer to the chosen path."""
+    result = CliRunner().invoke(
+        cli, ["export-navigator", "--path", str(tmp_path), "--file-name", "nav.json"]
+    )
+    assert result.exit_code == 0
+    layer = json.loads((tmp_path / "nav.json").read_text(encoding="utf-8"))
+    assert layer["domain"] == "enterprise-attack"
+    assert layer["techniques"]
