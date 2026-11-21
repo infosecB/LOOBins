@@ -18,7 +18,7 @@ paths:
 - /usr/sbin/sysctl
 detections:
 - name: "Jamf Protect: Detect activity related to sysctl in an interactive shell"
-  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sysctl_activity
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sysctl_activity.yaml
 resources:
 - name: 'Evasions: macOS'
   url: https://evasions.checkpoint.com/src/MacOS/macos.html

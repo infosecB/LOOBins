@@ -29,4 +29,4 @@ detections:
   url: N/A
 resources:
 - name: macOS MDM introduction.
-  url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-mdm
+  url: https://book.hacktricks.wiki/en/macos-hardening/macos-red-teaming/macos-mdm/index.html
