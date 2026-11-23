@@ -45,7 +45,7 @@ detections:
 - name: "Splunk Security Content: Suspicious SQLite3 LSQuarantine Behavior"
   url: https://github.com/splunk/security_content/blob/c65dda5c0aa73a97f28c49c20739971ec1ba18a6/dev/endpoint/suspicious_sqlite3_lsquarantine_behavior.yml#L2
 - name: "Jamf Protect: Detect SQLite3 activity used to associated URLs with downloaded files"
-  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sqlite3_downloads
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sqlite3_downloads.yaml
 resources:
 - name: TCC.db Modifier Script
   url: https://github.com/bp88/JSS-Scripts/blob/master/TCC.db%20Modifier.sh

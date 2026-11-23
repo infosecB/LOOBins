@@ -167,9 +167,9 @@ paths:
   - /usr/bin/dscl
 detections:
   - name: "Jamf Protect: Detect user account creation with dscl"
-    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/user_created_by_dscl
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/user_created_by_dscl.yaml
 resources:
   - name: 'MacOS Red Teaming - HackTricks'
-    url: https://book.hacktricks.xyz/macos-hardening/macos-security-and-privilege-escalation/macos-red-teaming
+    url: https://book.hacktricks.wiki/en/macos-hardening/macos-red-teaming/index.html
   - name: 'MITRE ATT&CK T1136.001 Create Account: Local Account'
     url: https://attack.mitre.org/techniques/T1136/001/

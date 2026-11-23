@@ -62,7 +62,7 @@ paths:
 - /usr/bin/tmutil
 detections:
 - name: "Jamf Protect: Detect the deletion of localsnapshots"
-  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/tmutil_activity
+  url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/tmutil_activity.yaml
 - name: "Sigma: Time Machine Backup Deletion Attempt Via Tmutil - MacOS"
   url: https://github.com/SigmaHQ/sigma/blob/master/rules/macos/process_creation/proc_creation_macos_tmutil_delete_backup.yml
 - name: "Sigma: Time Machine Backup Disabled Via Tmutil - MacOS"

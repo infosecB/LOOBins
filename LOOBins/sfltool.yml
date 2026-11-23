@@ -24,7 +24,7 @@ paths:
   - /usr/bin/sfltool
 detections:
   - name: "Jamf Protect: Detect attempts to dump BTM or being reverted to installation defaults"
-    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sfltool_activity
+    url: https://github.com/jamf/jamfprotect/blob/main/custom_analytic_detections/sfltool_activity.yaml
 resources:
   - name: "sfltool man page"
     url: https://www.unix.com/man-page/mojave/1/sfltool/

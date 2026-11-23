@@ -47,9 +47,9 @@ detections:
     url: N/A
 resources:
   - name: 'tftp man page'
-    url: https://ss64.com/mac/tftp.html
+    url: https://keith.github.io/xcode-man-pages/tftp.1.html
   - name: 'TFTP (Trivial File Transfer Protocol)'
-    url: https://en.wikipedia.org/https://hackviser.com/tactics/pentesting/services/tftp
+    url: https://hackviser.com/tactics/pentesting/services/tftp
   - name: 'Uncovered: Uncovering Risk Exposure from Publicly Accessible Unauthenticated TFTP'
     url: https://www.stamus-networks.com/blog/uncovered-uncovering-risk-exposure-from-publicly-accessible-unauthenticated-tftp
   - name: 'MITRE ATT&CK T1105 - Ingress Tool Transfer'
